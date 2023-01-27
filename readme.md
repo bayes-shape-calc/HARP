@@ -32,6 +32,34 @@ harpcalc 6j6j
 ```
 
 
+### Isolated install
+Follow these to use instructions to use and install in an isolated virtual environment
+
+``` bash
+git clone https://github.com/bayes-shape-calc/HARP.git
+python -m venv harpenv
+source harpenv/bin/activate
+cd HARP
+make
+pip install ./
+cd ..
+harpcalc 6j6j --use_c
+deactivate
+```
+
+and you should see output that looks like:
+```
+Loading 6j6j
+N_adfs = 10, N_blobs = 20
+Using default weights: [0.05 1.   1.   1.   2.   2.  ]
+Chain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec
+Chain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec
+Chain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec
+Chain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec
+<P_res>: 0.8030
+Finite: 476 / 476
+```
+
 ## Library versions
 Note: these are not the minimum required versions. They should be automatically installed by the `pip` command above (step 4).
 

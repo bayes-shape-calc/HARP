@@ -1,0 +1,8 @@
+.DS_Store
+build
+*.pyc
+__pycache__
+*.so
+*.egg-info
+*.gz
+*.csv
