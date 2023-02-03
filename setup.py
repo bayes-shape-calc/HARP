@@ -7,7 +7,7 @@ from setuptools.command.install import install as _install
 with open("readme.md") as f:
 	ld = f.read()
 
-NAME = "HARP"
+NAME = "harp"
 
 #pip version
 setuptools.setup(

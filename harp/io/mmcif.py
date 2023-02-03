@@ -154,6 +154,7 @@ def _load_mmcif_dict(f,exclusive=None):
 			if not exclusive is None:
 				if line.startswith(exclusive):
 					armed = True
+			
 			if armed:
 				entry,value = _get_single_entry(f,pos,line)
 				out[entry] = value
@@ -258,11 +259,12 @@ def check_loop_header(fname,loopname,look_list):
 					break
 			pos,line = pos_read(f)
 	return all(headers)
+	
 ################################################################################
 ################################################################################
 ################################################################################
 
-def load_mmcif(fname):
+def load_mmcif(fname,only_polymers=False):
 	'''
 	into an atomcollection class
 	'''
@@ -294,6 +296,26 @@ def load_mmcif(fname):
 	labelresid = labelresid.astype('int')
 
 	mol = atomcollection(atomid,labelresid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,authresid)
+	
+	if only_polymers: ### often PTMd residues are Hetatoms so... you can't remove bad stuff that way.
+		keep_entities = []
+		tags, entries = load_mmcif_dict(fname,'_entity.')['_entity']
+		for entry in entries:
+			if entry[1] =='polymer':
+				keep_entities.append(entry[0])
+		if len(keep_entities) == 0:
+			raise Exception('no polymers in entries in %s!'%(fname))
+
+		keep_chains = []
+		tags, entries = load_mmcif_dict(fname,'_struct_asym.')['_struct_asym']
+		for entry in entries:
+			if entry[3] in keep_entities:
+				keep_chains.append(entry[0])
+		if len(keep_chains) == 0:
+			raise Exception('no chains in the polymer entries in %s!'%(fname))
+		
+		mol = mol.get_set(np.isin(mol.chain,np.array(keep_chains)))
+		
 	return mol
 
 def change_mmcif_xyzbfactor(fname,oname,xyzshift,bfactors,badval=1.):

@@ -173,7 +173,7 @@ def fake_mol(xyz):
 	hetatom = np.array([False for _ in range(atomid.size)])
 	return atomcollection(atomid,resid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom)
 
-def load(fname):
+def load(fname,only_polymers=False):
 	from . import io
 	if fname.endswith('.mmcif') or fname.endswith('.cif') or fname.endswith('.cif.gz'):
-		return io.load_mmcif(fname)
+		return io.load_mmcif(fname,only_polymers)

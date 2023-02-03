@@ -51,7 +51,7 @@ def bms_residue(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutof
 		## usually normalized to carbon. Could be anything b/c a shape analysis, but needs to be something
 		raise Exception('no weights provided!')
 
-	weights = np.zeros(subresidue.natoms)
+	weights = np.ones(subresidue.natoms)
 	for ati in range(atom_types.size):
 		weights[subresidue.element == atom_types[ati]] = atom_weights[ati] ## assign weights
 	if subresidue.occupancy.sum() > 0:
@@ -149,12 +149,12 @@ def optimal_global_adf(grid,data,mol,sigmacutoff,offset,sigmas = np.linspace(0.3
 
 def gen_adfsblobs(adf_low=None,adf_high=None,adf_n=None,blob_low=None,blob_high=None,blob_n=None):
 	if adf_low is None or adf_high is None or adf_n is None:
-		adf_low = .25
-		adf_high = 2.5
+		adf_low = .25 ## rationale: lowest B factor
+		adf_high = 2.5 ## rationale: 10-fold higher
 		adf_n = 10
 	if blob_low is None or blob_high is None or blob_n is None:
-		blob_low = .25
-		blob_high = 8.
+		blob_low = .25 ## rationale: lowest B factor
+		blob_high = 8. ## rationale: b/c this is also our resolution cutoff
 		blob_n = 20
 
 	adfs = np.logspace(np.log10(adf_low),np.log10(adf_high),adf_n)

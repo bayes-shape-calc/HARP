@@ -29,7 +29,7 @@ def file_path(string):
 		err = "\n\nError: file %s does not exist\n\n"%(string)
 		raise Exception(err)
 
-def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, reduced=False):
+def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, reduced=False, only_polymers=True):
 	if verbose: emit('Using %s library'%(models.version))
 
 	## Try to download files from the wwPDB
@@ -38,9 +38,7 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	## Load molecule
 	if not skip_load:
 		if not quiet: emit('Loading %s'%(pdbid))
-		mol = molecule.load(path_mol)
-
-		mol = mol.remove_hetatoms()
+		mol = molecule.load(path_mol,only_polymers)
 
 		## Load X-ray density from structure factors
 		if flag_density == 'xray':
@@ -138,6 +136,7 @@ def main():
 
 	parser.add_argument('--skip_calc',action='store_true',default=False,help='Skip the trustworthiness calculation, still download and visualize')
 	parser.add_argument('--skip_load',action='store_true',default=False,help='Skip loading molecule and density')
+	parser.add_argument('--only_polymers',action='store_true',default=True,help='Only calculate chains that come from entities that are polymers')
 
 	if flag_blobview:
 		## you have to have blobview
@@ -195,6 +194,7 @@ def main():
 		skip_calc=args.skip_calc,
 		skip_load=args.skip_load,
 		reduced=args.reduced,
+		only_polymers=args.only_polymers,
 	)
 
 if __name__ == '__main__':
