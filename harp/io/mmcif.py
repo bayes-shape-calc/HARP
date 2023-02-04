@@ -264,7 +264,7 @@ def check_loop_header(fname,loopname,look_list):
 ################################################################################
 ################################################################################
 
-def load_mmcif(fname,only_polymers=False):
+def load_mmcif(fname, only_polymers=False, first_model=True):
 	'''
 	into an atomcollection class
 	'''
@@ -282,7 +282,7 @@ def load_mmcif(fname,only_polymers=False):
 	occupancy = entries[np.nonzero(tags=='_atom_site.occupancy')].astype('double')[0]
 	bfactor = entries[np.nonzero(tags=='_atom_site.B_iso_or_equiv')].astype('double')[0]
 	hetatom = entries[np.nonzero(tags=='_atom_site.group_PDB')][0] != 'ATOM'
-
+	modelnum = entries[np.nonzero(tags=='_atom_site.pdbx_PDB_model_num')][0]
 	xyz = np.array([entries[np.nonzero(tags=='_atom_site.Cartn_%s'%(xyz))][0] for xyz in ['x','y','z']]).astype('double').T
 
 	######################################## resid... hard to cast to int.
@@ -295,27 +295,45 @@ def load_mmcif(fname,only_polymers=False):
 	labelresid[bad] = np.array((-1),dtype=labelresid.dtype)
 	labelresid = labelresid.astype('int')
 
-	mol = atomcollection(atomid,labelresid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,authresid)
+	mol = atomcollection(atomid,labelresid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid)
 	
 	if only_polymers: ### often PTMd residues are Hetatoms so... you can't remove bad stuff that way.
-		keep_entities = []
-		tags, entries = load_mmcif_dict(fname,'_entity.')['_entity']
-		for entry in entries:
-			if entry[1] =='polymer':
-				keep_entities.append(entry[0])
-		if len(keep_entities) == 0:
-			raise Exception('no polymers in entries in %s!'%(fname))
+		try:
+			## Pull out the _entity entries corresponding to polymers. store as strings in keep_entities
+			method = 0
+			try:
+				tags2, entries2 = load_mmcif_dict(fname,'_entity.')['_entity']
+				tags2 = np.array(tags2)
+				entries2 = np.array(entries2).T
+				method = 1
+			except:
+				try:
+					entity_id = load_mmcif_dict(fname,'_entity.id')['_entity.id']
+					entity_type = load_mmcif_dict(fname,'_entity.type')['_entity.type']
+					tags2 = np.array(['_entity.id','_entity.type'])
+					entries2 = np.array([[entity_id,entity_type],]).T
+					method = 2
+				except:
+					pass
+			if method == 0:
+				raise Exception('Cannot get _entity entry in %s!'%(fname))
+			
+			_entities = entries2[np.nonzero(tags2=='_entity.id')][0]
+			_polymers = entries2[np.nonzero(tags2=='_entity.type')][0]
+			keep_entities = _entities[np.nonzero(_polymers == 'polymer')]
+			entities = entries[np.nonzero(tags=='_atom_site.label_entity_id')][0]
+			
+			mol = mol.get_set(np.isin(entities,keep_entities))
 
-		keep_chains = []
-		tags, entries = load_mmcif_dict(fname,'_struct_asym.')['_struct_asym']
-		for entry in entries:
-			if entry[3] in keep_entities:
-				keep_chains.append(entry[0])
-		if len(keep_chains) == 0:
-			raise Exception('no chains in the polymer entries in %s!'%(fname))
-		
-		mol = mol.get_set(np.isin(mol.chain,np.array(keep_chains)))
-		
+		except:
+			## if everything fails, just do it the old fashioned way. This removes things like PTMs though.
+			mol = mol.remove_hetatoms()
+			
+	if first_model: ## sometimes several are built into the same density; just grab the first model: _atom_site.pdbx_PDB_model_num = 1
+		unique_models = np.unique(mol.modelnum)
+		if unique_models.size > 1:
+			mol = mol.get_set(mol.modelnum == unique_models[0])
+			
 	return mol
 
 def change_mmcif_xyzbfactor(fname,oname,xyzshift,bfactors,badval=1.):

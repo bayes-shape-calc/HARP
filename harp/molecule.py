@@ -16,7 +16,7 @@ class atomcollection(object):
 	hetatom is boolean for whether it is a heteroatom entry or not
 	authresid is author resid, or if not provided will default to resid
 	'''
-	def __init__(self,atomid,resid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,authresid=None):
+	def __init__(self,atomid,resid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None):
 		self.atomid = atomid
 		self.resid = resid
 		self.resname = resname
@@ -28,6 +28,7 @@ class atomcollection(object):
 		self.occupancy = occupancy
 		self.bfactor = bfactor
 		self.hetatom = hetatom
+		self.modelnum = modelnum
 		self.shift = np.zeros(3)
 		if authresid is None:
 			self.authresid = self.resid.copy()
@@ -45,7 +46,7 @@ class atomcollection(object):
 			self.xyz = self.xyz.reshape((1,3))
 
 	def get_set(self,keep):
-		return atomcollection(self.atomid[keep], self.resid[keep], self.resname[keep], self.atomname[keep],self.chain[keep],self.element[keep], self.conf[keep], self.xyz[keep],self.occupancy[keep],self.bfactor[keep],self.hetatom[keep],self.authresid[keep])
+		return atomcollection(self.atomid[keep], self.resid[keep], self.resname[keep], self.atomname[keep],self.chain[keep],self.element[keep], self.conf[keep], self.xyz[keep],self.occupancy[keep],self.bfactor[keep],self.hetatom[keep],self.modelnum[keep],self.authresid[keep])
 
 	def get_residue(self,number):
 		return self.get_set(self.resid==number)
@@ -139,7 +140,7 @@ class atomcollection(object):
 		return self.xyz.mean(0)
 
 	def info_atom(self,i):
-		return [self.atomid[i],self.resid[i],self.resname[i],self.chain[i],self.element[i],self.atomname[i],self.conf[i],self.xyz[i],self.occupancy[i],self.bfactor[i],self.hetatom[i],self.authresid[i]]
+		return [self.atomid[i],self.resid[i],self.resname[i],self.chain[i],self.element[i],self.atomname[i],self.conf[i],self.xyz[i],self.occupancy[i],self.bfactor[i],self.hetatom[i],self.modelnum[i],self.authresid[i]]
 
 	def wrapcom_into_unitcell(self,grid):
 		shift = np.zeros(3)
@@ -171,9 +172,10 @@ def fake_mol(xyz):
 	occupancy = resid.copy()
 	bfactor = occupancy.astype('double')
 	hetatom = np.array([False for _ in range(atomid.size)])
-	return atomcollection(atomid,resid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom)
+	modelnum = 	atomname = np.array(['1' for _ in range(atomid.size)])
+	return atomcollection(atomid,resid,resname,atomname,chain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum)
 
-def load(fname,only_polymers=False):
+def load(fname,only_polymers=False,firstmodel=True):
 	from . import io
 	if fname.endswith('.mmcif') or fname.endswith('.cif') or fname.endswith('.cif.gz'):
-		return io.load_mmcif(fname,only_polymers)
+		return io.load_mmcif(fname,only_polymers,firstmodel)
