@@ -87,7 +87,10 @@ def bms_residue(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutof
 		# lnpriors[nadf:] /= float(nblob)
 
 		###### max-ent mag priors
-		lnpriors = np.zeros(ncalc) + .5
+		lnpriors = np.zeros(ncalc)
+		lnpriors[:nadf] += 0.5
+		lnpriors[nadf:] += 0.5
+		
 		if nadf > 1:
 			dlnx = np.log(adfs[-1])-np.log(adfs[0])
 			adfbounds = (adfs[1:]+adfs[:-1])/2.
@@ -150,11 +153,11 @@ def optimal_global_adf(grid,data,mol,sigmacutoff,offset,sigmas = np.linspace(0.3
 def gen_adfsblobs(adf_low=None,adf_high=None,adf_n=None,blob_low=None,blob_high=None,blob_n=None):
 	if adf_low is None or adf_high is None or adf_n is None:
 		adf_low = .25 ## rationale: lowest B factor
-		adf_high = 2.5 ## rationale: 10-fold higher
+		adf_high = 1. ## rationale: C-Cbond50
 		adf_n = 10
 	if blob_low is None or blob_high is None or blob_n is None:
 		blob_low = .25 ## rationale: lowest B factor
-		blob_high = 8. ## rationale: b/c this is also our resolution cutoff
+		blob_high = 3. ## rationale: ClosestInterResidueDistance50
 		blob_n = 20
 
 	adfs = np.logspace(np.log10(adf_low),np.log10(adf_high),adf_n)
@@ -173,8 +176,7 @@ def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., si
 	if blobs is None:
 		blobs = gen_adfsblobs()[1]
 
-	# emit(adfs)
-	# emit(blobs)
+
 	emit('N_adfs = %d, N_blobs = %d'%(adfs.size,blobs.size))
 
 	if atom_types is None or atom_weights is None:

@@ -125,13 +125,13 @@ def main():
 	########### Working on implementing
 	# parser.add_argument('--atom_width',type=float,default=.6,help='Width of atoms in density models (standard deviation of 3D normal distribution)')
 	parser.add_argument('--atoms_min',type=float,default=.25,help='Minimum width of atoms to check (standard deviation of 3D normal distribution)')
-	parser.add_argument('--atoms_max',type=float,default=2.5,help='Maximum width of atoms to check (standard deviation of 3D normal distribution)')
+	parser.add_argument('--atoms_max',type=float,default=1.0,help='Maximum width of atoms to check (standard deviation of 3D normal distribution)')
 	parser.add_argument('--atoms_num',type=int,default=10,help='Number of atoms models to use. Spaced evenly between atom_min and atom_max')
 
 	parser.add_argument('--voxel_offset',type=float,default=.5,help='XYZ coordinate offset for each density voxel to relate to atomic model coordinates. A value of 0.0 is edge centered, 0.5 is face centered.')
 
 	parser.add_argument('--blobs_min',type=float,default=.25,help='Minimum width of a blob to check (standard deviation of 3D normal distribution)')
-	parser.add_argument('--blobs_max',type=float,default=8.0,help='Maximum width of a blob to check (standard deviation of 3D normal distribution)')
+	parser.add_argument('--blobs_max',type=float,default=3.0,help='Maximum width of a blob to check (standard deviation of 3D normal distribution)')
 	parser.add_argument('--blobs_num',type=int,default=20,help='Number of blobs to use. Spaced evenly between blob_min and blob_max')
 
 	parser.add_argument('--skip_calc',action='store_true',default=False,help='Skip the trustworthiness calculation, still download and visualize')
