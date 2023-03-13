@@ -29,7 +29,7 @@ def file_path(string):
 		err = "\n\nError: file %s does not exist\n\n"%(string)
 		raise Exception(err)
 
-def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, reduced=False, only_polymers=True):
+def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, only_polymers=True):
 	if verbose: emit('Using %s library'%(models.version))
 
 	## Try to download files from the wwPDB
@@ -70,18 +70,14 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	## Perform the HARP model selection on all residues in all chains of molecule.
 	probs = np.zeros(mol.xyz.shape[0])
 	if not skip_calc:
-		probs, ln_evidence = bayes_model_select.bms_molecule(grid, dens, mol, chains = chains, adfs=adfs , blobs=blobs, offset=offset, reduced=reduced)
-		keep = np.bitwise_or(mol.atomname=='\"C4\'\"',mol.atomname=='CA')
-		last_resid = -1
-		last_chain = ''
-		for i in range(keep.size):
-			if keep[i]:
-				if last_resid == mol.resid[i] and last_chain == mol.chain[i]:
-					keep[i] = False
-				else:
-					last_resid = mol.resid[i]
-					last_chain = mol.chain[i]
-
+		probs, ln_evidence = bayes_model_select.bms_molecule(grid, dens, mol, chains = chains, adfs=adfs , blobs=blobs, offset=offset)
+		keep = np.zeros(probs.size,dtype='bool')
+		for chain in mol.unique_chains:
+			subchain = mol.get_chain(chain)
+			for i in range(subchain.unique_residues.size):
+				resi = subchain.unique_residues[i]
+				subresidue = subchain.get_residue(resi)
+				keep[mol.atomid==subresidue.atomid[0]] = True
 
 		## Return a little information
 		if not quiet:
@@ -123,7 +119,6 @@ def main():
 	parser.add_argument('--label_phase',type=str,default='pdbx_PHWT',help='Phase label in X-ray file')
 
 	########### Working on implementing
-	# parser.add_argument('--atom_width',type=float,default=.6,help='Width of atoms in density models (standard deviation of 3D normal distribution)')
 	parser.add_argument('--atoms_min',type=float,default=.25,help='Minimum width of atoms to check (standard deviation of 3D normal distribution)')
 	parser.add_argument('--atoms_max',type=float,default=1.0,help='Maximum width of atoms to check (standard deviation of 3D normal distribution)')
 	parser.add_argument('--atoms_num',type=int,default=10,help='Number of atoms models to use. Spaced evenly between atom_min and atom_max')
@@ -131,7 +126,7 @@ def main():
 	parser.add_argument('--voxel_offset',type=float,default=.5,help='XYZ coordinate offset for each density voxel to relate to atomic model coordinates. A value of 0.0 is edge centered, 0.5 is face centered.')
 
 	parser.add_argument('--blobs_min',type=float,default=.25,help='Minimum width of a blob to check (standard deviation of 3D normal distribution)')
-	parser.add_argument('--blobs_max',type=float,default=3.0,help='Maximum width of a blob to check (standard deviation of 3D normal distribution)')
+	parser.add_argument('--blobs_max',type=float,default=2.8,help='Maximum width of a blob to check (standard deviation of 3D normal distribution)')
 	parser.add_argument('--blobs_num',type=int,default=20,help='Number of blobs to use. Spaced evenly between blob_min and blob_max')
 
 	parser.add_argument('--skip_calc',action='store_true',default=False,help='Skip the trustworthiness calculation, still download and visualize')
@@ -147,10 +142,6 @@ def main():
 	group_loud.add_argument("--verbose", action="store_true")
 	group_loud.add_argument("--quiet", action="store_true")
 	group_loud.add_argument("--normal", action="store_true",default=True)
-
-	group_fullreduced = parser.add_mutually_exclusive_group()
-	group_fullreduced.add_argument("--reduced", action="store_true")
-	group_fullreduced.add_argument("--full", action="store_true",default=True)
 
 	group_lib = parser.add_mutually_exclusive_group()
 	group_lib.add_argument('--use_c',action='store_true',default=False,help='Use the C library to render models')
@@ -193,7 +184,6 @@ def main():
 		chains = args.chains,
 		skip_calc=args.skip_calc,
 		skip_load=args.skip_load,
-		reduced=args.reduced,
 		only_polymers=args.only_polymers,
 	)
 

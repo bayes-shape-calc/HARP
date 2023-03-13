@@ -114,50 +114,14 @@ def bms_residue(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutof
 
 	return record_prob_good, record_ln_ev
 
-def bms_residue_reduced(grid, data, subresidue, adf =.25, subgrid_size=8.,sigmacutoff=5,offset=0.5,atom_types=None,atom_weights=None):
-	'''
-	Run the reduced version of the BMS calculation on a (sub)residue
-		- only one M0 and one M1 are calculated!!!
-		- adf is the \sigma (std dev) of atoms in M0 -- atomic DISTORTION factor... not exclusively DISPLACEMENT. e.g. includes bad reconstruction noise.
-		- blob is calculated as sqrt(adf^2+var(\mu))
-		- removes hydrogen atoms before doing any calculation
-		- results are extended to all atoms in the residue (including the removed hydrogens!)
-	'''
-
-	## if there are no atoms left in the residue, don't do the calculation
-	if subresidue.natoms == 0:
-		record_prob_good = np.zeros((subresidue.natoms))
-		record_ln_ev = np.zeros((subresidue.natoms,2))
-		return record_prob_good,record_ln_ev
-
-	# r = np.sqrt(np.sum(subresidue.xyz**2.,axis=1))
-	r = np.sqrt(np.sum((subresidue.xyz-subresidue.com()[None,:])**2.,axis=1))
-	E_r = np.mean(r)
-	E_rr = np.mean(r*r)
-	blob = np.sqrt(adf**2.+E_rr-E_r**2.)
-	return bms_residue(grid, data, subresidue, np.array((adf,)), np.array((blob,)), subgrid_size, sigmacutoff, offset,atom_types,atom_weights)
-
-
-def optimal_global_adf(grid,data,mol,sigmacutoff,offset,sigmas = np.linspace(0.3,1.2,20)):
-	mol_nohet = mol.remove_hetatoms()
-	weights = np.ones(mol_nohet.natoms)
-
-	ln_ev = np.zeros_like(sigmas)
-	for i in range(sigmas.size):
-		model = models.density_atoms(grid, mol_nohet.xyz, weights, sigmas[i], sigmacutoff, offset)
-		ln_ev[i] = evidence.ln_evidence(model, data)
-	out = sigmas[np.nanargmax(ln_ev)]
-	return out
-
-
 def gen_adfsblobs(adf_low=None,adf_high=None,adf_n=None,blob_low=None,blob_high=None,blob_n=None):
 	if adf_low is None or adf_high is None or adf_n is None:
-		adf_low = .25 ## rationale: lowest B factor
+		adf_low = .25 ## rationale: lowest cryocooled B factor (fraunfelder xray)
 		adf_high = 1. ## rationale: C-Cbond50
 		adf_n = 10
 	if blob_low is None or blob_high is None or blob_n is None:
-		blob_low = .25 ## rationale: lowest B factor
-		blob_high = 3. ## rationale: ClosestInterResidueDistance50
+		blob_low = .25 ## rationale: lowest cryocooled B factor (fraunfelder xray)
+		blob_high = 2.8 ## rationale: ClosestInterResidueDistance50
 		blob_n = 20
 
 	adfs = np.logspace(np.log10(adf_low),np.log10(adf_high),adf_n)
@@ -165,7 +129,7 @@ def gen_adfsblobs(adf_low=None,adf_high=None,adf_n=None,blob_low=None,blob_high=
 	return adfs,blobs
 
 
-def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, reduced=False, atom_types=None, atom_weights=None):
+def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None):
 	'''
 	Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains
 		- results are per residue but extended for all atoms
@@ -187,12 +151,7 @@ def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., si
 	## initialize results
 	nadf = adfs.size
 	nblob = blobs.size
-	if reduced:
-		ncalc = 2
-		adf = optimal_global_adf(grid,data,mol,sigmacutoff,offset)
-		emit('Found Global ADF: %.2f'%(adf))
-	else:
-		ncalc = nadf+nblob
+	ncalc = nadf+nblob
 
 	record_prob_good = np.zeros((mol.natoms)) ## Natoms
 	record_ln_ev = np.zeros((mol.natoms,ncalc)) ## Natoms x Nmodels (atomic, then blobs in sigmas_blob)
@@ -205,8 +164,6 @@ def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., si
 
 		## Extract current chain
 		subchain = mol.get_chain(chain)
-		if np.all(subchain.hetatom):
-			continue
 
 		## Loop over residues in current chain
 		t0 = time.time()
@@ -217,10 +174,7 @@ def bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., si
 			subresidue = subchain.get_residue(resi)
 
 			## Run Calculation
-			if reduced:
-				out = bms_residue_reduced(grid, data, subresidue, adf, subgrid_size ,sigmacutoff, offset,atom_types,atom_weights)
-			else:
-				out = bms_residue(grid, data, subresidue, adfs, blobs, subgrid_size, sigmacutoff, offset,atom_types,atom_weights)
+			out = bms_residue(grid, data, subresidue, adfs, blobs, subgrid_size, sigmacutoff, offset,atom_types,atom_weights)
 
 			## Extend results to all atoms in residue
 			avgprob.append(out[0][0])
