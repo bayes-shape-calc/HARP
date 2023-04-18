@@ -1,0 +1,11 @@
+---
+title: "About HARP"
+toc-expand: false
+---
+
+# Intro
+HARP was a development that came out of the [shape-calculation](https://bayes-shape-calc.github.io) framework between ~2020-2023.
+
+# People
+* Colin Kinz-Thompson: [lab website](https://ckinzthompson.github.io), [github](https://github.com/ckinzthompson), [email](colin.kinzthompson@rutgers.edu)
+* Korak Ray: [github](https://github.com/KorakRay), [email](korak.ray@columbia.edu)

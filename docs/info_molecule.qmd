@@ -1,0 +1,5 @@
+---
+title: "Welcome to HARP"
+---
+
+Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.

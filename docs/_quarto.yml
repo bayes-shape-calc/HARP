@@ -1,0 +1,73 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "HARP Documentation"
+
+  page-navigation: false
+  site-url: https://bayes-shape-calc.github.io/HARP
+  repo-url: https://github.com/bayes-shape-calc/HARP
+  # repo-actions: [edit, source]
+  
+  # page-footer:
+  #   left: "something 2023"
+    
+  sidebar:
+    title:
+      'Hierarchical Atomic Resolution Perception: Documentation'
+    logo: images/HARP_logo.png
+    pinned: true
+    tools:
+
+      - icon: file-earmark-text
+        href: https://www.biorxiv.org
+        text: "HARP paper"
+      - icon: github
+        href: https://github.com/bayes-shape-calc/HARP
+        text: "HARP repo"
+      - icon: hexagon
+        href: https://bayes-shape-calc.github.io/
+        text: "Shape-calc website"
+      - icon: upload
+        href: https://github.com/bayes-shape-calc
+        text: "Shape calculations"
+
+    
+    style: "docked"
+    search: true
+    collapse-level: 1
+
+    contents:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+            
+      - section: "Get Started"
+        contents:
+          - install.qmd
+          - somestuff.qmd
+          
+      - section: "Examples"
+        contents:
+          - example1.qmd
+          
+      - section: "Information"
+        contents:
+          - info_priors.qmd
+          - info_molecule.qmd
+          - info_density.qmd
+
+# exectue:
+#   freeze: true
+
+format:
+  html:
+    theme: cosmo
+    code-background: true
+    code-copy: true
+    css: styles.css
+    toc: true
+
+
+
