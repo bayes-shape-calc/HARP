@@ -33,7 +33,22 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	if verbose: emit('Using %s library'%(models.version))
 
 	## Try to download files from the wwPDB
-	success, path_mol, path_density, flag_density = io.rcsb.get_pdb(pdbid,basedir,overwrite,verbose,emit)
+	if pdbid is None and input_files is None:
+		emit('No input information')
+		sys.exit(1)
+			
+	elif not pdbid is None and input_files is None:
+		success, path_mol, path_density, flag_density = io.rcsb.get_pdb(pdbid,basedir,overwrite,verbose,emit)
+	
+	elif pdbid is None and not input_files is None:
+		path_mol,path_density = input_files
+		emit('MMCIF: %s'%(path_mol))
+		emit('MRC: %s'%(path_density))
+		flag_density = 'em'
+		
+	else:
+		emit('Unclear what to process')
+		sys.exit(1)
 
 	## Load molecule
 	if not skip_load:
@@ -109,12 +124,17 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 def main():
 	parser = argparse.ArgumentParser(description="Use HARP to calculate trustiworthness of model")
 
-	parser.add_argument('pdb', type=str, help='The ID of the structure in the wwPDB to process')
+	group_exec = parser.add_mutually_exclusive_group(required=True)
+	group_exec.add_argument('-f',type=file_path,nargs=2,help='Location of mmcif file and density file')
+	# parser.add_argument('map',type=file_path,default=None,help='Location of density file. Must include mmcif location too')
+	group_exec.add_argument('-id', type=str, help='The ID of the structure in the wwPDB to process')
+	
 	parser.add_argument('-o','--output',type=dir_path,default='./',help='Directory to store results and files')
 	parser.add_argument('--overwrite',action='store_true',default=False,help='Overwrite old data files or not')
 
-	parser.add_argument('--mmcif_location',type=file_path,default=None,help='Location of mmcif file. Must include density_location too')
-	parser.add_argument('--density_location',type=file_path,default=None,help='Location of density file. Must include mmcif location too')
+	# parser.add_argument('--mmcif_location',type=file_path,default=None,help='Location of mmcif file. Must include density_location too')
+	# parser.add_argument('--density_location',type=file_path,default=None,help='Location of density file. Must include mmcif location too')
+	
 	parser.add_argument('--label_sf',type=str,default='pdbx_FWT',help='Structure factor label in X-ray file')
 	parser.add_argument('--label_phase',type=str,default='pdbx_PHWT',help='Phase label in X-ray file')
 
@@ -162,20 +182,19 @@ def main():
 	else:
 		aview = None
 		aviewt = None
-
-
+		
 	adfs,blobs = bayes_model_select.gen_adfsblobs(args.atoms_min,args.atoms_max,args.atoms_num,args.blobs_min,args.blobs_max,args.blobs_num)
 
 
 	harpcalc(
-		pdbid = args.pdb,
+		pdbid = args.id,
 		basedir = args.output,
 		verbose = args.verbose,
 		quiet = args.quiet,
 		overwrite = args.overwrite,
 		end_view = aview,
 		view_threshold = aviewt,
-		input_files = [args.mmcif_location, args.density_location],
+		input_files = args.f,
 		label_sf = args.label_sf,
 		label_phase = args.label_phase,
 		adfs = adfs,

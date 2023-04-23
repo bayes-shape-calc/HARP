@@ -5,7 +5,8 @@ from ..molecule import atomcollection
 def pos_read(f):
 	pos = f.tell()
 	line = f.readline().decode('utf-8')
-	line = line.lstrip()
+	line = line.lstrip(' ')
+	line = line.lstrip('\t')
 	return pos,line
 
 def _get_full_loop(f,pos,line):
@@ -131,11 +132,13 @@ def _load_mmcif_dict(f,exclusive=None):
 	if not exclusive is None:
 		armed = False
 
-	while line:
+	while line: 
 		line = line[:-1]
+
 		if line.startswith('data_'): ## it's a block
 			if not out is None:
 				outs.append(out)
+			# print(repr(line))
 			out = {}
 
 		elif line.startswith('loop_') and not out is None: ## pull out a loop
@@ -155,7 +158,6 @@ def _load_mmcif_dict(f,exclusive=None):
 			if not exclusive is None:
 				if line.startswith(exclusive):
 					armed = True
-			
 			if armed:
 				entry,value = _get_single_entry(f,pos,line)
 				out[entry] = value
