@@ -1,5 +1,5 @@
 ---
-title: "Example 1"
+title: "Example: Load Data Script
 ---
 
 Here's a code example
@@ -7,5 +7,10 @@ Here's a code example
 ``` python
 import harp
 
-blah = 122
+
+file_cif = 'your_molecule.cif'
+file_mrc = 'your_map.mrc'
+
+mol = harp.molecule.load(file_cif,False)
+grid,density = harpdensity.load(file_map)
 ```
