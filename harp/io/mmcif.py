@@ -5,6 +5,7 @@ from ..molecule import atomcollection
 def pos_read(f):
 	pos = f.tell()
 	line = f.readline().decode('utf-8')
+	line = line.lstrip()
 	return pos,line
 
 def _get_full_loop(f,pos,line):
@@ -200,8 +201,8 @@ def load_mmcif_dict(fname,exclusive=None):
 	else:
 		with open(fname,'rb') as f:
 			dictionaries = _load_mmcif_dict(f,exclusive)
-	if len(dictionaries) == 1:
-		return dictionaries[0]
+	# if len(dictionaries) == 1:
+		# return dictionaries[0]
 	return dictionaries
 
 def _find_emdb(f):
@@ -269,7 +270,7 @@ def load_mmcif(fname, only_polymers=False, first_model=True):
 	into an atomcollection class
 	'''
 
-	tags,entries = load_mmcif_dict(fname,exclusive='_atom_site.')['_atom_site']
+	tags,entries = load_mmcif_dict(fname,exclusive='_atom_site.')[0]['_atom_site']
 	tags = np.array(tags)
 	entries = np.array(entries).T
 
@@ -302,14 +303,14 @@ def load_mmcif(fname, only_polymers=False, first_model=True):
 			## Pull out the _entity entries corresponding to polymers. store as strings in keep_entities
 			method = 0
 			try:
-				tags2, entries2 = load_mmcif_dict(fname,'_entity.')['_entity']
+				tags2, entries2 = load_mmcif_dict(fname,'_entity.')[0]['_entity']
 				tags2 = np.array(tags2)
 				entries2 = np.array(entries2).T
 				method = 1
 			except:
 				try:
-					entity_id = load_mmcif_dict(fname,'_entity.id')['_entity.id']
-					entity_type = load_mmcif_dict(fname,'_entity.type')['_entity.type']
+					entity_id = load_mmcif_dict(fname,'_entity.id')[0]['_entity.id']
+					entity_type = load_mmcif_dict(fname,'_entity.type')[0]['_entity.type']
 					tags2 = np.array(['_entity.id','_entity.type'])
 					entries2 = np.array([[entity_id,entity_type],]).T
 					method = 2
