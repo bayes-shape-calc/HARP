@@ -24,8 +24,8 @@ setuptools.setup(
 	project_urls={
 		'Documentation': 'https://github.com/bayes-shape-calc/HARP/docs',
 	},
-	# packages=setuptools.find_packages(where="."),
-	packages=setuptools.find_packages(include=['harp','harp.*']),
+	packages=setuptools.find_packages(where="."),
+	# packages=setuptools.find_packages(include=['harp','harp.*']),
 	python_requires='>=3.7',
 	install_requires=["numba>=0.55","numpy>=1.22","mrcfile>=1.3","gemmi>=0.5.5"],
 	classifiers=[

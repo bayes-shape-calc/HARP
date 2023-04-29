@@ -29,7 +29,7 @@ def file_path(string):
 		err = "\n\nError: file %s does not exist\n\n"%(string)
 		raise Exception(err)
 
-def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, only_polymers=True):
+def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, only_polymers=True,bfactor_out=None,authid=False,bout=False):
 	if verbose: emit('Using %s library'%(models.version))
 
 	## Try to download files from the wwPDB
@@ -42,6 +42,8 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	
 	elif pdbid is None and not input_files is None:
 		path_mol,path_density = input_files
+		pdbid = os.path.splitext(path_mol)[0]
+		pdbid = os.path.split(pdbid)[1]
 		emit('MMCIF: %s'%(path_mol))
 		emit('MRC: %s'%(path_density))
 		flag_density = 'em'
@@ -53,7 +55,7 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	## Load molecule
 	if not skip_load:
 		if not quiet: emit('Loading %s'%(pdbid))
-		mol = molecule.load(path_mol,only_polymers)
+		mol = molecule.load(path_mol,only_polymers=only_polymers,authid=authid)
 
 		## Load X-ray density from structure factors
 		if flag_density == 'xray':
@@ -104,12 +106,17 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 		if not os.path.exists(path_out) or overwrite:
 			with open(path_out,'w') as f:
 				# f.write('Chain,Residue ID,Auth ID,Residue Name,P_res,sigma_ADF MAP,sigma_blob MAP\n')
-				f.write('Chain,Residue ID,Auth ID,Residue Name,P_res\n')
+				# f.write('Chain,Residue ID,Auth ID,Residue Name,P_res\n')
+				f.write('Chain,Auth ID,Residue ID,Residue Name,P_res\n')
 				for i in range(keep.sum()):
 					# out = '%s,%s,%s,%s,%.5f,%.5f,%.5f\n'%(mol.chain[keep][i],mol.resid[keep][i],mol.authresid[keep][i],mol.resname[keep][i],probs[keep][i], adfs[np.nanargmax(ln_evidence[keep][i][:adfs.size])], blobs[np.nanargmax(ln_evidence[keep][i][adfs.size:])])
 					out = '%s,%s,%s,%s,%.5f\n'%(mol.chain[keep][i],mol.resid[keep][i],mol.authresid[keep][i],mol.resname[keep][i],probs[keep][i])
 					f.write(out)
 			if verbose: emit('Results for %s saved in %s'%(pdbid,path_out))
+		
+		if bout:
+			io.mmcif.write_bfactor(path_mol,mol,probs)
+			print('wrote bfactor')
 
 	## View the molecule and density -- only if blobview is installed
 	if end_view and flag_blobview:
@@ -128,6 +135,9 @@ def main():
 	group_exec.add_argument('-f',type=file_path,nargs=2,help='Location of mmcif file and density file')
 	# parser.add_argument('map',type=file_path,default=None,help='Location of density file. Must include mmcif location too')
 	group_exec.add_argument('-id', type=str, help='The ID of the structure in the wwPDB to process')
+	
+	
+	parser.add_argument('--authid',action='store_true',default=False,help='Use Auth ID instead of Label ID')
 	
 	parser.add_argument('-o','--output',type=dir_path,default='./',help='Directory to store results and files')
 	parser.add_argument('--overwrite',action='store_true',default=False,help='Overwrite old data files or not')
@@ -151,7 +161,9 @@ def main():
 
 	parser.add_argument('--skip_calc',action='store_true',default=False,help='Skip the trustworthiness calculation, still download and visualize')
 	parser.add_argument('--skip_load',action='store_true',default=False,help='Skip loading molecule and density')
-	parser.add_argument('--only_polymers',action='store_true',default=True,help='Only calculate chains that come from entities that are polymers')
+	parser.add_argument('--only_polymers',action='store_true',default=False,help='Only calculate chains that come from entities that are polymers')
+	parser.add_argument('--output_bfactor',action='store_true',default=False,help='Output a version of the structure with bfactors overwritten with HARP prob')
+
 
 	if flag_blobview:
 		## you have to have blobview
@@ -204,6 +216,8 @@ def main():
 		skip_calc=args.skip_calc,
 		skip_load=args.skip_load,
 		only_polymers=args.only_polymers,
+		authid=args.authid,
+		bout=args.output_bfactor,
 	)
 
 if __name__ == '__main__':
