@@ -29,7 +29,7 @@ def file_path(string):
 		err = "\n\nError: file %s does not exist\n\n"%(string)
 		raise Exception(err)
 
-def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, only_polymers=True,bfactor_out=None,authid=False,bout=False):
+def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=None, blobs=None, offset=.5, chains=None, verbose=True, quiet=False, emit=print, overwrite=False, end_view=False, view_threshold=.5, input_files=None, skip_calc=False, skip_load=False, only_polymers=True,bfactor_out=None,authid=False,bout=False, remove_metals=False,remove_water=False):
 	if verbose: emit('Using %s library'%(models.version))
 
 	## Try to download files from the wwPDB
@@ -56,6 +56,12 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 	if not skip_load:
 		if not quiet: emit('Loading %s'%(pdbid))
 		mol = molecule.load(path_mol,only_polymers=only_polymers,authid=authid)
+		if remove_metals:
+			keep = np.bitwise_not(np.isin(mol.resname,np.array(['CU','FE','MG','NI','MN','K','NA','MO','CO','ZN','W','CA','V'])))
+			mol = mol.get_set(keep)
+		if remove_water:
+			keep = np.bitwise_not(np.isin(mol.resname,np.array(['HOH',])))
+			mol = mol.get_set(keep)
 
 		## Load X-ray density from structure factors
 		if flag_density == 'xray':
@@ -107,7 +113,10 @@ def harpcalc(pdbid, basedir, label_sf='pdbx_FWT', label_phase='pdbx_PHWT', adfs=
 			with open(path_out,'w') as f:
 				# f.write('Chain,Residue ID,Auth ID,Residue Name,P_res,sigma_ADF MAP,sigma_blob MAP\n')
 				# f.write('Chain,Residue ID,Auth ID,Residue Name,P_res\n')
-				f.write('Chain,Auth ID,Residue ID,Residue Name,P_res\n')
+				if authid:
+					f.write('Chain,Auth ID,Residue ID,Residue Name,P_res\n')
+				else:
+					f.write('Chain,Residue ID,Auth ID,Residue Name,P_res\n')
 				for i in range(keep.sum()):
 					# out = '%s,%s,%s,%s,%.5f,%.5f,%.5f\n'%(mol.chain[keep][i],mol.resid[keep][i],mol.authresid[keep][i],mol.resname[keep][i],probs[keep][i], adfs[np.nanargmax(ln_evidence[keep][i][:adfs.size])], blobs[np.nanargmax(ln_evidence[keep][i][adfs.size:])])
 					out = '%s,%s,%s,%s,%.5f\n'%(mol.chain[keep][i],mol.resid[keep][i],mol.authresid[keep][i],mol.resname[keep][i],probs[keep][i])
@@ -140,7 +149,7 @@ def main():
 	parser.add_argument('--authid',action='store_true',default=False,help='Use Auth ID instead of Label ID')
 	
 	parser.add_argument('-o','--output',type=dir_path,default='./',help='Directory to store results and files')
-	parser.add_argument('--overwrite',action='store_true',default=False,help='Overwrite old data files or not')
+	# parser.add_argument('--overwrite',action='store_true',default=False,help='Overwrite old data files or not')
 
 	# parser.add_argument('--mmcif_location',type=file_path,default=None,help='Location of mmcif file. Must include density_location too')
 	# parser.add_argument('--density_location',type=file_path,default=None,help='Location of density file. Must include mmcif location too')
@@ -163,7 +172,8 @@ def main():
 	parser.add_argument('--skip_load',action='store_true',default=False,help='Skip loading molecule and density')
 	parser.add_argument('--only_polymers',action='store_true',default=False,help='Only calculate chains that come from entities that are polymers')
 	parser.add_argument('--output_bfactor',action='store_true',default=False,help='Output a version of the structure with bfactors overwritten with HARP prob')
-
+	parser.add_argument('--remove_metals',action='store_true',default=False,help='Remove common metal/salt ions from molecule before calculation')
+	parser.add_argument('--remove_water',action='store_true',default=False,help='Remove waters from molecule before calculation')
 
 	if flag_blobview:
 		## you have to have blobview
@@ -203,7 +213,8 @@ def main():
 		basedir = args.output,
 		verbose = args.verbose,
 		quiet = args.quiet,
-		overwrite = args.overwrite,
+		overwrite = True,
+		# overwrite = args.overwrite,
 		end_view = aview,
 		view_threshold = aviewt,
 		input_files = args.f,
@@ -218,6 +229,8 @@ def main():
 		only_polymers=args.only_polymers,
 		authid=args.authid,
 		bout=args.output_bfactor,
+		remove_metals=args.remove_metals,
+		remove_water=args.remove_water,
 	)
 
 if __name__ == '__main__':
