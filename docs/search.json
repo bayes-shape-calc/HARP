@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "example1.html",
+    "href": "example1.html",
+    "title": "Load Data",
+    "section": "",
+    "text": "Here’s a code example\nimport harp\n\n\nfile_cif = 'your_molecule.cif'\nfile_mrc = 'your_map.mrc'\n\nmol = harp.molecule.load(file_cif,False)\ngrid,density = harpdensity.load(file_map)"
+  },
+  {
+    "objectID": "info_priors.html",
+    "href": "info_priors.html",
+    "title": "Priors",
+    "section": "",
+    "text": "Here’s some info on priors"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to HARP",
+    "section": "",
+    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package."
+  },
+  {
+    "objectID": "install.html",
+    "href": "install.html",
+    "title": "Installing HARP",
+    "section": "",
+    "text": "New Python Environment\nconda stuff\n\n\nInstall package\npip install -e ./"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About HARP",
+    "section": "",
+    "text": "Intro\nHARP was a development that came out of the shape-calculation framework between ~2020-2023.\n\n\nPeople\n\nColin Kinz-Thompson: lab website, github, email\nKorak Ray: github, email"
+  },
+  {
+    "objectID": "info_density.html",
+    "href": "info_density.html",
+    "title": "Density maps",
+    "section": "",
+    "text": "info on densities"
+  },
+  {
+    "objectID": "info_molecule.html",
+    "href": "info_molecule.html",
+    "title": "Molecules",
+    "section": "",
+    "text": "Info on .molecule"
+  },
+  {
+    "objectID": "somestuff.html",
+    "href": "somestuff.html",
+    "title": "Some Stuff",
+    "section": "",
+    "text": "placeholder"
+  }
+]

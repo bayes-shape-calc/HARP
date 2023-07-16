@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: _site
+  output-dir: "../"
 
 website:
   title: "HARP Documentation"
@@ -8,14 +8,10 @@ website:
   page-navigation: false
   site-url: https://bayes-shape-calc.github.io/HARP
   repo-url: https://github.com/bayes-shape-calc/HARP
-  # repo-actions: [edit, source]
   
-  # page-footer:
-  #   left: "something 2023"
-    
   sidebar:
     title:
-      'Hierarchical Atomic Resolution Perception: Documentation'
+      'Hierarchical Atomic Resolution Perception'
     logo: images/HARP_logo.png
     pinned: true
     tools:
@@ -58,8 +54,7 @@ website:
           - info_molecule.qmd
           - info_density.qmd
 
-# exectue:
-#   freeze: true
+
 
 format:
   html:
@@ -68,6 +63,7 @@ format:
     code-copy: true
     css: styles.css
     toc: true
+
 
 
 

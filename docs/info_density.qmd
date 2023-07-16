@@ -1,5 +1,0 @@
----
-title: "Information about Densities"
----
-
-info on densities

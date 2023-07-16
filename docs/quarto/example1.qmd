@@ -1,5 +1,5 @@
 ---
-title: "Example: Load Data Script
+title: "Load Data"
 ---
 
 Here's a code example
