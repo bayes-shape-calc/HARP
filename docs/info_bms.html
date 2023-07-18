@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HARP Documentation - Molecules</title>
+<title>HARP Documentation - Bayesian Model Selection</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Molecules</h1>
+      <h1 class="quarto-secondary-nav-title">Bayesian Model Selection</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -150,12 +150,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./info_bms.html" class="sidebar-item-text sidebar-link">Bayesian Model Selection</a>
+  <a href="./info_bms.html" class="sidebar-item-text sidebar-link active">Bayesian Model Selection</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./info_molecule.html" class="sidebar-item-text sidebar-link active">Molecules</a>
+  <a href="./info_molecule.html" class="sidebar-item-text sidebar-link">Molecules</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -174,15 +174,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#atomcollection-class" id="toc-atomcollection-class" class="nav-link active" data-scroll-target="#atomcollection-class">atomcollection [class]</a>
-  <ul class="collapse">
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
-  </ul></li>
-  <li><a href="#load-function" id="toc-load-function" class="nav-link" data-scroll-target="#load-function">load [function]</a>
+  <li><a href="#bms_molecule-function" id="toc-bms_molecule-function" class="nav-link active" data-scroll-target="#bms_molecule-function">bms_molecule [function]</a>
   <ul class="collapse">
   <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
+  </ul></li>
+  <li><a href="#bms_residue-function" id="toc-bms_residue-function" class="nav-link" data-scroll-target="#bms_residue-function">bms_residue [function]</a>
+  <ul class="collapse">
+  <li><a href="#input-1" id="toc-input-1" class="nav-link" data-scroll-target="#input-1">Input</a></li>
+  <li><a href="#output-1" id="toc-output-1" class="nav-link" data-scroll-target="#output-1">Output</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -192,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Molecules</h1>
+<h1 class="title d-none d-lg-block">Bayesian Model Selection</h1>
 </div>
 
 
@@ -207,68 +207,32 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="atomcollection-class" class="level1">
-<h1>atomcollection [class]</h1>
-<pre><code>class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)</code></pre>
-<p>Molecular models are stored as an <code>atomcollection</code>.</p>
-<section id="attributes" class="level2">
-<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
-<p>These follow the pdb naming convention</p>
-<ul>
-<li><code>self.atomid [int] (natoms)</code> is a number id to find particular atoms</li>
-<li><code>self.resid [int] (natoms)</code> is the residue ID that the atom is part of</li>
-<li><code>self.resname [string] (natoms)</code> is the name of the residue (gly, ala etc…)</li>
-<li><code>self.atomname [string] (natoms)</code> is CA CB N, etc…</li>
-<li><code>self.chain [string](natoms)</code> is the chain …</li>
-<li><code>self.element [string] (natoms)</code> is (CNOFH etc..)</li>
-<li><code>self.conf [...?] (natoms)</code></li>
-<li><code>self.xyz [double] (natoms,3)</code> is cartesian coordinates… must be a double!</li>
-<li><code>self.occupancy [double] (natoms)</code></li>
-<li><code>self.bfactor [double] (natoms)</code></li>
-<li><code>self.hetatom [bool] (natoms)</code> is boolean for whether it is a heteroatom entry or not</li>
-<li><code>self.modelnum [...?] (natoms)</code></li>
-<li><code>self.shift [...] (3)</code></li>
-<li><code>self.authresid [int] (natoms)</code> is author resid, or if not provided will default to resid</li>
-<li><code>self.ind [int] (natoms)</code></li>
-<li><code>self.natoms [int]</code></li>
-<li><code>self.unique_residues [int] (&lt;nres)</code></li>
-<li><code>self.unique_chains [string] (nchains)</code></li>
-<li><code>self.unique_confs [...?] (nconfs)</code></li>
-</ul>
-</section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<ul>
-<li><code>self.get_residue(number)</code> - number [int] -&gt; atomcollection</li>
-<li><code>self.get_chain(chain)</code> - chain [string] -&gt; atomcollection</li>
-<li><code>self.get_chains(chains)</code> - chains [np.ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_atomname(atomname)</code> - atomname [string] -&gt; atomcollection</li>
-<li><code>self.dehydrogen()</code> - -&gt; atomcollection</li>
-<li><code>self.get_atomids(atomids)</code> - atomids [np,ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_conformation(conf)</code> - conf […?] -&gt; atomcollection</li>
-<li><code>self.remove_hetatoms()</code> - -&gt; atomcollection</li>
-<li><code>self.split_residue()</code> - -&gt; atomcollection</li>
-<li><code>self.com()</code> - -&gt; np.ndarray (3) with mean of self.xyz</li>
-</ul>
-</section>
-</section>
-<section id="load-function" class="level1">
-<h1>load [function]</h1>
-<p><code>harp.molecule.load(fname,only_polymers=False,firstmodel=True,authid=False)</code></p>
+<p>This is the code that actually does the HARP</p>
+<section id="bms_molecule-function" class="level1">
+<h1>bms_molecule [function]</h1>
+<p><code>harp.bayes_model_select.bms_molecule</code> Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains - results are per residue but extended for all atoms</p>
+<p>Default weights are [.05,1.,1.,1.,2.,2.] for [H, C, N, O, P, S]</p>
+<p>Default M0 points are 0.25 -&gt; 1.0 by 10 log10-scaled points</p>
+<p>Default M1 points are 0.25 -&gt; 2.8 by 20 log10-scaled points</p>
 <section id="input" class="level2">
 <h2 class="anchored" data-anchor-id="input">Input</h2>
-<ul>
-<li><code>fname [string]</code> is the filename of the .cif file to load. This function currently only handles files ending in <code>.mmcif</code>, <code>.cif</code>, or <code>.cif.gz</code></li>
-<li><code>only_polymers [bool]</code> is a flag for whether to only use entities labeled as polymers (e.g., things that aren’t water, or ions, or metals, or ligands, etc.).</li>
-<li><code>firstmodel [bool]</code> is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).</li>
-<li><code>authid [bool]</code> is a flag for whether to use authid as <code>atomcollection.resid</code> or not. Useful for when people populate the wrong column (e.g., when model building).</li>
-</ul>
+<pre><code>(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)</code></pre>
 </section>
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
-<ul>
-<li>an atomcollection holding the molecular model</li>
-</ul>
+<pre><code>(record_prob_good,record_ln_ev)</code></pre>
+</section>
+</section>
+<section id="bms_residue-function" class="level1">
+<h1>bms_residue [function]</h1>
+<p><code>harp.bayes_model_select.bms_residue</code> This code does the local residue HARP calculation. It is called by <code>bms_molecule</code>; so, you probably don’t need to call it</p>
+<section id="input-1" class="level2">
+<h2 class="anchored" data-anchor-id="input-1">Input</h2>
+<pre><code>(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)</code></pre>
+</section>
+<section id="output-1" class="level2">
+<h2 class="anchored" data-anchor-id="output-1">Output</h2>
+<pre><code>(record_prob_good, record_ln_ev)</code></pre>
 
 
 </section>

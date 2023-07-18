@@ -2,4 +2,57 @@
 title: "Molecules"
 ---
 
-Info on `.molecule`
+# atomcollection [class]
+```
+class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)
+```
+Molecular models are stored as an `atomcollection`.
+
+## Attributes
+These follow the pdb naming convention
+
+* `self.atomid [int] (natoms)` is a number id to find particular atoms
+* `self.resid [int] (natoms)` is the residue ID that the atom is part of
+* `self.resname [string] (natoms)` is the name of the residue (gly, ala etc...)
+* `self.atomname [string] (natoms)` is CA CB N, etc...
+* `self.chain [string](natoms)` is the chain ...
+* `self.element [string] (natoms)` is (CNOFH etc..)
+* `self.conf [...?] (natoms)`
+* `self.xyz [double] (natoms,3)` is cartesian coordinates... must be a double!
+* `self.occupancy [double] (natoms)`
+* `self.bfactor [double] (natoms)`
+* `self.hetatom [bool] (natoms)` is boolean for whether it is a heteroatom entry or not
+* `self.modelnum [...?] (natoms)`
+* `self.shift [...] (3)`
+* `self.authresid [int] (natoms)` is author resid, or if not provided will default to resid
+* `self.ind [int] (natoms)`
+* `self.natoms [int]`
+* `self.unique_residues [int] (<nres)`
+* `self.unique_chains [string] (nchains)`
+* `self.unique_confs [...?] (nconfs)`
+
+## Functions
+* `self.get_residue(number)` - number [int] -> atomcollection
+* `self.get_chain(chain)` - chain [string] -> atomcollection
+* `self.get_chains(chains)` - chains [np.ndarray/list] -> atomcollection
+* `self.get_atomname(atomname)` - atomname [string] -> atomcollection
+* `self.dehydrogen()` -   -> atomcollection
+* `self.get_atomids(atomids)` - atomids [np,ndarray/list] -> atomcollection
+* `self.get_conformation(conf)` - conf [...?] -> atomcollection
+* `self.remove_hetatoms()` -   -> atomcollection
+* `self.split_residue()` -   -> atomcollection
+* `self.com()` -   -> np.ndarray (3) with mean of self.xyz
+
+
+
+# load [function]
+`harp.molecule.load(fname,only_polymers=False,firstmodel=True,authid=False)`
+
+## Input
+* `fname [string]` is the filename of the .cif file to load. This function currently only handles files ending in `.mmcif`, `.cif`, or `.cif.gz`
+* `only_polymers [bool]` is a flag for whether to only use entities labeled as polymers (e.g., things that aren't water, or ions, or metals, or ligands, etc.).
+* `firstmodel [bool]` is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).
+* `authid [bool]` is a flag for whether to use authid as `atomcollection.resid` or not. Useful for when people populate the wrong column (e.g., when model building).
+
+## Output
+* an atomcollection holding the molecular model

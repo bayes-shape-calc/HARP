@@ -2,4 +2,44 @@
 title: "Density maps"
 ---
 
-info on densities
+# gridclass [class]
+```
+class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)
+```
+The grid defining the voxel locations for a density maps are stored in this class.
+
+## Attributes
+* `self.origin [double] (3)` is the lower corner of the grid
+* `self.dxyz [double] (3)` is the rectilinear spacing between each grid point
+* `self.nxyz [double] (3)` is the number of grid points in each direction
+
+## Functions
+* `self.xyzmin()` -> np.ndarray (3) [double]
+* `self.xyzmax()` -> np.ndarray (3) [double]
+* `self.com()` -> np.ndarray (3) [double]
+* `self.grid_ijk()` -> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]
+* `self.grid_xyz()` -> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]
+
+# load [function]
+Load densities (map, mrc, SF(cif), SF(mtz))
+input: string fname
+returns: grid(gridclass), density(np.ndarray)
+
+# x2i [function]
+transfer xyz to ijk on grid
+(grid,point) -> point
+
+# i2x [function]
+transfer ijk on grid to xyz
+(grid,point) -> point
+
+# subgrid_center [function]
+(grid,centerxyz,halfwidthxyz) -> grid
+
+# subgrid_extract[function]
+(grid,data,subgrid) -> data
+
+# trim_density_to_mol [function]
+finds box that emcompasses mol's xyz positions, pads it isotropically with pad
+exports (grid,data) pair (using periodic boundary conditions) for new padded box from old data
+(grid,data,mol,pad=8.) --> grid,data

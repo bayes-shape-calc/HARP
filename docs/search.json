@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Welcome to HARP",
     "section": "",
-    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package."
+    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package. HARP was a development that came out of the shape-calculation framework between ~2020-2023.\n\n\nPaper\n[Link goes here]\n\n\nPeople\n\nColin Kinz-Thompson: lab website, github, email\nKorak Ray: github, email"
   },
   {
     "objectID": "install.html",
@@ -39,14 +39,35 @@
     "href": "info_density.html",
     "title": "Density maps",
     "section": "",
-    "text": "info on densities"
+    "text": "class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)\nThe grid defining the voxel locations for a density maps are stored in this class.\n\n\n\nself.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction\n\n\n\n\n\nself.xyzmin() -> np.ndarray (3) [double]\nself.xyzmax() -> np.ndarray (3) [double]\nself.com() -> np.ndarray (3) [double]\nself.grid_ijk() -> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
   },
   {
     "objectID": "info_molecule.html",
     "href": "info_molecule.html",
     "title": "Molecules",
     "section": "",
-    "text": "Info on .molecule"
+    "text": "class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)\nMolecular models are stored as an atomcollection.\n\n\nThese follow the pdb naming convention\n\nself.atomid [int] (natoms) is a number id to find particular atoms\nself.resid [int] (natoms) is the residue ID that the atom is part of\nself.resname [string] (natoms) is the name of the residue (gly, ala etc…)\nself.atomname [string] (natoms) is CA CB N, etc…\nself.chain [string](natoms) is the chain …\nself.element [string] (natoms) is (CNOFH etc..)\nself.conf [...?] (natoms)\nself.xyz [double] (natoms,3) is cartesian coordinates… must be a double!\nself.occupancy [double] (natoms)\nself.bfactor [double] (natoms)\nself.hetatom [bool] (natoms) is boolean for whether it is a heteroatom entry or not\nself.modelnum [...?] (natoms)\nself.shift [...] (3)\nself.authresid [int] (natoms) is author resid, or if not provided will default to resid\nself.ind [int] (natoms)\nself.natoms [int]\nself.unique_residues [int] (<nres)\nself.unique_chains [string] (nchains)\nself.unique_confs [...?] (nconfs)\n\n\n\n\n\nself.get_residue(number) - number [int] -> atomcollection\nself.get_chain(chain) - chain [string] -> atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -> atomcollection\nself.get_atomname(atomname) - atomname [string] -> atomcollection\nself.dehydrogen() - -> atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -> atomcollection\nself.get_conformation(conf) - conf […?] -> atomcollection\nself.remove_hetatoms() - -> atomcollection\nself.split_residue() - -> atomcollection\nself.com() - -> np.ndarray (3) with mean of self.xyz"
+  },
+  {
+    "objectID": "info_molecule.html#input",
+    "href": "info_molecule.html#input",
+    "title": "Molecules",
+    "section": "Input",
+    "text": "Input\n\nfname [string] is the filename of the .cif file to load. This function currently only handles files ending in .mmcif, .cif, or .cif.gz\nonly_polymers [bool] is a flag for whether to only use entities labeled as polymers (e.g., things that aren’t water, or ions, or metals, or ligands, etc.).\nfirstmodel [bool] is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).\nauthid [bool] is a flag for whether to use authid as atomcollection.resid or not. Useful for when people populate the wrong column (e.g., when model building)."
+  },
+  {
+    "objectID": "info_molecule.html#output",
+    "href": "info_molecule.html#output",
+    "title": "Molecules",
+    "section": "Output",
+    "text": "Output\n\nan atomcollection holding the molecular model"
+  },
+  {
+    "objectID": "tutorials.html",
+    "href": "tutorials.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package."
   },
   {
     "objectID": "somestuff.html",
@@ -54,5 +75,40 @@
     "title": "Some Stuff",
     "section": "",
     "text": "placeholder"
+  },
+  {
+    "objectID": "info_bms.html",
+    "href": "info_bms.html",
+    "title": "Bayesian Model Selection",
+    "section": "",
+    "text": "This is the code that actually does the HARP"
+  },
+  {
+    "objectID": "info_bms.html#input",
+    "href": "info_bms.html#input",
+    "title": "Bayesian Model Selection",
+    "section": "Input",
+    "text": "Input\n(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)"
+  },
+  {
+    "objectID": "info_bms.html#output",
+    "href": "info_bms.html#output",
+    "title": "Bayesian Model Selection",
+    "section": "Output",
+    "text": "Output\n(record_prob_good,record_ln_ev)"
+  },
+  {
+    "objectID": "info_bms.html#input-1",
+    "href": "info_bms.html#input-1",
+    "title": "Bayesian Model Selection",
+    "section": "Input",
+    "text": "Input\n(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)"
+  },
+  {
+    "objectID": "info_bms.html#output-1",
+    "href": "info_bms.html#output-1",
+    "title": "Bayesian Model Selection",
+    "section": "Output",
+    "text": "Output\n(record_prob_good, record_ln_ev)"
   }
 ]

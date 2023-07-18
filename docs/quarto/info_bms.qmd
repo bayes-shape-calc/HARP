@@ -1,0 +1,42 @@
+---
+title: "Bayesian Model Selection"
+---
+This is the code that actually does the HARP
+
+# bms_molecule [function]
+`harp.bayes_model_select.bms_molecule`
+Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains
+  - results are per residue but extended for all atoms
+
+Default weights are [.05,1.,1.,1.,2.,2.] for [H, C, N, O, P, S]
+
+Default M0 points are 0.25 -> 1.0 by 10 log10-scaled points
+
+Default M1 points are 0.25 -> 2.8 by 20 log10-scaled points
+
+
+
+## Input
+```
+(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)
+```
+
+## Output
+```
+(record_prob_good,record_ln_ev)
+```
+
+
+# bms_residue [function]
+`harp.bayes_model_select.bms_residue`
+This code does the local residue HARP calculation. It is called by `bms_molecule`; so, you probably don't need to call it 
+
+## Input
+```
+(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)
+```
+
+## Output
+```
+(record_prob_good, record_ln_ev)
+```

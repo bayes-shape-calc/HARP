@@ -1,8 +1,17 @@
 ---
 title: "Welcome to HARP"
+toc-expand: false
 ---
 
-Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.
+Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package. HARP was a development that came out of the [shape-calculation](https://bayes-shape-calc.github.io) framework between ~2020-2023.
 
 
-![](images/HARP_logo.png){fig-alt="The profile is inspired by a (upsidedown?) harp"}
+![](images/Fig1_v2.png){fig-alt="The profile is inspired by a (upsidedown?) harp"}
+
+
+# Paper 
+[Link goes here]
+
+# People
+* Colin Kinz-Thompson: [lab website](https://ckinzthompson.github.io), [github](https://github.com/ckinzthompson), [email](colin.kinzthompson@rutgers.edu)
+* Korak Ray: [github](https://github.com/KorakRay), [email](korak.ray@columbia.edu)

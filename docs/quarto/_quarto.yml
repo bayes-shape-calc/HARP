@@ -37,20 +37,19 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - about.qmd
             
       - section: "Get Started"
         contents:
           - install.qmd
-          - somestuff.qmd
+          - tutorials.qmd
           
       - section: "Examples"
         contents:
           - example1.qmd
           
-      - section: "Information"
+      - section: "Documentation"
         contents:
-          - info_priors.qmd
+          - info_bms.qmd
           - info_molecule.qmd
           - info_density.qmd
 

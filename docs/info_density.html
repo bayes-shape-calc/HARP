@@ -105,11 +105,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./index.html" class="sidebar-item-text sidebar-link">Home</a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link">About HARP</a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Get Started</a>
@@ -125,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./somestuff.html" class="sidebar-item-text sidebar-link">Some Stuff</a>
+  <a href="./tutorials.html" class="sidebar-item-text sidebar-link">Tutorials</a>
   </div>
 </li>
       </ul>
@@ -147,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Information</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Documentation</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -155,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./info_priors.html" class="sidebar-item-text sidebar-link">Priors</a>
+  <a href="./info_bms.html" class="sidebar-item-text sidebar-link">Bayesian Model Selection</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -175,7 +170,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gridclass-class" id="toc-gridclass-class" class="nav-link active" data-scroll-target="#gridclass-class">gridclass [class]</a>
+  <ul class="collapse">
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  </ul></li>
+  <li><a href="#load-function" id="toc-load-function" class="nav-link" data-scroll-target="#load-function">load [function]</a></li>
+  <li><a href="#x2i-function" id="toc-x2i-function" class="nav-link" data-scroll-target="#x2i-function">x2i [function]</a></li>
+  <li><a href="#i2x-function" id="toc-i2x-function" class="nav-link" data-scroll-target="#i2x-function">i2x [function]</a></li>
+  <li><a href="#subgrid_center-function" id="toc-subgrid_center-function" class="nav-link" data-scroll-target="#subgrid_center-function">subgrid_center [function]</a></li>
+  <li><a href="#subgrid_extractfunction" id="toc-subgrid_extractfunction" class="nav-link" data-scroll-target="#subgrid_extractfunction">subgrid_extract[function]</a></li>
+  <li><a href="#trim_density_to_mol-function" id="toc-trim_density_to_mol-function" class="nav-link" data-scroll-target="#trim_density_to_mol-function">trim_density_to_mol [function]</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -197,9 +208,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>info on densities</p>
+<section id="gridclass-class" class="level1">
+<h1>gridclass [class]</h1>
+<pre><code>class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)</code></pre>
+<p>The grid defining the voxel locations for a density maps are stored in this class.</p>
+<section id="attributes" class="level2">
+<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
+<ul>
+<li><code>self.origin [double] (3)</code> is the lower corner of the grid</li>
+<li><code>self.dxyz [double] (3)</code> is the rectilinear spacing between each grid point</li>
+<li><code>self.nxyz [double] (3)</code> is the number of grid points in each direction</li>
+</ul>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<ul>
+<li><code>self.xyzmin()</code> -&gt; np.ndarray (3) [double]</li>
+<li><code>self.xyzmax()</code> -&gt; np.ndarray (3) [double]</li>
+<li><code>self.com()</code> -&gt; np.ndarray (3) [double]</li>
+<li><code>self.grid_ijk()</code> -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]</li>
+<li><code>self.grid_xyz()</code> -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]</li>
+</ul>
+</section>
+</section>
+<section id="load-function" class="level1">
+<h1>load [function]</h1>
+<p>Load densities (map, mrc, SF(cif), SF(mtz)) input: string fname returns: grid(gridclass), density(np.ndarray)</p>
+</section>
+<section id="x2i-function" class="level1">
+<h1>x2i [function]</h1>
+<p>transfer xyz to ijk on grid (grid,point) -&gt; point</p>
+</section>
+<section id="i2x-function" class="level1">
+<h1>i2x [function]</h1>
+<p>transfer ijk on grid to xyz (grid,point) -&gt; point</p>
+</section>
+<section id="subgrid_center-function" class="level1">
+<h1>subgrid_center [function]</h1>
+<p>(grid,centerxyz,halfwidthxyz) -&gt; grid</p>
+</section>
+<section id="subgrid_extractfunction" class="level1">
+<h1>subgrid_extract[function]</h1>
+<p>(grid,data,subgrid) -&gt; data</p>
+</section>
+<section id="trim_density_to_mol-function" class="level1">
+<h1>trim_density_to_mol [function]</h1>
+<p>finds box that emcompasses mol’s xyz positions, pads it isotropically with pad exports (grid,data) pair (using periodic boundary conditions) for new padded box from old data (grid,data,mol,pad=8.) –&gt; grid,data</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

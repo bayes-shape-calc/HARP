@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HARP Documentation - Molecules</title>
+<title>HARP Documentation - Tutorials</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -38,6 +38,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Molecules</h1>
+      <h1 class="quarto-secondary-nav-title">Tutorials</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -107,12 +109,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Get Started</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Get Started</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./install.html" class="sidebar-item-text sidebar-link">Installing HARP</a>
@@ -120,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials.html" class="sidebar-item-text sidebar-link">Tutorials</a>
+  <a href="./tutorials.html" class="sidebar-item-text sidebar-link active">Tutorials</a>
   </div>
 </li>
       </ul>
@@ -142,12 +144,12 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Documentation</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Documentation</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./info_bms.html" class="sidebar-item-text sidebar-link">Bayesian Model Selection</a>
@@ -155,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./info_molecule.html" class="sidebar-item-text sidebar-link active">Molecules</a>
+  <a href="./info_molecule.html" class="sidebar-item-text sidebar-link">Molecules</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -170,29 +172,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#atomcollection-class" id="toc-atomcollection-class" class="nav-link active" data-scroll-target="#atomcollection-class">atomcollection [class]</a>
-  <ul class="collapse">
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
-  </ul></li>
-  <li><a href="#load-function" id="toc-load-function" class="nav-link" data-scroll-target="#load-function">load [function]</a>
-  <ul class="collapse">
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Molecules</h1>
+<h1 class="title d-none d-lg-block">Tutorials</h1>
 </div>
 
 
@@ -207,72 +194,11 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="atomcollection-class" class="level1">
-<h1>atomcollection [class]</h1>
-<pre><code>class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)</code></pre>
-<p>Molecular models are stored as an <code>atomcollection</code>.</p>
-<section id="attributes" class="level2">
-<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
-<p>These follow the pdb naming convention</p>
-<ul>
-<li><code>self.atomid [int] (natoms)</code> is a number id to find particular atoms</li>
-<li><code>self.resid [int] (natoms)</code> is the residue ID that the atom is part of</li>
-<li><code>self.resname [string] (natoms)</code> is the name of the residue (gly, ala etc…)</li>
-<li><code>self.atomname [string] (natoms)</code> is CA CB N, etc…</li>
-<li><code>self.chain [string](natoms)</code> is the chain …</li>
-<li><code>self.element [string] (natoms)</code> is (CNOFH etc..)</li>
-<li><code>self.conf [...?] (natoms)</code></li>
-<li><code>self.xyz [double] (natoms,3)</code> is cartesian coordinates… must be a double!</li>
-<li><code>self.occupancy [double] (natoms)</code></li>
-<li><code>self.bfactor [double] (natoms)</code></li>
-<li><code>self.hetatom [bool] (natoms)</code> is boolean for whether it is a heteroatom entry or not</li>
-<li><code>self.modelnum [...?] (natoms)</code></li>
-<li><code>self.shift [...] (3)</code></li>
-<li><code>self.authresid [int] (natoms)</code> is author resid, or if not provided will default to resid</li>
-<li><code>self.ind [int] (natoms)</code></li>
-<li><code>self.natoms [int]</code></li>
-<li><code>self.unique_residues [int] (&lt;nres)</code></li>
-<li><code>self.unique_chains [string] (nchains)</code></li>
-<li><code>self.unique_confs [...?] (nconfs)</code></li>
-</ul>
-</section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<ul>
-<li><code>self.get_residue(number)</code> - number [int] -&gt; atomcollection</li>
-<li><code>self.get_chain(chain)</code> - chain [string] -&gt; atomcollection</li>
-<li><code>self.get_chains(chains)</code> - chains [np.ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_atomname(atomname)</code> - atomname [string] -&gt; atomcollection</li>
-<li><code>self.dehydrogen()</code> - -&gt; atomcollection</li>
-<li><code>self.get_atomids(atomids)</code> - atomids [np,ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_conformation(conf)</code> - conf […?] -&gt; atomcollection</li>
-<li><code>self.remove_hetatoms()</code> - -&gt; atomcollection</li>
-<li><code>self.split_residue()</code> - -&gt; atomcollection</li>
-<li><code>self.com()</code> - -&gt; np.ndarray (3) with mean of self.xyz</li>
-</ul>
-</section>
-</section>
-<section id="load-function" class="level1">
-<h1>load [function]</h1>
-<p><code>harp.molecule.load(fname,only_polymers=False,firstmodel=True,authid=False)</code></p>
-<section id="input" class="level2">
-<h2 class="anchored" data-anchor-id="input">Input</h2>
-<ul>
-<li><code>fname [string]</code> is the filename of the .cif file to load. This function currently only handles files ending in <code>.mmcif</code>, <code>.cif</code>, or <code>.cif.gz</code></li>
-<li><code>only_polymers [bool]</code> is a flag for whether to only use entities labeled as polymers (e.g., things that aren’t water, or ions, or metals, or ligands, etc.).</li>
-<li><code>firstmodel [bool]</code> is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).</li>
-<li><code>authid [bool]</code> is a flag for whether to use authid as <code>atomcollection.resid</code> or not. Useful for when people populate the wrong column (e.g., when model building).</li>
-</ul>
-</section>
-<section id="output" class="level2">
-<h2 class="anchored" data-anchor-id="output">Output</h2>
-<ul>
-<li>an atomcollection holding the molecular model</li>
-</ul>
+<p>Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="harpcalctutorial.mp4"></video></div>
+<!-- ![](images/HARP_logo.png){fig-alt="The profile is inspired by a (upsidedown?) harp"} -->
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -409,6 +335,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
