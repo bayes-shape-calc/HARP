@@ -33,6 +33,7 @@ def ln_evidence(x,y):
 
 def ln_evidence_scipy(x,y):
 	from scipy.special import betainc as ssbetainc
+	from scipy.special import gammaln as ssgammaln
 	### 2.2.2
 
 	N = float(x.size)
@@ -52,7 +53,7 @@ def ln_evidence_scipy(x,y):
 
 	r = vxy/np.sqrt(vx*vy)
 	r2 = r*r
-	out = gammaln(M) -N/2.*np.log(N) -.5*np.log(vx) -np.log(2) -2.*lnprior_factor_location -lnprior_factor_scale -M*np.log(np.pi) -M*np.log(vy) -M*np.log(1.-r2) + np.log(1.+r/np.abs(r)*ssbetainc(.5,M,r2))
+	out = ssgammaln(M) -N/2.*np.log(N) -.5*np.log(vx) -np.log(2) -2.*lnprior_factor_location -lnprior_factor_scale -M*np.log(np.pi) -M*np.log(vy) -M*np.log(1.-r2) + np.log(1.+r/np.abs(r)*ssbetainc(.5,M,r2))
 	return out
 
 
