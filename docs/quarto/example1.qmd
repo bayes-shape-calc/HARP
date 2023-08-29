@@ -12,5 +12,5 @@ file_cif = 'your_molecule.cif'
 file_mrc = 'your_map.mrc'
 
 mol = harp.molecule.load(file_cif,False)
-grid,density = harpdensity.load(file_map)
+grid,density = harp.density.load(file_map)
 ```

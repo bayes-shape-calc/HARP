@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/example1.html</loc>
-    <lastmod>2023-07-18T05:21:55.380Z</lastmod>
+    <lastmod>2023-07-18T15:16:19.177Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_priors.html</loc>
@@ -10,11 +10,11 @@
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/index.html</loc>
-    <lastmod>2023-07-18T05:21:55.899Z</lastmod>
+    <lastmod>2023-07-18T05:24:16.204Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/install.html</loc>
-    <lastmod>2023-07-18T05:21:56.153Z</lastmod>
+    <lastmod>2023-07-18T05:26:39.540Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/about.html</loc>
@@ -22,15 +22,15 @@
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_density.html</loc>
-    <lastmod>2023-07-18T05:21:56.656Z</lastmod>
+    <lastmod>2023-07-18T05:31:46.954Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_molecule.html</loc>
-    <lastmod>2023-07-18T05:21:56.915Z</lastmod>
+    <lastmod>2023-07-18T05:28:57.661Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/tutorials.html</loc>
-    <lastmod>2023-07-18T05:21:57.185Z</lastmod>
+    <lastmod>2023-07-18T05:26:44.093Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/somestuff.html</loc>
@@ -38,6 +38,6 @@
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_bms.html</loc>
-    <lastmod>2023-07-18T05:21:57.699Z</lastmod>
+    <lastmod>2023-07-18T05:28:47.672Z</lastmod>
   </url>
 </urlset>

@@ -4,7 +4,7 @@
     "href": "example1.html",
     "title": "Load Data",
     "section": "",
-    "text": "Here’s a code example\nimport harp\n\n\nfile_cif = 'your_molecule.cif'\nfile_mrc = 'your_map.mrc'\n\nmol = harp.molecule.load(file_cif,False)\ngrid,density = harpdensity.load(file_map)"
+    "text": "Here’s a code example\nimport harp\n\n\nfile_cif = 'your_molecule.cif'\nfile_mrc = 'your_map.mrc'\n\nmol = harp.molecule.load(file_cif,False)\ngrid,density = harp.density.load(file_map)"
   },
   {
     "objectID": "info_priors.html",
