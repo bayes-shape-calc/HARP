@@ -114,7 +114,7 @@ def download_em_map(pdbid,fdir,overwrite=False,verbose=True,emit=print):
 
 def check_map_type(local_cif):
 	from .mmcif import load_mmcif_dict
-	d = load_mmcif_dict(local_cif,'_exptl.method') ## only bother with _exptl.method
+	d = load_mmcif_dict(local_cif,'_exptl.method')[0] ## only bother with _exptl.method
 	if d['_exptl.method'] == "\'X-RAY DIFFRACTION\'":
 		return 'xray'
 	return 'em'
