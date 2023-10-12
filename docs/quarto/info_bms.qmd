@@ -1,10 +1,18 @@
 ---
 title: "Bayesian Model Selection"
 ---
-This is the code that actually does the HARP
+HARP executes Bayesian model selection (BMS) between an atomic level model ($M_0$) and a residue level model ($M_1$) to compute the probability, $P(M_0 | \mathcal{Y})$, where $\mathcal{Y}$ is the local cryoEM map for a residue., according to
 
-# bms_molecule [function]
-`harp.bayes_model_select.bms_molecule`
+$$
+P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P(M_0) + P(\mathcal{Y} | M_1) P(M_1)}
+$$
+where the priors $P(M_0) = P(M_1) = \frac{1}{2}$, and $P(\mathcal{Y} | M_0)$ and $P(\mathcal{Y} | M_1)$ are the likelihoods that the latent structural information in $\mathcal{Y}$ is explained by an atomic level template (for $M_0$) or a residue level template (for $M_1$), according to Equation 2.2.2. in [Ray, _et al_.](https://doi.org/10.1098/rspa.2022.0177)
+
+## bms_molecule 
+`
+harp.bayes_model_select.bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)
+`
+
 Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains
   - results are per residue but extended for all atoms
 

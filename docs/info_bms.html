@@ -59,6 +59,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -110,6 +112,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About HARP</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -191,11 +199,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#bms_molecule-function" id="toc-bms_molecule-function" class="nav-link active" data-scroll-target="#bms_molecule-function">bms_molecule [function]</a>
-  <ul class="collapse">
+  <li><a href="#bms_molecule" id="toc-bms_molecule" class="nav-link active" data-scroll-target="#bms_molecule">bms_molecule</a></li>
   <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  </ul></li>
   <li><a href="#bms_residue-function" id="toc-bms_residue-function" class="nav-link" data-scroll-target="#bms_residue-function">bms_residue [function]</a>
   <ul class="collapse">
   <li><a href="#input-1" id="toc-input-1" class="nav-link" data-scroll-target="#input-1">Input</a></li>
@@ -224,13 +230,18 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This is the code that actually does the HARP</p>
-<section id="bms_molecule-function" class="level1">
-<h1>bms_molecule [function]</h1>
-<p><code>harp.bayes_model_select.bms_molecule</code> Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains - results are per residue but extended for all atoms</p>
+<p>HARP executes Bayesian model selection (BMS) between an atomic level model (<span class="math inline">\(M_0\)</span>) and a residue level model (<span class="math inline">\(M_1\)</span>) to compute the probability, <span class="math inline">\(P(M_0 | \mathcal{Y})\)</span>, where <span class="math inline">\(\mathcal{Y}\)</span> is the local cryoEM map for a residue., according to</p>
+<p><span class="math display">\[
+P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P(M_0) + P(\mathcal{Y} | M_1) P(M_1)}
+\]</span> where the priors <span class="math inline">\(P(M_0) = P(M_1) = \frac{1}{2}\)</span>, and <span class="math inline">\(P(\mathcal{Y} | M_0)\)</span> and <span class="math inline">\(P(\mathcal{Y} | M_1)\)</span> are the likelihoods that the latent structural information in <span class="math inline">\(\mathcal{Y}\)</span> is explained by an atomic level template (for <span class="math inline">\(M_0\)</span>) or a residue level template (for <span class="math inline">\(M_1\)</span>), according to Equation 2.2.2. in <a href="https://doi.org/10.1098/rspa.2022.0177">Ray, <em>et al</em>.</a></p>
+<section id="bms_molecule" class="level2">
+<h2 class="anchored" data-anchor-id="bms_molecule">bms_molecule</h2>
+<p><code>harp.bayes_model_select.bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)</code></p>
+<p>Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains - results are per residue but extended for all atoms</p>
 <p>Default weights are [.05,1.,1.,1.,2.,2.] for [H, C, N, O, P, S]</p>
 <p>Default M0 points are 0.25 -&gt; 1.0 by 10 log10-scaled points</p>
 <p>Default M1 points are 0.25 -&gt; 2.8 by 20 log10-scaled points</p>
+</section>
 <section id="input" class="level2">
 <h2 class="anchored" data-anchor-id="input">Input</h2>
 <pre><code>(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)</code></pre>
@@ -238,7 +249,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
 <pre><code>(record_prob_good,record_ln_ev)</code></pre>
-</section>
 </section>
 <section id="bms_residue-function" class="level1">
 <h1>bms_residue [function]</h1>

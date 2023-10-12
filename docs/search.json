@@ -81,7 +81,7 @@
     "href": "info_bms.html",
     "title": "Bayesian Model Selection",
     "section": "",
-    "text": "This is the code that actually does the HARP"
+    "text": "HARP executes Bayesian model selection (BMS) between an atomic level model (\\(M_0\\)) and a residue level model (\\(M_1\\)) to compute the probability, \\(P(M_0 | \\mathcal{Y})\\), where \\(\\mathcal{Y}\\) is the local cryoEM map for a residue., according to\n\\[\nP(M_0 | \\mathcal{Y}) = \\frac{P(\\mathcal{Y} | M_0) P(M_0)}{P(\\mathcal{Y} | M_0) P(M_0) + P(\\mathcal{Y} | M_1) P(M_1)}\n\\] where the priors \\(P(M_0) = P(M_1) = \\frac{1}{2}\\), and \\(P(\\mathcal{Y} | M_0)\\) and \\(P(\\mathcal{Y} | M_1)\\) are the likelihoods that the latent structural information in \\(\\mathcal{Y}\\) is explained by an atomic level template (for \\(M_0\\)) or a residue level template (for \\(M_1\\)), according to Equation 2.2.2. in Ray, et al."
   },
   {
     "objectID": "info_bms.html#input",
@@ -138,5 +138,12 @@
     "title": "Molecules",
     "section": "",
     "text": "self.get_residue(number) - number [int] -&gt; atomcollection\nself.get_chain(chain) - chain [string] -&gt; atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -&gt; atomcollection\nself.get_atomname(atomname) - atomname [string] -&gt; atomcollection\nself.dehydrogen() - -&gt; atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -&gt; atomcollection\nself.get_conformation(conf) - conf […?] -&gt; atomcollection\nself.remove_hetatoms() - -&gt; atomcollection\nself.split_residue() - -&gt; atomcollection\nself.com() - -&gt; np.ndarray (3) with mean of self.xyz"
+  },
+  {
+    "objectID": "info_bms.html#bms_molecule",
+    "href": "info_bms.html#bms_molecule",
+    "title": "Bayesian Model Selection",
+    "section": "bms_molecule",
+    "text": "bms_molecule\nharp.bayes_model_select.bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)\nRun the BMS calculation on an entire molecule by looping over all of the residues in all of the chains - results are per residue but extended for all atoms\nDefault weights are [.05,1.,1.,1.,2.,2.] for [H, C, N, O, P, S]\nDefault M0 points are 0.25 -&gt; 1.0 by 10 log10-scaled points\nDefault M1 points are 0.25 -&gt; 2.8 by 20 log10-scaled points"
   }
 ]
