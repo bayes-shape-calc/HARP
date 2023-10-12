@@ -37,6 +37,9 @@ website:
     contents:
       - href: index.qmd
         text: Home
+
+      - href: about.qmd
+        text: About HARP
             
       - section: "Get Started"
         contents:

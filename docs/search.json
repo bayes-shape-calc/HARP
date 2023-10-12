@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Welcome to HARP",
     "section": "",
-    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package. HARP was a development that came out of the shape-calculation framework between ~2020-2023.\n\n\nPaper\n[Link goes here]\n\n\nPeople\n\nColin Kinz-Thompson: lab website, github, email\nKorak Ray: github, email"
+    "text": "Learn how HARP can help you evaluate cryoEM maps and models.\n\nHARP is an ongoing project based out of the Kinz-Thompson lab at Rutgers University-Newark"
   },
   {
     "objectID": "install.html",
@@ -32,21 +32,21 @@
     "href": "about.html",
     "title": "About HARP",
     "section": "",
-    "text": "Intro\nHARP was a development that came out of the shape-calculation framework between ~2020-2023.\n\n\nPeople\n\nColin Kinz-Thompson: lab website, github, email\nKorak Ray: github, email"
+    "text": "Hierarchical Atomic Resolution Perception (HARP) is a Python package for the evaluation of local atomic resolution in a cryoEM map and for the estimation of map-to-model validation of the corresponding atomic structural model. HARP calculates the atomic resolution of the cryoEM map at the level of resides using the framework of hierarchical resolution, through a comparison between atomic level models and residue-level models.\n\nHARP utilizes a mathematical framework to describe the latent structural information in a noisy dataset (described in Ray, et al.).\n\nCiting HARP\nIf you use HARP in your work, please cite:\n[Link goes here]\n\n\nDevelopers\n\nColin Kinz-Thompson   \nKorak Ray"
   },
   {
     "objectID": "info_density.html",
     "href": "info_density.html",
     "title": "Density maps",
     "section": "",
-    "text": "class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)\nThe grid defining the voxel locations for a density maps are stored in this class.\n\n\n\nself.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction\n\n\n\n\n\nself.xyzmin() -> np.ndarray (3) [double]\nself.xyzmax() -> np.ndarray (3) [double]\nself.com() -> np.ndarray (3) [double]\nself.grid_ijk() -> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+    "text": "class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)\nThe grid defining the voxel locations for a density maps are stored in this class.\n\n\n\nself.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction\n\n\n\n\n\nself.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
   },
   {
     "objectID": "info_molecule.html",
     "href": "info_molecule.html",
     "title": "Molecules",
     "section": "",
-    "text": "class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)\nMolecular models are stored as an atomcollection.\n\n\nThese follow the pdb naming convention\n\nself.atomid [int] (natoms) is a number id to find particular atoms\nself.resid [int] (natoms) is the residue ID that the atom is part of\nself.resname [string] (natoms) is the name of the residue (gly, ala etc…)\nself.atomname [string] (natoms) is CA CB N, etc…\nself.chain [string](natoms) is the chain …\nself.element [string] (natoms) is (CNOFH etc..)\nself.conf [...?] (natoms)\nself.xyz [double] (natoms,3) is cartesian coordinates… must be a double!\nself.occupancy [double] (natoms)\nself.bfactor [double] (natoms)\nself.hetatom [bool] (natoms) is boolean for whether it is a heteroatom entry or not\nself.modelnum [...?] (natoms)\nself.shift [...] (3)\nself.authresid [int] (natoms) is author resid, or if not provided will default to resid\nself.ind [int] (natoms)\nself.natoms [int]\nself.unique_residues [int] (<nres)\nself.unique_chains [string] (nchains)\nself.unique_confs [...?] (nconfs)\n\n\n\n\n\nself.get_residue(number) - number [int] -> atomcollection\nself.get_chain(chain) - chain [string] -> atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -> atomcollection\nself.get_atomname(atomname) - atomname [string] -> atomcollection\nself.dehydrogen() - -> atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -> atomcollection\nself.get_conformation(conf) - conf […?] -> atomcollection\nself.remove_hetatoms() - -> atomcollection\nself.split_residue() - -> atomcollection\nself.com() - -> np.ndarray (3) with mean of self.xyz"
+    "text": "class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)\nMolecular models are stored as an atomcollection.\n\n\nThese follow the pdb naming convention\n\nself.atomid [int] (natoms) is a number id to find particular atoms\nself.resid [int] (natoms) is the residue ID that the atom is part of\nself.resname [string] (natoms) is the name of the residue (gly, ala etc…)\nself.atomname [string] (natoms) is CA CB N, etc…\nself.chain [string](natoms) is the chain …\nself.element [string] (natoms) is (CNOFH etc..)\nself.conf [...?] (natoms)\nself.xyz [double] (natoms,3) is cartesian coordinates… must be a double!\nself.occupancy [double] (natoms)\nself.bfactor [double] (natoms)\nself.hetatom [bool] (natoms) is boolean for whether it is a heteroatom entry or not\nself.modelnum [...?] (natoms)\nself.shift [...] (3)\nself.authresid [int] (natoms) is author resid, or if not provided will default to resid\nself.ind [int] (natoms)\nself.natoms [int]\nself.unique_residues [int] (&lt;nres)\nself.unique_chains [string] (nchains)\nself.unique_confs [...?] (nconfs)\n\n\n\n\n\nself.get_residue(number) - number [int] -&gt; atomcollection\nself.get_chain(chain) - chain [string] -&gt; atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -&gt; atomcollection\nself.get_atomname(atomname) - atomname [string] -&gt; atomcollection\nself.dehydrogen() - -&gt; atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -&gt; atomcollection\nself.get_conformation(conf) - conf […?] -&gt; atomcollection\nself.remove_hetatoms() - -&gt; atomcollection\nself.split_residue() - -&gt; atomcollection\nself.com() - -&gt; np.ndarray (3) with mean of self.xyz"
   },
   {
     "objectID": "info_molecule.html#input",
@@ -110,5 +110,33 @@
     "title": "Bayesian Model Selection",
     "section": "Output",
     "text": "Output\n(record_prob_good, record_ln_ev)"
+  },
+  {
+    "objectID": "info_density.html#attributes",
+    "href": "info_density.html#attributes",
+    "title": "Density maps",
+    "section": "",
+    "text": "self.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction"
+  },
+  {
+    "objectID": "info_density.html#functions",
+    "href": "info_density.html#functions",
+    "title": "Density maps",
+    "section": "",
+    "text": "self.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+  },
+  {
+    "objectID": "info_molecule.html#attributes",
+    "href": "info_molecule.html#attributes",
+    "title": "Molecules",
+    "section": "",
+    "text": "These follow the pdb naming convention\n\nself.atomid [int] (natoms) is a number id to find particular atoms\nself.resid [int] (natoms) is the residue ID that the atom is part of\nself.resname [string] (natoms) is the name of the residue (gly, ala etc…)\nself.atomname [string] (natoms) is CA CB N, etc…\nself.chain [string](natoms) is the chain …\nself.element [string] (natoms) is (CNOFH etc..)\nself.conf [...?] (natoms)\nself.xyz [double] (natoms,3) is cartesian coordinates… must be a double!\nself.occupancy [double] (natoms)\nself.bfactor [double] (natoms)\nself.hetatom [bool] (natoms) is boolean for whether it is a heteroatom entry or not\nself.modelnum [...?] (natoms)\nself.shift [...] (3)\nself.authresid [int] (natoms) is author resid, or if not provided will default to resid\nself.ind [int] (natoms)\nself.natoms [int]\nself.unique_residues [int] (&lt;nres)\nself.unique_chains [string] (nchains)\nself.unique_confs [...?] (nconfs)"
+  },
+  {
+    "objectID": "info_molecule.html#functions",
+    "href": "info_molecule.html#functions",
+    "title": "Molecules",
+    "section": "",
+    "text": "self.get_residue(number) - number [int] -&gt; atomcollection\nself.get_chain(chain) - chain [string] -&gt; atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -&gt; atomcollection\nself.get_atomname(atomname) - atomname [string] -&gt; atomcollection\nself.dehydrogen() - -&gt; atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -&gt; atomcollection\nself.get_conformation(conf) - conf […?] -&gt; atomcollection\nself.remove_hetatoms() - -&gt; atomcollection\nself.split_residue() - -&gt; atomcollection\nself.com() - -&gt; np.ndarray (3) with mean of self.xyz"
   }
 ]

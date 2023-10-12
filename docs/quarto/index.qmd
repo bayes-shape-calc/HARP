@@ -2,16 +2,8 @@
 title: "Welcome to HARP"
 toc-expand: false
 ---
-
-Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package. HARP was a development that came out of the [shape-calculation](https://bayes-shape-calc.github.io) framework between ~2020-2023.
-
+Learn how HARP can help you evaluate cryoEM maps and models.
 
 ![](images/Fig1_v2.png){fig-alt="The profile is inspired by a (upsidedown?) harp"}
 
-
-# Paper 
-[Link goes here]
-
-# People
-* Colin Kinz-Thompson: [lab website](https://ckinzthompson.github.io), [github](https://github.com/ckinzthompson), [email](colin.kinzthompson@rutgers.edu)
-* Korak Ray: [github](https://github.com/KorakRay), [email](korak.ray@columbia.edu)
+HARP is an ongoing project based out of the [Kinz-Thompson lab](https://ckinzthompson.github.io) at Rutgers University-Newark
