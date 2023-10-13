@@ -26,22 +26,22 @@ Returns a tuple of `(record_prob_good, record_ln_ev)`.
 #### Arguments
 Variable       |Descrption        
 :-----------   |:-----------------
-`grid`         | HARP `gridclass` <br> The grid defining the voxel locations for a density map.
-`data`         | Numpy `ndarray`  <br> The experimental cryoEM density map for a molecule.
-`subresidue`   | HARP `atomcollection` <br> The collection of atoms that correspond to the specific residue.
-`adfs`         | Numpy `ndarray`  <br> A 1-D array of Gaussian width $\sigma_0$ (in $\unicode{x212B}$) for the atomic profiles in $M_0$. The default is an array of 10 $\log_{10}$-spaced points points between 0.25 and 1.0.
-`blobs`        | Numpy `ndarray`  <br> A 1-D array of Gaussian width $\sigma_1$ (in $\unicode{x212B}$) for the residue super-atom profiles in $M_1$. The default is an array of 20 $\log_{10}$-spaced points points between 0.25 and 2.8.
+`grid`         | `harp.molecule.gridclass` <br> The grid defining the voxel locations for a density map.
+`data`         | `numpy.ndarray`  <br> The experimental cryoEM density map for a molecule.
+`subresidue`   | `harp.molecule.atomcollection` <br> The collection of atoms that correspond to the specific residue.
+`adfs`         | `numpy.ndarray`  <br> A 1-D array of Gaussian width $\sigma_0$ (in $\unicode{x212B}$) for the atomic profiles in $M_0$. The default is an array of 10 $\log_{10}$-spaced points points between 0.25 and 1.0.
+`blobs`        | `numpy.ndarray`  <br> A 1-D array of Gaussian width $\sigma_1$ (in $\unicode{x212B}$) for the residue super-atom profiles in $M_1$. The default is an array of 20 $\log_{10}$-spaced points points between 0.25 and 2.8.
 `subgrid_size` | `float` <br> The size of the cubic subgrid (in $\unicode{x212B}$) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.
 `sigmacuttoff` | `float` <br> The cutoff distance (in terms of $\sigma$) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.
 `offset`       | `float` <br> The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.
-`atom_types`   | Numpy `ndarray`  <br> A 1-D array of strings for the elements present in a residue. The default is `['H', 'C', 'N', 'O', 'P', 'S']`.
-`atom_weights` | Numpy `ndarray`  <br> A 1-D array of elements-wise weights, normalized to C, in the same order as `atom_types`. The default is [0.05, 1., 1., 1., 2., 2.].
+`atom_types`   | `numpy.ndarray`  <br> A 1-D array of strings for the elements present in a residue. The default is `['H', 'C', 'N', 'O', 'P', 'S']`.
+`atom_weights` | `numpy.ndarray`  <br> A 1-D array of elements-wise weights, normalized to C, in the same order as `atom_types`. The default is [0.05, 1., 1., 1., 2., 2.].
 
 #### Output
 Variable           |Descrption        
 :-----------       |:-----------------
-`record_prob_good` | Numpy `ndarray`  <br> A 1-D array of the same size as the number of atoms in the residue, containing the probability $P(M_0| \mathcal{Y})$ for a specific residue. <br> _Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue._
-`record_ln_ev`     | Numpy `ndarray`  <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (`adfs.size + blobs.size`), containing the log-probabilities, $\log P ({\mathcal{Y}|M_n})$, for the specific residue. `record_ln_ev[:, :adfs.size]` contains the log-probabilites for each $\sigma_0$ in `adfs` and `record_ln_ev[:, adfs.size:]` contains the log-probabilites for each $\sigma_1$ in `blobs`. <br> _Note: Every_ `record_ln_ev[i]` _contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue._
+`record_prob_good` | `numpy.ndarray`  <br> A 1-D array of the same size as the number of atoms in the residue, containing the probability $P(M_0| \mathcal{Y})$ for a specific residue. <br> _Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue._
+`record_ln_ev`     | `numpy.ndarray`  <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (`adfs.size + blobs.size`), containing the log-probabilities, $\log P ({\mathcal{Y}|M_n})$, for the specific residue. `record_ln_ev[:, :adfs.size]` contains the log-probabilites for each $\sigma_0$ in `adfs` and `record_ln_ev[:, adfs.size:]` contains the log-probabilites for each $\sigma_1$ in `blobs`. <br> _Note: Every_ `record_ln_ev[i]` _contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue._
 
 
 
@@ -57,23 +57,23 @@ Returns a tuple of `(record_prob_good, record_ln_ev)`.
 #### Arguments
 Variable       |Descrption        
 :-----------   |:-----------------
-`grid`         | HARP `gridclass` <br> The grid defining the voxel locations for a density map.
-`data`         | Numpy `ndarray`  <br> The experimental cryoEM density map for a molecule.
-`mol       `   | HARP `atomcollection` <br> The collection of atoms that correspond to the molecule.
-`adfs`         | Numpy `ndarray`  <br> A 1-D array of Gaussian width $\sigma_0$ (in $\unicode{x212B}$) for the atomic profiles in $M_0$. The default is an array of 10 $\log_{10}$-spaced points points between 0.25 and 1.0.
-`blobs`        | Numpy `ndarray`  <br> A 1-D array of Gaussian width $\sigma_1$ (in $\unicode{x212B}$) for the residue super-atom profiles in $M_1$. The default is an array of 20 $\log_{10}$-spaced points points between 0.25 and 2.8.
+`grid`         | `harp.molecule.gridclass` <br> The grid defining the voxel locations for a density map.
+`data`         | `numpy.ndarray`  <br> The experimental cryoEM density map for a molecule.
+`mol       `   | `harp.molecule.atomcollection` <br> The collection of atoms that correspond to the molecule.
+`adfs`         | `numpy.ndarray`  <br> A 1-D array of Gaussian width $\sigma_0$ (in $\unicode{x212B}$) for the atomic profiles in $M_0$. The default is an array of 10 $\log_{10}$-spaced points points between 0.25 and 1.0.
+`blobs`        | `numpy.ndarray`  <br> A 1-D array of Gaussian width $\sigma_1$ (in $\unicode{x212B}$) for the residue super-atom profiles in $M_1$. The default is an array of 20 $\log_{10}$-spaced points points between 0.25 and 2.8.
 `subgrid_size` | `float` <br> The size of the cubic subgrid (in $\unicode{x212B}$) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.
 `sigmacuttoff` | `float` <br> The cutoff distance (in terms of $\sigma$) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.
 `offset`       | `float` <br> The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.
 `emit`         | Python `function` <br> The function which determines how the HARP result will be displayes. Default is `print`.
-`chains`       | Numpy `ndarray`  <br> A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is `None`, which corresponds to the calculation being run for all chains.
-`atom_types`   | Numpy `ndarray`  <br> A 1-D array of strings for the elements present in a residue. The default is `['H', 'C', 'N', 'O', 'P', 'S']`.
-`atom_weights` | Numpy `ndarray`  <br> A 1-D array of elements-wise weights, normalized to C, in the same order as `atom_types`. The default is [0.05, 1., 1., 1., 2., 2.].
+`chains`       | `numpy.ndarray`  <br> A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is `None`, which corresponds to the calculation being run for all chains.
+`atom_types`   | `numpy.ndarray`  <br> A 1-D array of strings for the elements present in a residue. The default is `['H', 'C', 'N', 'O', 'P', 'S']`.
+`atom_weights` | `numpy.ndarray`  <br> A 1-D array of elements-wise weights, normalized to C, in the same order as `atom_types`. The default is [0.05, 1., 1., 1., 2., 2.].
 
 #### Output
 Variable           |Descrption        
 :-----------       |:-----------------
-`record_prob_good` | Numpy `ndarray`  <br> A 1-D array of the same size as the number of atoms in the molecule, containing the probability $P(M_0| \mathcal{Y})$ for each residue in the molecule. <br> _Note: Every atom of a particular residue has the same probability value._
-`record_ln_ev`     | Numpy `ndarray`  <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (`adfs.size + blobs.size`), containing the log-probabilities, $\log P ({\mathcal{Y}|M_n})$, for each residue in the molecule. `record_ln_ev[:, :adfs.size]` contains the log-probabilites for each $\sigma_0$ in `adfs` and `record_ln_ev[:, adfs.size:]` contains the log-probabilites for each $\sigma_1$ in `blobs`. <br> _Note: Every atom_ `i` _of a particular residue has the same_ `record_ln_ev[i, :]`. 
+`record_prob_good` | `numpy.ndarray`  <br> A 1-D array of the same size as the number of atoms in the molecule, containing the probability $P(M_0| \mathcal{Y})$ for each residue in the molecule. <br> _Note: Every atom of a particular residue has the same probability value._
+`record_ln_ev`     | `numpy.ndarray`  <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (`adfs.size + blobs.size`), containing the log-probabilities, $\log P ({\mathcal{Y}|M_n})$, for each residue in the molecule. `record_ln_ev[:, :adfs.size]` contains the log-probabilites for each $\sigma_0$ in `adfs` and `record_ln_ev[:, adfs.size:]` contains the log-probabilites for each $\sigma_1$ in `blobs`. <br> _Note: Every atom_ `i` _of a particular residue has the same_ `record_ln_ev[i, :]`. 
 
 

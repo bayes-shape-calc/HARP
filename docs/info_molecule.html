@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles_doc.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -197,16 +198,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#atomcollection-class" id="toc-atomcollection-class" class="nav-link active" data-scroll-target="#atomcollection-class">atomcollection [class]</a>
-  <ul class="collapse">
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
-  </ul></li>
-  <li><a href="#load-function" id="toc-load-function" class="nav-link" data-scroll-target="#load-function">load [function]</a>
-  <ul class="collapse">
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  </ul></li>
+  <li><a href="#atomcollection" id="toc-atomcollection" class="nav-link active" data-scroll-target="#atomcollection">atomcollection</a></li>
+  <li><a href="#load" id="toc-load" class="nav-link" data-scroll-target="#load">load</a></li>
   </ul>
 </nav>
     </div>
@@ -230,68 +223,217 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="atomcollection-class" class="level1">
-<h1>atomcollection [class]</h1>
-<pre><code>class harp.molecule.atomcollection(atomid,resid,resname,atomnamechain,element,conf,xyz,occupancy,bfactor,hetatom,modelnum,authresid=None)</code></pre>
-<p>Molecular models are stored as an <code>atomcollection</code>.</p>
-<section id="attributes" class="level2">
-<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
-<p>These follow the pdb naming convention</p>
-<ul>
-<li><code>self.atomid [int] (natoms)</code> is a number id to find particular atoms</li>
-<li><code>self.resid [int] (natoms)</code> is the residue ID that the atom is part of</li>
-<li><code>self.resname [string] (natoms)</code> is the name of the residue (gly, ala etc…)</li>
-<li><code>self.atomname [string] (natoms)</code> is CA CB N, etc…</li>
-<li><code>self.chain [string](natoms)</code> is the chain …</li>
-<li><code>self.element [string] (natoms)</code> is (CNOFH etc..)</li>
-<li><code>self.conf [...?] (natoms)</code></li>
-<li><code>self.xyz [double] (natoms,3)</code> is cartesian coordinates… must be a double!</li>
-<li><code>self.occupancy [double] (natoms)</code></li>
-<li><code>self.bfactor [double] (natoms)</code></li>
-<li><code>self.hetatom [bool] (natoms)</code> is boolean for whether it is a heteroatom entry or not</li>
-<li><code>self.modelnum [...?] (natoms)</code></li>
-<li><code>self.shift [...] (3)</code></li>
-<li><code>self.authresid [int] (natoms)</code> is author resid, or if not provided will default to resid</li>
-<li><code>self.ind [int] (natoms)</code></li>
-<li><code>self.natoms [int]</code></li>
-<li><code>self.unique_residues [int] (&lt;nres)</code></li>
-<li><code>self.unique_chains [string] (nchains)</code></li>
-<li><code>self.unique_confs [...?] (nconfs)</code></li>
-</ul>
+<p>This page describes how how molecular models are handled in HARP.</p>
+<section id="atomcollection" class="level2">
+<h2 class="anchored" data-anchor-id="atomcollection">atomcollection</h2>
+<pre><code>class harp.molecule.atomcollection (atomid, resid, resname, atomnamechain, element, conf, xyz, occupancy, bfactor, hetatom, modelnum, authresid=None)</code></pre>
+<p>An <code>atomcollection</code> object stores all information about the molecular models and the methods to manipulate them in HARP.</p>
+<section id="attributes" class="level4">
+<h4 class="anchored" data-anchor-id="attributes">Attributes</h4>
+<p>The attributes are named following the PDB naming convention</p>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>self.natoms</code></td>
+<td style="text-align: left;"><code>int</code> <br> Number of atoms in the molecule.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.atomid</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of size <code>natoms</code>, containing a numerical id for each individual atom in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.ind</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of size <code>natoms</code>, containing the index for each individual atom in the molecule. Is equal to <code>numpy.arange(natoms)</code>. Used internally in HARP for indexing.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.resid</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of size <code>natoms</code>, containing a numerical id for the residue for individual atom in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.resname</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of size <code>natoms</code>, containing the identity of the residue for each individual atom in the molecule (<em>e.g.</em>, Gly, Ala, etc.).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.element</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of size <code>natoms</code>, containing the element identity for each individual atom in the molecule (<em>e.g.</em>, C, H, O, N, etc.).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.atomname</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of size <code>natoms</code>, containing the atom identity of each individual atom in a particular residue in the molecule (<em>e.g.</em>, CA, CB, N, etc.).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.chain</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of size <code>natoms</code>, containing the identity of the chain for each individual atom in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.xyz</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 2-D <code>double</code> array of size <code>[natoms, 3]</code>, containing the Cartesian co-ordinates of each individual atom in the molecule. <br> <em>Note: This must be a</em> <code>double</code> <em>array</em>!</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.occupancy</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>double</code> array of size <code>natoms</code>, containing the occupancy for each individual atom in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.bfactor</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>double</code> array of size <code>natoms</code>, containing the B-factor for each individual atom in the molecule.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.hetatom</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>bool</code> array of size <code>natoms</code>, indicating whether the atom is a heteroatom entry.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.authresid</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of size <code>natoms</code>, containing the author-provided id for the residue for individual atom in the molecule. Defaults to <code>resid</code> if not provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.conf</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of size <code>natoms</code>, containing the conformation for individual atom in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.modelnum</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of size <code>natoms</code>, containing the model number for individual atom in the molecule.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.unique_residues</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>int</code> array of the unique <code>resid</code> in the molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.unique_chains</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of the unique <code>chain</code> in the molecule.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.unique_confs</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D <code>string</code> array of the unique <code>conf</code> in the molecule.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<ul>
-<li><code>self.get_residue(number)</code> - number [int] -&gt; atomcollection</li>
-<li><code>self.get_chain(chain)</code> - chain [string] -&gt; atomcollection</li>
-<li><code>self.get_chains(chains)</code> - chains [np.ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_atomname(atomname)</code> - atomname [string] -&gt; atomcollection</li>
-<li><code>self.dehydrogen()</code> - -&gt; atomcollection</li>
-<li><code>self.get_atomids(atomids)</code> - atomids [np,ndarray/list] -&gt; atomcollection</li>
-<li><code>self.get_conformation(conf)</code> - conf […?] -&gt; atomcollection</li>
-<li><code>self.remove_hetatoms()</code> - -&gt; atomcollection</li>
-<li><code>self.split_residue()</code> - -&gt; atomcollection</li>
-<li><code>self.com()</code> - -&gt; np.ndarray (3) with mean of self.xyz</li>
-</ul>
+<section id="functions" class="level4">
+<h4 class="anchored" data-anchor-id="functions">Functions</h4>
+<p>The functions associated with <code>atomcollection</code> are</p>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>self.get_residue</code></td>
+<td style="text-align: left;">Returns a particular residue. <br> <strong>Input:</strong> <code>int</code> number (the specific <code>resid</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.get_chain</code></td>
+<td style="text-align: left;">Returns a particular chain. <br> <strong>Input:</strong> <code>string</code> chain (the specific <code>chain</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.get_chains</code></td>
+<td style="text-align: left;">Returns multiple chains. <br> <strong>Input:</strong> <code>numpy.ndarray</code>/<code>list</code> chains (the array/list of <code>chain</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.get_atomname</code></td>
+<td style="text-align: left;">Returns a collection of specific atoms based on their identity in residues. <br> <strong>Input:</strong> <code>string</code> atomname (the specific <code>atomname</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.get_atomids</code></td>
+<td style="text-align: left;">Returns a collection of specific atoms. <br> <strong>Input:</strong> <code>numpy.ndarray</code>/<code>list</code> atomids (the array/list of <code>atomid</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.get_conformation</code></td>
+<td style="text-align: left;">Returns a specific conformation of the model. <br> <strong>Input:</strong> <code>string</code> conf (the specifc <code>conf</code> to be returned). <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.dehydrogen</code></td>
+<td style="text-align: left;">Removes hydrogens from <code>self</code> <br> <strong>Input:</strong> None. <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.remove_hetatoms</code></td>
+<td style="text-align: left;">Removes heteroatoms from <code>self</code> <br> <strong>Input:</strong> None. <br> <strong>Output:</strong> <code>atomcollection</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>self.split_residue</code></td>
+<td style="text-align: left;">Splits an <code>atomcollection</code> of a single residue into component parts. For a nucleotide, returns a list of phosphate, sugar, and base. For an amino-acid, returns backbone and sidechain. <br> <strong>Input:</strong> None (<em>Note:</em> <code>self</code> <em>must be a single residue!</em>). <br> <strong>Output:</strong> A <code>list</code> of <code>atomcollection</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>self.com</code></td>
+<td style="text-align: left;">Returns the Cartesian co-ordinate center-of-mass (centroid) of an <code>atomcollection</code>, <em>i.e.</em> the mean of <code>self.xyz</code>. <br> <strong>Input:</strong> None. <br> <strong>Output:</strong> A <code>numpy.ndarray</code> of size 3.</td>
+</tr>
+</tbody>
+</table>
+<p>A separate function is involved in loading an <code>atomcollection</code> from a file.</p>
 </section>
 </section>
-<section id="load-function" class="level1">
-<h1>load [function]</h1>
-<p><code>harp.molecule.load(fname,only_polymers=False,firstmodel=True,authid=False)</code></p>
-<section id="input" class="level2">
-<h2 class="anchored" data-anchor-id="input">Input</h2>
-<ul>
-<li><code>fname [string]</code> is the filename of the .cif file to load. This function currently only handles files ending in <code>.mmcif</code>, <code>.cif</code>, or <code>.cif.gz</code></li>
-<li><code>only_polymers [bool]</code> is a flag for whether to only use entities labeled as polymers (e.g., things that aren’t water, or ions, or metals, or ligands, etc.).</li>
-<li><code>firstmodel [bool]</code> is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).</li>
-<li><code>authid [bool]</code> is a flag for whether to use authid as <code>atomcollection.resid</code> or not. Useful for when people populate the wrong column (e.g., when model building).</li>
-</ul>
+<section id="load" class="level2">
+<h2 class="anchored" data-anchor-id="load">load</h2>
+<pre><code>harp.molecule.load (fname, only_polymers = False, firstmodel = True, authid = False)</code></pre>
+<section id="argument" class="level4">
+<h4 class="anchored" data-anchor-id="argument">Argument</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>fname</code></td>
+<td style="text-align: left;"><code>string</code> <br> The filename of the mmCIF file to load. <br> <em>Note: This function currently only handles the file suffixes <code>.mmcif</code>, <code>.cif</code></em>, or_ <code>.cif.gz</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>only_polymers</code></td>
+<td style="text-align: left;"><code>bool</code> <br> A flag for whether to only use entities labeled as polymers (<em>i.e.</em> not water, ions, metals, or ligands, etc.).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>firstmodel</code></td>
+<td style="text-align: left;"><code>bool</code> <br> A flag for whether to take the only first model. Useful for an ensemble of models (<em>e.g.</em>, as in NMR).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>authid</code></td>
+<td style="text-align: left;"><code>bool</code> <br> A flag for whether to use authid as <code>atomcollection.resid</code> or not. Useful for when people populate the wrong column (<em>e.g.</em>, during model building).</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="output" class="level2">
-<h2 class="anchored" data-anchor-id="output">Output</h2>
-<ul>
-<li>an atomcollection holding the molecular model</li>
-</ul>
+<section id="output" class="level4">
+<h4 class="anchored" data-anchor-id="output">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>atomcollection</code></td>
+<td style="text-align: left;">Contains the molecular model written in the .mmCIF file</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

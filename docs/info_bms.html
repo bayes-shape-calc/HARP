@@ -250,23 +250,23 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>grid</code></td>
-<td style="text-align: left;">HARP <code>gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
+<td style="text-align: left;"><code>harp.molecule.gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>data</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>subresidue</code></td>
-<td style="text-align: left;">HARP <code>atomcollection</code> <br> The collection of atoms that correspond to the specific residue.</td>
+<td style="text-align: left;"><code>harp.molecule.atomcollection</code> <br> The collection of atoms that correspond to the specific residue.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>adfs</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>blobs</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>subgrid_size</code></td>
@@ -282,11 +282,11 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>atom_types</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>atom_weights</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
 </tr>
 </tbody>
 </table>
@@ -307,11 +307,11 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>record_prob_good</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of the same size as the number of atoms in the residue, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for a specific residue. <br> <em>Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue.</em></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of the same size as the number of atoms in the residue, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for a specific residue. <br> <em>Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue.</em></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>record_ln_ev</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for the specific residue. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every</em> <code>record_ln_ev[i]</code> <em>contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue.</em></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for the specific residue. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every</em> <code>record_ln_ev[i]</code> <em>contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue.</em></td>
 </tr>
 </tbody>
 </table>
@@ -338,23 +338,23 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>grid</code></td>
-<td style="text-align: left;">HARP <code>gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
+<td style="text-align: left;"><code>harp.molecule.gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>data</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>mol</code></td>
-<td style="text-align: left;">HARP <code>atomcollection</code> <br> The collection of atoms that correspond to the molecule.</td>
+<td style="text-align: left;"><code>harp.molecule.atomcollection</code> <br> The collection of atoms that correspond to the molecule.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>adfs</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>blobs</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>subgrid_size</code></td>
@@ -374,15 +374,15 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>chains</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is <code>None</code>, which corresponds to the calculation being run for all chains.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is <code>None</code>, which corresponds to the calculation being run for all chains.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>atom_types</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>atom_weights</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
 </tr>
 </tbody>
 </table>
@@ -403,11 +403,11 @@ P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>record_prob_good</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of the same size as the number of atoms in the molecule, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for each residue in the molecule. <br> <em>Note: Every atom of a particular residue has the same probability value.</em></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 1-D array of the same size as the number of atoms in the molecule, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for each residue in the molecule. <br> <em>Note: Every atom of a particular residue has the same probability value.</em></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>record_ln_ev</code></td>
-<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for each residue in the molecule. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every atom</em> <code>i</code> <em>of a particular residue has the same</em> <code>record_ln_ev[i, :]</code>.</td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for each residue in the molecule. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every atom</em> <code>i</code> <em>of a particular residue has the same</em> <code>record_ln_ev[i, :]</code>.</td>
 </tr>
 </tbody>
 </table>
