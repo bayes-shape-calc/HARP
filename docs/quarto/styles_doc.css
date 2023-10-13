@@ -1,0 +1,21 @@
+/* css styles */
+
+
+.sidebar-logo {
+  max-width: 150px;
+}
+
+.sidebar-title {
+  font-size: 1.7rem;
+}
+
+code {
+  font-family: monospace ;
+  font-size: 11pt;
+  color: #000000;
+  text-wrap: wrap !important;
+  background-color: #ffffff !important;
+  text-align: left;
+  padding-left: 100px;
+  text-indent: -100px;
+}

@@ -63,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles_doc.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -199,14 +200,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#bms_molecule" id="toc-bms_molecule" class="nav-link active" data-scroll-target="#bms_molecule">bms_molecule</a></li>
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#bms_residue-function" id="toc-bms_residue-function" class="nav-link" data-scroll-target="#bms_residue-function">bms_residue [function]</a>
-  <ul class="collapse">
-  <li><a href="#input-1" id="toc-input-1" class="nav-link" data-scroll-target="#input-1">Input</a></li>
-  <li><a href="#output-1" id="toc-output-1" class="nav-link" data-scroll-target="#output-1">Output</a></li>
-  </ul></li>
+  <li><a href="#bms_residue" id="toc-bms_residue" class="nav-link active" data-scroll-target="#bms_residue">bms_residue</a></li>
+  <li><a href="#bms_molecule" id="toc-bms_molecule" class="nav-link" data-scroll-target="#bms_molecule">bms_molecule</a></li>
   </ul>
 </nav>
     </div>
@@ -234,32 +229,188 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math display">\[
 P(M_0 | \mathcal{Y}) = \frac{P(\mathcal{Y} | M_0) P(M_0)}{P(\mathcal{Y} | M_0) P(M_0) + P(\mathcal{Y} | M_1) P(M_1)}
 \]</span> where the priors <span class="math inline">\(P(M_0) = P(M_1) = \frac{1}{2}\)</span>, and <span class="math inline">\(P(\mathcal{Y} | M_0)\)</span> and <span class="math inline">\(P(\mathcal{Y} | M_1)\)</span> are the likelihoods that the latent structural information in <span class="math inline">\(\mathcal{Y}\)</span> is explained by an atomic level template (for <span class="math inline">\(M_0\)</span>) or a residue level template (for <span class="math inline">\(M_1\)</span>), according to Equation 2.2.2. in <a href="https://doi.org/10.1098/rspa.2022.0177">Ray, <em>et al</em>.</a></p>
+<section id="bms_residue" class="level2">
+<h2 class="anchored" data-anchor-id="bms_residue">bms_residue</h2>
+<pre><code>harp.bayes_model_select.bms_residue (grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)</code></pre>
+<p>This function runs the HARP calculation at the local residue-level by executing BMS between <span class="math inline">\(M_0\)</span> and <span class="math inline">\(M_1\)</span> for a single residue of the cryoEM structure. This function is typically called by <code>bms_molecule</code> (see below), and therefore, it is unlikely to be independently used.</p>
+<p>Returns a tuple of <code>(record_prob_good, record_ln_ev)</code>.</p>
+<section id="arguments" class="level4">
+<h4 class="anchored" data-anchor-id="arguments">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;">HARP <code>gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>subresidue</code></td>
+<td style="text-align: left;">HARP <code>atomcollection</code> <br> The collection of atoms that correspond to the specific residue.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>adfs</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>blobs</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>subgrid_size</code></td>
+<td style="text-align: left;"><code>float</code> <br> The size of the cubic subgrid (in <span class="math inline">\(\unicode{x212B}\)</span>) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sigmacuttoff</code></td>
+<td style="text-align: left;"><code>float</code> <br> The cutoff distance (in terms of <span class="math inline">\(\sigma\)</span>) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>offset</code></td>
+<td style="text-align: left;"><code>float</code> <br> The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>atom_types</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>atom_weights</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output" class="level4">
+<h4 class="anchored" data-anchor-id="output">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>record_prob_good</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of the same size as the number of atoms in the residue, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for a specific residue. <br> <em>Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue.</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>record_ln_ev</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for the specific residue. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every</em> <code>record_ln_ev[i]</code> <em>contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue.</em></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
 <section id="bms_molecule" class="level2">
 <h2 class="anchored" data-anchor-id="bms_molecule">bms_molecule</h2>
-<p><code>harp.bayes_model_select.bms_molecule(grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)</code></p>
-<p>Run the BMS calculation on an entire molecule by looping over all of the residues in all of the chains - results are per residue but extended for all atoms</p>
-<p>Default weights are [.05,1.,1.,1.,2.,2.] for [H, C, N, O, P, S]</p>
-<p>Default M0 points are 0.25 -&gt; 1.0 by 10 log10-scaled points</p>
-<p>Default M1 points are 0.25 -&gt; 2.8 by 20 log10-scaled points</p>
+<pre><code>harp.bayes_model_select.bms_molecule (grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)</code></pre>
+<p>This function runs the HARP calculation for a specific molecular model by calling <code>bms_residue</code> (see above) in a loop for all the residues in all the chains of the molecule.</p>
+<p>Returns a tuple of <code>(record_prob_good, record_ln_ev)</code>.</p>
+<section id="arguments-1" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-1">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;">HARP <code>gridclass</code> <br> The grid defining the voxel locations for a density map.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> The experimental cryoEM density map for a molecule.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mol</code></td>
+<td style="text-align: left;">HARP <code>atomcollection</code> <br> The collection of atoms that correspond to the molecule.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>adfs</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_0\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the atomic profiles in <span class="math inline">\(M_0\)</span>. The default is an array of 10 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 1.0.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>blobs</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of Gaussian width <span class="math inline">\(\sigma_1\)</span> (in <span class="math inline">\(\unicode{x212B}\)</span>) for the residue super-atom profiles in <span class="math inline">\(M_1\)</span>. The default is an array of 20 <span class="math inline">\(\log_{10}\)</span>-spaced points points between 0.25 and 2.8.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>subgrid_size</code></td>
+<td style="text-align: left;"><code>float</code> <br> The size of the cubic subgrid (in <span class="math inline">\(\unicode{x212B}\)</span>) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sigmacuttoff</code></td>
+<td style="text-align: left;"><code>float</code> <br> The cutoff distance (in terms of <span class="math inline">\(\sigma\)</span>) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>offset</code></td>
+<td style="text-align: left;"><code>float</code> <br> The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>emit</code></td>
+<td style="text-align: left;">Python <code>function</code> <br> The function which determines how the HARP result will be displayes. Default is <code>print</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chains</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is <code>None</code>, which corresponds to the calculation being run for all chains.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>atom_types</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of strings for the elements present in a residue. The default is <code>['H', 'C', 'N', 'O', 'P', 'S']</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>atom_weights</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of elements-wise weights, normalized to C, in the same order as <code>atom_types</code>. The default is [0.05, 1., 1., 1., 2., 2.].</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="input" class="level2">
-<h2 class="anchored" data-anchor-id="input">Input</h2>
-<pre><code>(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)</code></pre>
-</section>
-<section id="output" class="level2">
-<h2 class="anchored" data-anchor-id="output">Output</h2>
-<pre><code>(record_prob_good,record_ln_ev)</code></pre>
-</section>
-<section id="bms_residue-function" class="level1">
-<h1>bms_residue [function]</h1>
-<p><code>harp.bayes_model_select.bms_residue</code> This code does the local residue HARP calculation. It is called by <code>bms_molecule</code>; so, you probably don’t need to call it</p>
-<section id="input-1" class="level2">
-<h2 class="anchored" data-anchor-id="input-1">Input</h2>
-<pre><code>(grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)</code></pre>
-</section>
-<section id="output-1" class="level2">
-<h2 class="anchored" data-anchor-id="output-1">Output</h2>
-<pre><code>(record_prob_good, record_ln_ev)</code></pre>
+<section id="output-1" class="level4">
+<h4 class="anchored" data-anchor-id="output-1">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>record_prob_good</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 1-D array of the same size as the number of atoms in the molecule, containing the probability <span class="math inline">\(P(M_0| \mathcal{Y})\)</span> for each residue in the molecule. <br> <em>Note: Every atom of a particular residue has the same probability value.</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>record_ln_ev</code></td>
+<td style="text-align: left;">Numpy <code>ndarray</code> <br> A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (<code>adfs.size + blobs.size</code>), containing the log-probabilities, <span class="math inline">\(\log P ({\mathcal{Y}|M_n})\)</span>, for each residue in the molecule. <code>record_ln_ev[:, :adfs.size]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_0\)</span> in <code>adfs</code> and <code>record_ln_ev[:, adfs.size:]</code> contains the log-probabilites for each <span class="math inline">\(\sigma_1\)</span> in <code>blobs</code>. <br> <em>Note: Every atom</em> <code>i</code> <em>of a particular residue has the same</em> <code>record_ln_ev[i, :]</code>.</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
