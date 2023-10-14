@@ -13,7 +13,9 @@ code {
   font-family: monospace ;
   font-size: 11pt;
   color: #000000;
-  text-wrap: wrap !important;
+  /*text-wrap: wrap !important;*/
+  white-space: pre-wrap !important; 
+  word-wrap: break-word;
   background-color: #ffffff !important;
   text-align: left;
   padding-left: 100px;

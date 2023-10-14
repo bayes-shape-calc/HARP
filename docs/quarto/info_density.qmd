@@ -1,24 +1,33 @@
 ---
 title: "Density maps"
+format:
+  html:
+    css: styles_doc.css
 ---
 
-# gridclass [class]
+## gridclass
 ```
-class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)
+class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)
 ```
-The grid defining the voxel locations for a density maps are stored in this class.
+A `gridclass` object stores the grid defining the voxel locations for a density map.
 
-## Attributes
-* `self.origin [double] (3)` is the lower corner of the grid
-* `self.dxyz [double] (3)` is the rectilinear spacing between each grid point
-* `self.nxyz [double] (3)` is the number of grid points in each direction
+#### Attributes
+Variable        |Descrption        
+:-----------    |:-----------------
+ `self.origin`  | `numpy.ndarray` <br> A 1-D `double` array of size 3 containing the Cartesian coordinates of the lower corner of the grid.
+`self.dxyz`     | `numpy.ndarray` <br> A 1-D `double` array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.
+`self.nxyz`     | `numpy.ndarray` <br> A 1-D `double` array of size 3 containing the number of grid points in each Cartesian direction
 
-## Functions
-* `self.xyzmin()` -> np.ndarray (3) [double]
-* `self.xyzmax()` -> np.ndarray (3) [double]
-* `self.com()` -> np.ndarray (3) [double]
-* `self.grid_ijk()` -> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]
-* `self.grid_xyz()` -> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]
+#### Functions
+The functions associated with `gridclass` are
+
+Function          |Descrption        
+:-----------      |:-----------------
+`self.xyzmin()`   |-> np.ndarray (3) [double]
+`self.xyzmax()`   |-> np.ndarray (3) [double]
+`self.com()` 	  |-> np.ndarray (3) [double]
+`self.grid_ijk()` |-> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]
+`self.grid_xyz()` |-> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]
 
 # load [function]
 Load densities (map, mrc, SF(cif), SF(mtz))

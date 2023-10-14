@@ -39,7 +39,7 @@
     "href": "info_density.html",
     "title": "Density maps",
     "section": "",
-    "text": "class harp.molecule.gridclass(origin,dxyz,nxyz,*args,**kwargs)\nThe grid defining the voxel locations for a density maps are stored in this class.\n\n\n\nself.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction\n\n\n\n\n\nself.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+    "text": "class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)\nA gridclass object stores the grid defining the voxel locations for a density map.\n\n\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.origin\nnumpy.ndarray  A 1-D double array of size 3 containing the Cartesian coordinates of the lower corner of the grid.\n\n\nself.dxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.\n\n\nself.nxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the number of grid points in each Cartesian direction\n\n\n\n\n\n\nThe functions associated with gridclass are\n\n\n\nFunction\nDescrption\n\n\n\n\nself.xyzmin()\n-&gt; np.ndarray (3) [double]\n\n\nself.xyzmax()\n-&gt; np.ndarray (3) [double]\n\n\nself.com()\n-&gt; np.ndarray (3) [double]\n\n\nself.grid_ijk()\n-&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\n\n\nself.grid_xyz()\n-&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
   },
   {
     "objectID": "info_molecule.html",
@@ -122,8 +122,8 @@
     "objectID": "info_density.html#functions",
     "href": "info_density.html#functions",
     "title": "Density maps",
-    "section": "",
-    "text": "self.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+    "section": "Functions",
+    "text": "Functions\n\nself.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
   },
   {
     "objectID": "info_molecule.html#attributes",
@@ -166,5 +166,12 @@
     "title": "Molecules",
     "section": "load",
     "text": "load\nharp.molecule.load (fname, only_polymers = False, firstmodel = True, authid = False)\n\nArgument\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nfname\nstring  The filename of the mmCIF file to load.  Note: This function currently only handles the file suffixes .mmcif, .cif, or_ .cif.gz.\n\n\nonly_polymers\nbool  A flag for whether to only use entities labeled as polymers (i.e. not water, ions, metals, or ligands, etc.).\n\n\nfirstmodel\nbool  A flag for whether to take the only first model. Useful for an ensemble of models (e.g., as in NMR).\n\n\nauthid\nbool  A flag for whether to use authid as atomcollection.resid or not. Useful for when people populate the wrong column (e.g., during model building).\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\natomcollection\nContains the molecular model written in the .mmCIF file"
+  },
+  {
+    "objectID": "info_density.html#gridclass",
+    "href": "info_density.html#gridclass",
+    "title": "Density maps",
+    "section": "",
+    "text": "class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)\nA gridclass object stores the grid defining the voxel locations for a density map.\n\n\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.origin\nnumpy.ndarray  A 1-D double array of size 3 containing the Cartesian coordinates of the lower corner of the grid.\n\n\nself.dxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.\n\n\nself.nxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the number of grid points in each Cartesian direction\n\n\n\n\n\n\nThe functions associated with gridclass are\n\n\n\nFunction\nDescrption\n\n\n\n\nself.xyzmin()\n-&gt; np.ndarray (3) [double]\n\n\nself.xyzmax()\n-&gt; np.ndarray (3) [double]\n\n\nself.com()\n-&gt; np.ndarray (3) [double]\n\n\nself.grid_ijk()\n-&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\n\n\nself.grid_xyz()\n-&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
   }
 ]
