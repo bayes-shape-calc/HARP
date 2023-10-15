@@ -39,7 +39,7 @@
     "href": "info_density.html",
     "title": "Density maps",
     "section": "",
-    "text": "class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)\nA gridclass object stores the grid defining the voxel locations for a density map.\n\n\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.origin\nnumpy.ndarray  A 1-D double array of size 3 containing the Cartesian coordinates of the lower corner of the grid.\n\n\nself.dxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.\n\n\nself.nxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the number of grid points in each Cartesian direction\n\n\n\n\n\n\nThe functions associated with gridclass are\n\n\n\nFunction\nDescrption\n\n\n\n\nself.xyzmin()\n-&gt; np.ndarray (3) [double]\n\n\nself.xyzmax()\n-&gt; np.ndarray (3) [double]\n\n\nself.com()\n-&gt; np.ndarray (3) [double]\n\n\nself.grid_ijk()\n-&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\n\n\nself.grid_xyz()\n-&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+    "text": "The experimental density map for a cryoEM experiment itself corresponds to a 3-D numpy.ndarray that contains the value of the density at different voxels. It is the location of the voxels themselves that encodes how these density values map onto the spatial information of the biomolecule. This information on the grid of the density map is stored in a separate class (gridclass) in HARP."
   },
   {
     "objectID": "info_molecule.html",
@@ -171,7 +171,49 @@
     "objectID": "info_density.html#gridclass",
     "href": "info_density.html#gridclass",
     "title": "Density maps",
-    "section": "",
-    "text": "class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)\nA gridclass object stores the grid defining the voxel locations for a density map.\n\n\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.origin\nnumpy.ndarray  A 1-D double array of size 3 containing the Cartesian coordinates of the lower corner of the grid.\n\n\nself.dxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.\n\n\nself.nxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the number of grid points in each Cartesian direction\n\n\n\n\n\n\nThe functions associated with gridclass are\n\n\n\nFunction\nDescrption\n\n\n\n\nself.xyzmin()\n-&gt; np.ndarray (3) [double]\n\n\nself.xyzmax()\n-&gt; np.ndarray (3) [double]\n\n\nself.com()\n-&gt; np.ndarray (3) [double]\n\n\nself.grid_ijk()\n-&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\n\n\nself.grid_xyz()\n-&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
+    "section": "gridclass",
+    "text": "gridclass\nclass harp.density.gridclass (origin, dxyz, nxyz, *args, **kwargs)\nA gridclass object stores the grid defining the voxel locations for a density map.\n\nAttributes\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.origin\nnumpy.ndarray  A 1-D double array of size 3 containing the Cartesian coordinates of the lower corner of the grid.\n\n\nself.dxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the rectilinear spacing between each grid point along all Cartesian axes.\n\n\nself.nxyz\nnumpy.ndarray  A 1-D double array of size 3 containing the number of grid points in each Cartesian direction\n\n\n\n\n\nFunctions\nThe functions associated with gridclass are\n\n\n\n\n\n\n\nFunction\nDescrption\n\n\n\n\nself.xyzmin\nReturns the Cartesian coordinates of the lower corner of the grid (i.e., self.origin).  Input: None.  Output A numpy.ndarray of double values, of size 3.\n\n\nself.xyzmax\nReturns the Cartesian coordinates of the upper corner of the grid (i.e., the one diagonally opposite self.origin).  Input: None.  Output A numpy.ndarray of double values, of size 3.\n\n\nself.com\nReturns the Cartesian coordinates of the center-of-mass of the grid (not weighted by the density).  Input: None.  Output A numpy.ndarray of double values, of size 3.\n\n\nself.grid_ijk()\nReturns an array of the indices of the grid.  Input: None.  Output: A tuple of gx, gy, and gy, which are 1-D numpy.ndarrays of int values, of size self.nxyz[0], self.nxyz[1] and self.nxyz[2], which are the number of gridpoints in the x-, y- and z-direction respectively.\n\n\nself.grid_xyz\nReturns an array of the Cartesian coordinates corresponding to the indices of the grid.  Input: None.  Output: A tuple of gx, gy, and gy, which are 1-D numpy.ndarrays of double values, of size self.nxyz[0], self.nxyz[1] and self.nxyz[2], which are the number of gridpoints in the x-, y- and z-direction respectively."
+  },
+  {
+    "objectID": "info_density.html#load",
+    "href": "info_density.html#load",
+    "title": "Density maps",
+    "section": "load",
+    "text": "load\nharp.density.load (fname)\nThis function loads cryoEM densities and the associated grid (file format suffixes supported are .map, .MAP, .mrc, .MRC, .map.gz, and .MAP.gz).\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nfname\nstring  The file-name for the cryoEM density map.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The grid of voxel locations of the cryoEM density map.\n\n\ndensity\nnumpy.ndarray  A 3-D array of double values corresponding to the density values at specific voxels corresponding to grid."
+  },
+  {
+    "objectID": "info_density.html#x2i",
+    "href": "info_density.html#x2i",
+    "title": "Density maps",
+    "section": "x2i",
+    "text": "x2i\nharp.density.x2i (grid, point)\nThis function transforms a point in Cartesian coordinates to the grid indices based on a particular grid.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid which the Cartesian coordinates will be transformed with respect to.\n\n\npoint\nnumpy.ndarray  An array of double values of size 3, containing the Cartesian coordinates of the point.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\npoint\nnumpy.ndarray  An array of int values of size 3, containing the grid indices of the point."
+  },
+  {
+    "objectID": "info_density.html#i2x",
+    "href": "info_density.html#i2x",
+    "title": "Density maps",
+    "section": "i2x",
+    "text": "i2x\nharp.density.i2x (grid, point)\nThis function transforms a point in grid indices to Cartesian coordinates based on a particular grid.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid which the grid indices will be transformed with respect to.\n\n\npoint\nnumpy.ndarray  An array of int values of size 3, containing the grid indices of the point.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\npoint\nnumpy.ndarray  An array of double values of size 3, containing the Cartesian coordinates of the point."
+  },
+  {
+    "objectID": "info_density.html#subgrid_center",
+    "href": "info_density.html#subgrid_center",
+    "title": "Density maps",
+    "section": "subgrid_center",
+    "text": "subgrid_center\nharp.density.subgrid_center (grid, centerxyz, halfwidthxyz)\nThis function defines and returns a cubic subgrid within a specific gridclass object centered at the specified point and with a specified half-width in every direction from that point.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid in which the subgrid will be defined\n\n\ncenterxyz\nnumpy.ndarray  An array of double values of size 3, containing the Cartesian coordinates of the center of the subgrid.\n\n\nhalfwidthxyz\nnumpy.ndarray  An array of double values of size 3, containing the halfwidths of the subgrid from the center (in \\(\\unicode{x212B}\\)).\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\nA gridclass object containing the defined subgrid."
+  },
+  {
+    "objectID": "info_density.html#subgrid_extract",
+    "href": "info_density.html#subgrid_extract",
+    "title": "Density maps",
+    "section": "subgrid_extract",
+    "text": "subgrid_extract\nharp.density.subgrid_extract (grid, data, subgrid)\nThis function extracts the cryoEM density from a map for the voxels corresponding to a cubic subgrid within a specific grid.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid associated with the cryoEM map.\n\n\ndata\nnumpy.ndarray  The cryoEM density values defined at the voxel locations in grid.\n\n\nsubgrid\ngridclass  The subgrid defined on grid for which the densities will be extracted.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ndata\nnumpy.ndarray  The cryoEM density values defined at the voxel locations in subgrid."
+  },
+  {
+    "objectID": "info_density.html#trim_density_to_mol",
+    "href": "info_density.html#trim_density_to_mol",
+    "title": "Density maps",
+    "section": "trim_density_to_mol",
+    "text": "trim_density_to_mol\nharp.density.trim_density_to_mol (grid, data, mol, pad = 8.)\nThis function finds the box that emcompasses the atomic coordinates of a specific molecular model on the grid for a specified density map and returns a trimmed grid and associated density map corresponding to this box. The trimmed box may additionally be padded isotropically by a constant value using periodic boundary condtions. This truncation is particularly useful for maps where only a small region has been used to build a model (which commonly occurs for molecules with high rotational symmetry) as it greatly reduces the computational cost of HARP calculations in these cases.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid associated with the cryoEM map.\n\n\ndata\nnumpy.ndarray  The cryoEM density values defined at the voxel locations in grid.\n\n\nmol\nharp.molecule.atomcollection  The molecular model that is built using part of the the cryoEM densities in data at voxel locations specified in grid.\n\n\npad\ndouble  A constant length (in \\(\\unicode{x212B}\\)) that is added to the box encompassing mol that is padded using peridic boundary conditions. The default value is 8.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The grid trimmed to the box around mol.\n\n\ndata\nnumpy.ndarray  The cryoEM densities at the voxel locations specified by the trimmed grid."
   }
 ]

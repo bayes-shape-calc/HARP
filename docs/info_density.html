@@ -59,6 +59,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="styles_doc.css">
@@ -199,12 +201,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#gridclass" id="toc-gridclass" class="nav-link active" data-scroll-target="#gridclass">gridclass</a></li>
-  <li><a href="#load-function" id="toc-load-function" class="nav-link" data-scroll-target="#load-function">load [function]</a></li>
-  <li><a href="#x2i-function" id="toc-x2i-function" class="nav-link" data-scroll-target="#x2i-function">x2i [function]</a></li>
-  <li><a href="#i2x-function" id="toc-i2x-function" class="nav-link" data-scroll-target="#i2x-function">i2x [function]</a></li>
-  <li><a href="#subgrid_center-function" id="toc-subgrid_center-function" class="nav-link" data-scroll-target="#subgrid_center-function">subgrid_center [function]</a></li>
-  <li><a href="#subgrid_extractfunction" id="toc-subgrid_extractfunction" class="nav-link" data-scroll-target="#subgrid_extractfunction">subgrid_extract[function]</a></li>
-  <li><a href="#trim_density_to_mol-function" id="toc-trim_density_to_mol-function" class="nav-link" data-scroll-target="#trim_density_to_mol-function">trim_density_to_mol [function]</a></li>
+  <li><a href="#load" id="toc-load" class="nav-link" data-scroll-target="#load">load</a></li>
+  <li><a href="#x2i" id="toc-x2i" class="nav-link" data-scroll-target="#x2i">x2i</a></li>
+  <li><a href="#i2x" id="toc-i2x" class="nav-link" data-scroll-target="#i2x">i2x</a></li>
+  <li><a href="#subgrid_center" id="toc-subgrid_center" class="nav-link" data-scroll-target="#subgrid_center">subgrid_center</a></li>
+  <li><a href="#subgrid_extract" id="toc-subgrid_extract" class="nav-link" data-scroll-target="#subgrid_extract">subgrid_extract</a></li>
+  <li><a href="#trim_density_to_mol" id="toc-trim_density_to_mol" class="nav-link" data-scroll-target="#trim_density_to_mol">trim_density_to_mol</a></li>
   </ul>
 </nav>
     </div>
@@ -228,9 +230,10 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>The experimental density map for a cryoEM experiment itself corresponds to a 3-D <code>numpy.ndarray</code> that contains the value of the density at different voxels. It is the location of the voxels themselves that encodes how these density values map onto the spatial information of the biomolecule. This information on the grid of the density map is stored in a separate class (<code>gridclass</code>) in HARP.</p>
 <section id="gridclass" class="level2">
 <h2 class="anchored" data-anchor-id="gridclass">gridclass</h2>
-<pre><code>class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)</code></pre>
+<pre><code>class harp.density.gridclass (origin, dxyz, nxyz, *args, **kwargs)</code></pre>
 <p>A <code>gridclass</code> object stores the grid defining the voxel locations for a density map.</p>
 <section id="attributes" class="level4">
 <h4 class="anchored" data-anchor-id="attributes">Attributes</h4>
@@ -265,6 +268,10 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="functions">Functions</h4>
 <p>The functions associated with <code>gridclass</code> are</p>
 <table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -273,54 +280,356 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>self.xyzmin()</code></td>
-<td style="text-align: left;">-&gt; np.ndarray (3) [double]</td>
+<td style="text-align: left;"><code>self.xyzmin</code></td>
+<td style="text-align: left;">Returns the Cartesian coordinates of the lower corner of the grid (<em>i.e.</em>, <code>self.origin</code>). <br> <strong>Input:</strong> None. <br> <strong>Output</strong> A <code>numpy.ndarray</code> of <code>double</code> values, of size 3.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>self.xyzmax()</code></td>
-<td style="text-align: left;">-&gt; np.ndarray (3) [double]</td>
+<td style="text-align: left;"><code>self.xyzmax</code></td>
+<td style="text-align: left;">Returns the Cartesian coordinates of the upper corner of the grid (<em>i.e.</em>, the one diagonally opposite <code>self.origin</code>). <br> <strong>Input:</strong> None. <br> <strong>Output</strong> A <code>numpy.ndarray</code> of <code>double</code> values, of size 3.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>self.com()</code></td>
-<td style="text-align: left;">-&gt; np.ndarray (3) [double]</td>
+<td style="text-align: left;"><code>self.com</code></td>
+<td style="text-align: left;">Returns the Cartesian coordinates of the center-of-mass of the grid (not weighted by the density). <br> <strong>Input:</strong> None. <br> <strong>Output</strong> A <code>numpy.ndarray</code> of <code>double</code> values, of size 3.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>self.grid_ijk()</code></td>
-<td style="text-align: left;">-&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]</td>
+<td style="text-align: left;">Returns an array of the indices of the grid. <br> <strong>Input:</strong> None. <br> <strong>Output:</strong> A <code>tuple</code> of <code>gx</code>, <code>gy</code>, and <code>gy</code>, which are 1-D <code>numpy.ndarray</code>s of <code>int</code> values, of size <code>self.nxyz[0]</code>, <code>self.nxyz[1]</code> and <code>self.nxyz[2]</code>, which are the number of gridpoints in the x-, y- and z-direction respectively.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>self.grid_xyz()</code></td>
-<td style="text-align: left;">-&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]</td>
+<td style="text-align: left;"><code>self.grid_xyz</code></td>
+<td style="text-align: left;">Returns an array of the Cartesian coordinates corresponding to the indices of the grid. <br> <strong>Input:</strong> None. <br> <strong>Output:</strong> A <code>tuple</code> of <code>gx</code>, <code>gy</code>, and <code>gy</code>, which are 1-D <code>numpy.ndarray</code>s of <code>double</code> values, of size <code>self.nxyz[0]</code>, <code>self.nxyz[1]</code> and <code>self.nxyz[2]</code>, which are the number of gridpoints in the x-, y- and z-direction respectively.</td>
 </tr>
 </tbody>
 </table>
 </section>
 </section>
-<section id="load-function" class="level1">
-<h1>load [function]</h1>
-<p>Load densities (map, mrc, SF(cif), SF(mtz)) input: string fname returns: grid(gridclass), density(np.ndarray)</p>
+<section id="load" class="level2">
+<h2 class="anchored" data-anchor-id="load">load</h2>
+<pre><code>harp.density.load (fname)</code></pre>
+<p>This function loads cryoEM densities and the associated grid (file format suffixes supported are .map, .MAP, .mrc, .MRC, .map.gz, and .MAP.gz).</p>
+<section id="arguments" class="level4">
+<h4 class="anchored" data-anchor-id="arguments">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>fname</code></td>
+<td style="text-align: left;"><code>string</code> <br> The file-name for the cryoEM density map.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="x2i-function" class="level1">
-<h1>x2i [function]</h1>
-<p>transfer xyz to ijk on grid (grid,point) -&gt; point</p>
+<section id="output" class="level4">
+<h4 class="anchored" data-anchor-id="output">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The grid of voxel locations of the cryoEM density map.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>density</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> A 3-D array of <code>double</code> values corresponding to the density values at specific voxels corresponding to <code>grid</code>.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="i2x-function" class="level1">
-<h1>i2x [function]</h1>
-<p>transfer ijk on grid to xyz (grid,point) -&gt; point</p>
 </section>
-<section id="subgrid_center-function" class="level1">
-<h1>subgrid_center [function]</h1>
-<p>(grid,centerxyz,halfwidthxyz) -&gt; grid</p>
+<section id="x2i" class="level2">
+<h2 class="anchored" data-anchor-id="x2i">x2i</h2>
+<pre><code>harp.density.x2i (grid, point)</code></pre>
+<p>This function transforms a point in Cartesian coordinates to the grid indices based on a particular grid.</p>
+<section id="arguments-1" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-1">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The cryoEM grid which the Cartesian coordinates will be transformed with respect to.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>point</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>double</code> values of size 3, containing the Cartesian coordinates of the point.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="subgrid_extractfunction" class="level1">
-<h1>subgrid_extract[function]</h1>
-<p>(grid,data,subgrid) -&gt; data</p>
+<section id="output-1" class="level4">
+<h4 class="anchored" data-anchor-id="output-1">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>point</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>int</code> values of size 3, containing the grid indices of the point.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="trim_density_to_mol-function" class="level1">
-<h1>trim_density_to_mol [function]</h1>
-<p>finds box that emcompasses mol’s xyz positions, pads it isotropically with pad exports (grid,data) pair (using periodic boundary conditions) for new padded box from old data (grid,data,mol,pad=8.) –&gt; grid,data</p>
+</section>
+<section id="i2x" class="level2">
+<h2 class="anchored" data-anchor-id="i2x">i2x</h2>
+<pre><code>harp.density.i2x (grid, point)</code></pre>
+<p>This function transforms a point in grid indices to Cartesian coordinates based on a particular grid.</p>
+<section id="arguments-2" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-2">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The cryoEM grid which the grid indices will be transformed with respect to.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>point</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>int</code> values of size 3, containing the grid indices of the point.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-2" class="level4">
+<h4 class="anchored" data-anchor-id="output-2">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>point</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>double</code> values of size 3, containing the Cartesian coordinates of the point.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="subgrid_center" class="level2">
+<h2 class="anchored" data-anchor-id="subgrid_center">subgrid_center</h2>
+<pre><code>harp.density.subgrid_center (grid, centerxyz, halfwidthxyz)</code></pre>
+<p>This function defines and returns a cubic subgrid within a specific <code>gridclass</code> object centered at the specified point and with a specified half-width in every direction from that point.</p>
+<section id="arguments-3" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-3">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The cryoEM grid in which the subgrid will be defined</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>centerxyz</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>double</code> values of size 3, containing the Cartesian coordinates of the center of the subgrid.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>halfwidthxyz</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> An array of <code>double</code> values of size 3, containing the halfwidths of the subgrid from the center (in <span class="math inline">\(\unicode{x212B}\)</span>).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-3" class="level4">
+<h4 class="anchored" data-anchor-id="output-3">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;">A <code>gridclass</code> object containing the defined subgrid.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="subgrid_extract" class="level2">
+<h2 class="anchored" data-anchor-id="subgrid_extract">subgrid_extract</h2>
+<pre><code>harp.density.subgrid_extract (grid, data, subgrid)</code></pre>
+<p>This function extracts the cryoEM density from a map for the voxels corresponding to a cubic subgrid within a specific grid.</p>
+<section id="arguments-4" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-4">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The cryoEM grid associated with the cryoEM map.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The cryoEM density values defined at the voxel locations in <code>grid</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>subgrid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The subgrid defined on <code>grid</code> for which the densities will be extracted.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-4" class="level4">
+<h4 class="anchored" data-anchor-id="output-4">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The cryoEM density values defined at the voxel locations in <code>subgrid</code>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="trim_density_to_mol" class="level2">
+<h2 class="anchored" data-anchor-id="trim_density_to_mol">trim_density_to_mol</h2>
+<pre><code>harp.density.trim_density_to_mol (grid, data, mol, pad = 8.)</code></pre>
+<p>This function finds the box that emcompasses the atomic coordinates of a specific molecular model on the grid for a specified density map and returns a trimmed grid and associated density map corresponding to this box. The trimmed box may additionally be padded isotropically by a constant value using periodic boundary condtions. This truncation is particularly useful for maps where only a small region has been used to build a model (which commonly occurs for molecules with high rotational symmetry) as it greatly reduces the computational cost of HARP calculations in these cases.</p>
+<section id="arguments-5" class="level4">
+<h4 class="anchored" data-anchor-id="arguments-5">Arguments</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The cryoEM grid associated with the cryoEM map.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The cryoEM density values defined at the voxel locations in <code>grid</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mol</code></td>
+<td style="text-align: left;"><code>harp.molecule.atomcollection</code> <br> The molecular model that is built using part of the the cryoEM densities in <code>data</code> at voxel locations specified in <code>grid</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>pad</code></td>
+<td style="text-align: left;"><code>double</code> <br> A constant length (in <span class="math inline">\(\unicode{x212B}\)</span>) that is added to the box encompassing <code>mol</code> that is padded using peridic boundary conditions. The default value is 8.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-5" class="level4">
+<h4 class="anchored" data-anchor-id="output-5">Output</h4>
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Descrption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grid</code></td>
+<td style="text-align: left;"><code>gridclass</code> <br> The grid trimmed to the box around <code>mol</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data</code></td>
+<td style="text-align: left;"><code>numpy.ndarray</code> <br> The cryoEM densities at the voxel locations specified by the trimmed <code>grid</code>.</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

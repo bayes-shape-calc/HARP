@@ -72,4 +72,4 @@ Variable           |Descrption
 #### Output
 Variable           |Descrption        
 :-----------       |:-----------------
-`atomcollection`   | Contains the molecular model written in the .mmCIF file
+`atomcollection`   | `atomcollection` <br> Contains the molecular model written in the .mmCIF file

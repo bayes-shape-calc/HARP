@@ -4,10 +4,11 @@ format:
   html:
     css: styles_doc.css
 ---
+The experimental density map for a cryoEM experiment itself corresponds to a 3-D `numpy.ndarray` that contains the value of the density at different voxels. It is the location of the voxels themselves that encodes how these density values map onto the spatial information of the biomolecule. This information on the grid of the density map is stored in a separate class (`gridclass`) in HARP.
 
 ## gridclass
 ```
-class harp.molecule.gridclass (origin, dxyz, nxyz, *args, **kwargs)
+class harp.density.gridclass (origin, dxyz, nxyz, *args, **kwargs)
 ```
 A `gridclass` object stores the grid defining the voxel locations for a density map.
 
@@ -23,32 +24,115 @@ The functions associated with `gridclass` are
 
 Function          |Descrption        
 :-----------      |:-----------------
-`self.xyzmin()`   |-> np.ndarray (3) [double]
-`self.xyzmax()`   |-> np.ndarray (3) [double]
-`self.com()` 	  |-> np.ndarray (3) [double]
-`self.grid_ijk()` |-> gi,gj,gk are all np.ndarray (nx,ny,nz) [int]
-`self.grid_xyz()` |-> gx,gy,gz are all np.ndarray (nx,ny,nz) [double]
+`self.xyzmin`     | Returns the Cartesian coordinates of the lower corner of the grid (_i.e._, `self.origin`). <br> **Input:** None. <br> **Output** A `numpy.ndarray` of `double` values, of size 3.
+`self.xyzmax`     | Returns the Cartesian coordinates of the upper corner of the grid (_i.e._, the one diagonally opposite `self.origin`). <br> **Input:** None. <br> **Output** A `numpy.ndarray` of `double` values, of size 3.
+`self.com` 	      |Returns the Cartesian coordinates of the center-of-mass of the grid (not weighted by the density). <br> **Input:** None. <br> **Output** A `numpy.ndarray` of `double` values, of size 3.
+`self.grid_ijk()` | Returns an array of the indices of the grid. <br> **Input:** None. <br>  **Output:** A `tuple` of `gx`, `gy`, and `gy`, which are 1-D `numpy.ndarray`s of `int` values, of size `self.nxyz[0]`, `self.nxyz[1]` and `self.nxyz[2]`, which are the number of gridpoints in the x-, y- and z-direction respectively.
+`self.grid_xyz`   | Returns an array of the Cartesian coordinates corresponding to the indices of the grid. <br> **Input:** None. <br>  **Output:** A `tuple` of `gx`, `gy`, and `gy`, which are 1-D `numpy.ndarray`s of `double` values, of size `self.nxyz[0]`, `self.nxyz[1]` and `self.nxyz[2]`, which are the number of gridpoints in the x-, y- and z-direction respectively.
 
-# load [function]
-Load densities (map, mrc, SF(cif), SF(mtz))
-input: string fname
-returns: grid(gridclass), density(np.ndarray)
+## load 
+```
+harp.density.load (fname)
+```
+This function loads cryoEM densities and the associated grid (file format suffixes supported are .map, .MAP, .mrc, .MRC, .map.gz, and .MAP.gz).
 
-# x2i [function]
-transfer xyz to ijk on grid
-(grid,point) -> point
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`fname`           | `string` <br> The file-name for the cryoEM density map.
 
-# i2x [function]
-transfer ijk on grid to xyz
-(grid,point) -> point
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The grid of voxel locations of the cryoEM density map.
+`density`         | `numpy.ndarray` <br> A 3-D array of `double` values corresponding to the density values at specific voxels corresponding to `grid`.
 
-# subgrid_center [function]
-(grid,centerxyz,halfwidthxyz) -> grid
+## x2i
+```
+harp.density.x2i (grid, point)
+```
+This function transforms a point in Cartesian coordinates to the grid indices based on a particular grid.
 
-# subgrid_extract[function]
-(grid,data,subgrid) -> data
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The cryoEM grid which the Cartesian coordinates will be transformed with respect to.
+`point`           | `numpy.ndarray` <br> An array of `double` values of size 3, containing the Cartesian coordinates of the point.
 
-# trim_density_to_mol [function]
-finds box that emcompasses mol's xyz positions, pads it isotropically with pad
-exports (grid,data) pair (using periodic boundary conditions) for new padded box from old data
-(grid,data,mol,pad=8.) --> grid,data
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`point`           | `numpy.ndarray` <br> An array of `int` values of size 3, containing the grid indices of the point.
+
+## i2x
+```
+harp.density.i2x (grid, point)
+```
+This function transforms a point in grid indices to Cartesian coordinates based on a particular grid.
+
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The cryoEM grid which the grid indices will be transformed with respect to.
+`point`           | `numpy.ndarray` <br> An array of `int` values of size 3, containing the grid indices of the point.
+
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`point`           | `numpy.ndarray` <br> An array of `double` values of size 3, containing the Cartesian coordinates of the point.
+
+## subgrid_center 
+```
+harp.density.subgrid_center (grid, centerxyz, halfwidthxyz)
+```
+This function defines and returns a cubic subgrid within a specific `gridclass` object centered at the specified point and with a specified half-width in every direction from that point.
+
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The cryoEM grid in which the subgrid will be defined
+`centerxyz`       | `numpy.ndarray` <br> An array of `double` values of size 3, containing the Cartesian coordinates of the center of the subgrid.
+`halfwidthxyz`    | `numpy.ndarray` <br> An array of `double` values of size 3, containing the halfwidths of the subgrid from the center (in $\unicode{x212B}$).
+
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | A `gridclass` object containing the defined subgrid.
+
+## subgrid_extract
+```
+harp.density.subgrid_extract (grid, data, subgrid)
+```
+This function extracts the cryoEM density from a map for the voxels corresponding to a cubic subgrid within a specific grid.
+
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The cryoEM grid associated with the cryoEM map.
+`data`            | `numpy.ndarray` <br> The cryoEM density values defined at the voxel locations in `grid`.
+`subgrid`         | `gridclass` <br> The subgrid defined on `grid` for which the densities will be extracted.
+
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`data`            | `numpy.ndarray` <br> The cryoEM density values defined at the voxel locations in `subgrid`.
+
+## trim_density_to_mol 
+```
+harp.density.trim_density_to_mol (grid, data, mol, pad = 8.)
+```
+This function finds the box that emcompasses the atomic coordinates of a specific molecular model on the grid for a specified density map and returns a trimmed grid and associated density map corresponding to this box. The trimmed box may additionally be padded isotropically by a constant value using periodic boundary condtions. This truncation is particularly useful for maps where only a small region has been used to build a model (which commonly occurs for molecules with high rotational symmetry) as it greatly reduces the computational cost of HARP calculations in these cases.
+
+#### Arguments
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The cryoEM grid associated with the cryoEM map.
+`data`            | `numpy.ndarray` <br> The cryoEM density values defined at the voxel locations in `grid`.
+`mol`             | `harp.molecule.atomcollection` <br> The molecular model that is built using part of the the cryoEM densities in `data` at voxel locations specified in `grid`.
+`pad`             | `double` <br> A constant length (in $\unicode{x212B}$) that is added to the box encompassing `mol` that is padded using peridic boundary conditions. The default value is 8.
+
+#### Output
+Variable          |Descrption        
+:-----------      |:-----------------
+`grid`            | `gridclass` <br> The grid trimmed to the box around `mol`.
+`data`            | `numpy.ndarray` <br>  The cryoEM densities at the voxel locations specified by the trimmed `grid`.
