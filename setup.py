@@ -12,7 +12,7 @@ NAME = "harp"
 #pip version
 setuptools.setup(
 	name=NAME,
-	version="0.0.1",
+	version="0.1.0",
 	author="Colin Kinz-Thompson",
 	author_email="colin.kinzthompson@rutgers.edu",
 	description="H(ierarhical) A(tomic) R(esolution) P(erception) for experimental, biomolecular structures",
@@ -26,8 +26,13 @@ setuptools.setup(
 	},
 	packages=setuptools.find_packages(where="."),
 	# packages=setuptools.find_packages(include=['harp','harp.*']),
-	python_requires='>=3.7',
-	install_requires=["numba>=0.55","numpy>=1.22","mrcfile>=1.3","gemmi>=0.5.5"],
+	python_requires='==3.10.12',
+	install_requires=[
+		"numpy==1.23.5",
+		"numba==0.56.4",
+		"mrcfile==1.4.3",
+		# "gemmi>=0.5.5"
+	],
 	classifiers=[
 		"Programming Language :: Python :: 3",
 		"License :: OSI Approved :: License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

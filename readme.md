@@ -1,54 +1,17 @@
 # HARP - Hierarchical Atomic Resolution Perception
 HARP is an advanced, model-based, physics-informed machine learning algorithm capable of perceiving the local resolution of a biomolecule in its imaged density. Using the [Bayesian inference-based shape calculation framework](https://bayes-shape-calc.github.io/) it can be used to validate the trustworthiness of (*e.g.*, cryoEM-derived) structural models.
 
-
 ## Quick start
-1. Download this repository
+1. Install HARP
 
-2. Navigate to the HARP folder
-```bash
-cd <path to the location of the HARP folder>
-cd HARP
-```
+2. Activate the HARP environment (`conda activate harp` or `source harpenv/bin/activate`; see above)
 
-3. [*Optional*] To compile the (fast) C library, run the command:
-```bash
-make
-```
-
-4. To install the harp module, run the command:
+3. use the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):
 ``` bash
-pip install ./
+harpcalc -id 6j6j
 ```
 
-5. Option 1: Write python scripts:
-``` python
-import harp
-```
-
-6. Option 2: use the installed command line interface (using PDB ID 6J6J as an example):
-``` bash
-harpcalc 6j6j
-```
-
-
-### Isolated install
-Follow these to use instructions to use and install in an isolated virtual environment
-
-``` bash
-git clone https://github.com/bayes-shape-calc/HARP.git
-python -m venv harpenv
-source harpenv/bin/activate
-cd HARP
-make
-pip install ./
-cd ..
-harpcalc 6j6j --use_c
-deactivate
-```
-
-and you should see output that looks like:
-```
+``` 
 Loading 6j6j
 N_adfs = 10, N_blobs = 20
 Using default weights: [0.05 1.   1.   1.   2.   2.  ]
@@ -60,17 +23,41 @@ Chain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec
 Finite: 476 / 476
 ```
 
-## Library versions
-Note: these are not the minimum required versions. They should be automatically installed by the `pip` command above (step 4).
+## Install
+HARP comes as a Python module called `harp` that has a command line interface (CLI) program called `harpcalc`. Installing the `harp` module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use `conda` or `venv` to do this. 
+
+### conda
+`conda` is a Python environment manager. You'll have to [download and install conda](https://conda.io/docs/user-guide/install/) or the smaller [miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html). With that installed, you need to get the HARP code, make an environment for HARP, and then install HARP. Here is an example of how to do that from a terminal window:
+
+``` bash
+git clone https://github.com/bayes-shape-calc/HARP.git
+cd HARP
+conda env create
+conda activate harp
+pip install ./
+```
+
+### venv + pip
+If you don't want to use `conda`, you can use `venv` to make an environment and `pip` to handle installing all the libraries. Here is an exmaple of how to do that from a terminal window:
+
+``` bash
+python -m venv harpenv
+source harpenv/bin/activate
+git clone https://github.com/bayes-shape-calc/HARP.git
+cd HARP
+pip install ./
+```
+
+### Dependencies
+These are not the absolute minimum required versions. They should be automatically installed by the `pip` command above (step 4).
 
 | Library    | Version| Required? | Use                                    |
 | ---------  | ------ |-----------|--------------------------------------- |
-| gemmi      | 0.5.5  |  No       | (optional) For X-ray SF loading        |
+| python     | 3.7    |  Yes      | Programming                            |
 | mrcfile    | 1.3    |  Yes      | For loading density maps               |
 | numba      | 0.55   |  Yes      | For fast model building                |
 | numpy      | 1.22   |  Yes      | Math                                   |
-| python     | 3.7    |  Yes      | Programming                            |
-
+| gemmi      | 0.5.5  |  No       | (optional) For X-ray SF loading        |
 
 
 ## [Optional] Optimization: Faster model building with a C library
@@ -95,7 +82,6 @@ A makefile exists that you can use to easily compile this library if you are on 
 cd HARP
 make
 ```
-
 
 ### Usage
 In the harp module, the C functions are called through `ctypes`. You can switch between the Numba and C versions using:
