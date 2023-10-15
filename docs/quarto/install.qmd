@@ -2,10 +2,38 @@
 title: "Installing HARP"
 ---
 
-# New Python Environment
-conda stuff
+HARP comes as a Python module called `harp` that has a command line interface (CLI) program called `harpcalc`. Installing the `harp` module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use `conda` or `venv` to do this. 
 
-# Install package
+# Environment 1: conda
+`conda` is a Python environment manager. You'll have to [download and install conda](https://conda.io/docs/user-guide/install/) or the smaller [miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html). With that installed, you need to get the HARP code, make an environment for HARP, and then install HARP. Here is an example of how to do that from a terminal window:
+
 ``` bash
-pip install -e ./
+git clone https://github.com/bayes-shape-calc/HARP.git
+cd HARP
+conda env create
+conda activate harp
+pip install ./
 ```
+
+# Environment 2: venv + pip
+If you don't want to use `conda`, you can use `venv` to make an environment and `pip` to handle installing all the libraries. Here is an exmaple of how to do that from a terminal window:
+
+``` bash
+python -m venv harpenv
+source harpenv/bin/activate
+git clone https://github.com/bayes-shape-calc/HARP.git
+cd HARP
+pip install ./
+```
+
+# Dependencies
+These are not the absolute minimum required versions. They should be automatically installed by the `pip` command above (step 4).
+
+| Library    | Version| Required? | Use                                    |
+| ---------  | ------ |-----------|--------------------------------------- |
+| python     | 3.7    |  Yes      | Programming                            |
+| mrcfile    | 1.3    |  Yes      | For loading density maps               |
+| numba      | 0.55   |  Yes      | For fast model building                |
+| numpy      | 1.22   |  Yes      | Math                                   |
+| gemmi      | 0.5.5  |  No       | (optional) For X-ray SF loading        |
+

@@ -18,6 +18,6 @@ code {
   word-wrap: break-word;
   background-color: #ffffff !important;
   text-align: left;
-  padding-left: 100px;
-  text-indent: -100px;
+/*  padding-left: 100px;*/
+/*  text-indent: -100px;*/
 }

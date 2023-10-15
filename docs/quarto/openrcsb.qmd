@@ -1,0 +1,21 @@
+---
+title: "openrcsb"
+toc-expand: false
+---
+
+`openrcsb` is a command line interface (CLI) program to quickly launch the RCSB page for a PDB entry.
+
+
+## Usage
+
+``` text
+usage: openrcsb [-h] pdbid
+
+Open RCSB PDB page in webbrowser
+
+positional arguments:
+  pdbid       The ID of the structure in the RCSB PDB to load
+
+options:
+  -h, --help  show this help message and exit
+```

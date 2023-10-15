@@ -14,18 +14,53 @@
     "text": "Here’s some info on priors"
   },
   {
+    "objectID": "openrcsb.html",
+    "href": "openrcsb.html",
+    "title": "openrcsb",
+    "section": "",
+    "text": "openrcsb is a command line interface (CLI) program to quickly launch the RCSB page for a PDB entry."
+  },
+  {
+    "objectID": "openrcsb.html#usage",
+    "href": "openrcsb.html#usage",
+    "title": "openrcsb",
+    "section": "Usage",
+    "text": "Usage\nusage: openrcsb [-h] pdbid\n\nOpen RCSB PDB page in webbrowser\n\npositional arguments:\n  pdbid       The ID of the structure in the RCSB PDB to load\n\noptions:\n  -h, --help  show this help message and exit"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome to HARP",
     "section": "",
-    "text": "Learn how HARP can help you evaluate cryoEM maps and models.\n\nHARP is an ongoing project based out of the Kinz-Thompson lab at Rutgers University-Newark"
+    "text": "Hierarchical Atomic Resolution Perception (HARP) is a Python package for the evaluation of local atomic resolution in a cryoEM map and for map-to-model validation of the corresponding atomic structural model. HARP calculates the atomic resolution of the cryoEM map at the level of resides using the framework of hierarchical resolution, through a comparison between atomic level models and residue-level models."
+  },
+  {
+    "objectID": "index.html#citing-harp",
+    "href": "index.html#citing-harp",
+    "title": "Welcome to HARP",
+    "section": "Citing HARP",
+    "text": "Citing HARP\nIf you use HARP in your work, please cite:\n[Link goes here]"
+  },
+  {
+    "objectID": "index.html#developers",
+    "href": "index.html#developers",
+    "title": "Welcome to HARP",
+    "section": "Developers",
+    "text": "Developers\n\nColin Kinz-Thompson   \nKorak Ray"
+  },
+  {
+    "objectID": "index.html#funding",
+    "href": "index.html#funding",
+    "title": "Welcome to HARP",
+    "section": "Funding",
+    "text": "Funding\nThe development of HARP has been supported by the National Science Foundation (NSF)."
   },
   {
     "objectID": "install.html",
     "href": "install.html",
     "title": "Installing HARP",
     "section": "",
-    "text": "New Python Environment\nconda stuff\n\n\nInstall package\npip install -e ./"
+    "text": "HARP comes as a Python module called harp that has a command line interface (CLI) program called harpcalc. Installing the harp module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use conda or venv to do this.\n\nEnvironment 1: conda\nconda is a Python environment manager. You’ll have to download and install conda or the smaller miniconda. With that installed, you need to get the HARP code, make an environment for HARP, and then install HARP. Here is an example of how to do that from a terminal window:\ngit clone https://github.com/bayes-shape-calc/HARP.git\ncd HARP\nconda env create\nconda activate harp\npip install ./\n\n\nEnvironment 2: venv + pip\nIf you don’t want to use conda, you can use venv to make an environment and pip to handle installing all the libraries. Here is an exmaple of how to do that from a terminal window:\npython -m venv harpenv\nsource harpenv/bin/activate\ngit clone https://github.com/bayes-shape-calc/HARP.git\ncd HARP\npip install ./\n\n\nDependencies\nThese are not the absolute minimum required versions. They should be automatically installed by the pip command above (step 4).\n\n\n\n\n\n\n\n\n\nLibrary\nVersion\nRequired?\nUse\n\n\n\n\npython\n3.7\nYes\nProgramming\n\n\nmrcfile\n1.3\nYes\nFor loading density maps\n\n\nnumba\n0.55\nYes\nFor fast model building\n\n\nnumpy\n1.22\nYes\nMath\n\n\ngemmi\n0.5.5\nNo\n(optional) For X-ray SF loading"
   },
   {
     "objectID": "about.html",
@@ -40,132 +75,6 @@
     "title": "Density maps",
     "section": "",
     "text": "The experimental density map for a cryoEM experiment itself corresponds to a 3-D numpy.ndarray that contains the value of the density at different voxels. It is the location of the voxels themselves that encodes how these density values map onto the spatial information of the biomolecule. This information on the grid of the density map is stored in a separate class (gridclass) in HARP."
-  },
-  {
-    "objectID": "info_molecule.html",
-    "href": "info_molecule.html",
-    "title": "Molecules",
-    "section": "",
-    "text": "This page describes how how molecular models are handled in HARP."
-  },
-  {
-    "objectID": "info_molecule.html#input",
-    "href": "info_molecule.html#input",
-    "title": "Molecules",
-    "section": "Input",
-    "text": "Input\n\nfname [string] is the filename of the .cif file to load. This function currently only handles files ending in .mmcif, .cif, or .cif.gz\nonly_polymers [bool] is a flag for whether to only use entities labeled as polymers (e.g., things that aren’t water, or ions, or metals, or ligands, etc.).\nfirstmodel [bool] is a flag for whether to take the first model. Useful for an ensemble of models (e.g., as from NMR).\nauthid [bool] is a flag for whether to use authid as atomcollection.resid or not. Useful for when people populate the wrong column (e.g., when model building)."
-  },
-  {
-    "objectID": "info_molecule.html#output",
-    "href": "info_molecule.html#output",
-    "title": "Molecules",
-    "section": "Output",
-    "text": "Output\n\nan atomcollection holding the molecular model"
-  },
-  {
-    "objectID": "tutorials.html",
-    "href": "tutorials.html",
-    "title": "Tutorials",
-    "section": "",
-    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package."
-  },
-  {
-    "objectID": "somestuff.html",
-    "href": "somestuff.html",
-    "title": "Some Stuff",
-    "section": "",
-    "text": "placeholder"
-  },
-  {
-    "objectID": "info_bms.html",
-    "href": "info_bms.html",
-    "title": "Bayesian Model Selection",
-    "section": "",
-    "text": "HARP executes Bayesian model selection (BMS) between an atomic level model (\\(M_0\\)) and a residue level model (\\(M_1\\)) to compute the probability, \\(P(M_0 | \\mathcal{Y})\\), where \\(\\mathcal{Y}\\) is the local cryoEM map for a residue., according to\n\\[\nP(M_0 | \\mathcal{Y}) = \\frac{P(\\mathcal{Y} | M_0) P(M_0)}{P(\\mathcal{Y} | M_0) P(M_0) + P(\\mathcal{Y} | M_1) P(M_1)}\n\\] where the priors \\(P(M_0) = P(M_1) = \\frac{1}{2}\\), and \\(P(\\mathcal{Y} | M_0)\\) and \\(P(\\mathcal{Y} | M_1)\\) are the likelihoods that the latent structural information in \\(\\mathcal{Y}\\) is explained by an atomic level template (for \\(M_0\\)) or a residue level template (for \\(M_1\\)), according to Equation 2.2.2. in Ray, et al."
-  },
-  {
-    "objectID": "info_bms.html#input",
-    "href": "info_bms.html#input",
-    "title": "Bayesian Model Selection",
-    "section": "Input",
-    "text": "Input\n(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)"
-  },
-  {
-    "objectID": "info_bms.html#output",
-    "href": "info_bms.html#output",
-    "title": "Bayesian Model Selection",
-    "section": "Output",
-    "text": "Output\n(record_prob_good, record_ln_ev)"
-  },
-  {
-    "objectID": "info_bms.html#input-1",
-    "href": "info_bms.html#input-1",
-    "title": "Bayesian Model Selection",
-    "section": "Input",
-    "text": "Input\n(grid, data, mol, adfs = None, blobs = None, subgrid_size=8., sigmacutoff=5, offset=.5, emit=print, chains=None, atom_types=None, atom_weights=None)"
-  },
-  {
-    "objectID": "info_bms.html#output-1",
-    "href": "info_bms.html#output-1",
-    "title": "Bayesian Model Selection",
-    "section": "Output",
-    "text": "Output\n(record_prob_good,record_ln_ev)"
-  },
-  {
-    "objectID": "info_density.html#attributes",
-    "href": "info_density.html#attributes",
-    "title": "Density maps",
-    "section": "",
-    "text": "self.origin [double] (3) is the lower corner of the grid\nself.dxyz [double] (3) is the rectilinear spacing between each grid point\nself.nxyz [double] (3) is the number of grid points in each direction"
-  },
-  {
-    "objectID": "info_density.html#functions",
-    "href": "info_density.html#functions",
-    "title": "Density maps",
-    "section": "Functions",
-    "text": "Functions\n\nself.xyzmin() -&gt; np.ndarray (3) [double]\nself.xyzmax() -&gt; np.ndarray (3) [double]\nself.com() -&gt; np.ndarray (3) [double]\nself.grid_ijk() -&gt; gi,gj,gk are all np.ndarray (nx,ny,nz) [int]\nself.grid_xyz() -&gt; gx,gy,gz are all np.ndarray (nx,ny,nz) [double]"
-  },
-  {
-    "objectID": "info_molecule.html#attributes",
-    "href": "info_molecule.html#attributes",
-    "title": "Molecules",
-    "section": "",
-    "text": "These follow the pdb naming convention\n\nself.atomid [int] (natoms) is a number id to find particular atoms\nself.resid [int] (natoms) is the residue ID that the atom is part of\nself.resname [string] (natoms) is the name of the residue (gly, ala etc…)\nself.atomname [string] (natoms) is CA CB N, etc…\nself.chain [string](natoms) is the chain …\nself.element [string] (natoms) is (CNOFH etc..)\nself.conf [...?] (natoms)\nself.xyz [double] (natoms,3) is cartesian coordinates… must be a double!\nself.occupancy [double] (natoms)\nself.bfactor [double] (natoms)\nself.hetatom [bool] (natoms) is boolean for whether it is a heteroatom entry or not\nself.modelnum [...?] (natoms)\nself.shift [...] (3)\nself.authresid [int] (natoms) is author resid, or if not provided will default to resid\nself.ind [int] (natoms)\nself.natoms [int]\nself.unique_residues [int] (&lt;nres)\nself.unique_chains [string] (nchains)\nself.unique_confs [...?] (nconfs)"
-  },
-  {
-    "objectID": "info_molecule.html#functions",
-    "href": "info_molecule.html#functions",
-    "title": "Molecules",
-    "section": "Functions",
-    "text": "Functions\n\nself.get_residue(number) - number [int] -&gt; atomcollection\nself.get_chain(chain) - chain [string] -&gt; atomcollection\nself.get_chains(chains) - chains [np.ndarray/list] -&gt; atomcollection\nself.get_atomname(atomname) - atomname [string] -&gt; atomcollection\nself.dehydrogen() - -&gt; atomcollection\nself.get_atomids(atomids) - atomids [np,ndarray/list] -&gt; atomcollection\nself.get_conformation(conf) - conf […?] -&gt; atomcollection\nself.remove_hetatoms() - -&gt; atomcollection\nself.split_residue() - -&gt; atomcollection\nself.com() - -&gt; np.ndarray (3) with mean of self.xyz"
-  },
-  {
-    "objectID": "info_bms.html#bms_molecule",
-    "href": "info_bms.html#bms_molecule",
-    "title": "Bayesian Model Selection",
-    "section": "bms_molecule",
-    "text": "bms_molecule\nharp.bayes_model_select.bms_molecule (grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)\nThis function runs the HARP calculation for a specific molecular model by calling bms_residue (see above) in a loop for all the residues in all the chains of the molecule.\nReturns a tuple of (record_prob_good, record_ln_ev).\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\nharp.molecule.gridclass  The grid defining the voxel locations for a density map.\n\n\ndata\nnumpy.ndarray  The experimental cryoEM density map for a molecule.\n\n\nmol\nharp.molecule.atomcollection  The collection of atoms that correspond to the molecule.\n\n\nadfs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_0\\) (in \\(\\unicode{x212B}\\)) for the atomic profiles in \\(M_0\\). The default is an array of 10 \\(\\log_{10}\\)-spaced points points between 0.25 and 1.0.\n\n\nblobs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_1\\) (in \\(\\unicode{x212B}\\)) for the residue super-atom profiles in \\(M_1\\). The default is an array of 20 \\(\\log_{10}\\)-spaced points points between 0.25 and 2.8.\n\n\nsubgrid_size\nfloat  The size of the cubic subgrid (in \\(\\unicode{x212B}\\)) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.\n\n\nsigmacuttoff\nfloat  The cutoff distance (in terms of \\(\\sigma\\)) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.\n\n\noffset\nfloat  The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.\n\n\nemit\nPython function  The function which determines how the HARP result will be displayes. Default is print.\n\n\nchains\nnumpy.ndarray  A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is None, which corresponds to the calculation being run for all chains.\n\n\natom_types\nnumpy.ndarray  A 1-D array of strings for the elements present in a residue. The default is ['H', 'C', 'N', 'O', 'P', 'S'].\n\n\natom_weights\nnumpy.ndarray  A 1-D array of elements-wise weights, normalized to C, in the same order as atom_types. The default is [0.05, 1., 1., 1., 2., 2.].\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nrecord_prob_good\nnumpy.ndarray  A 1-D array of the same size as the number of atoms in the molecule, containing the probability \\(P(M_0| \\mathcal{Y})\\) for each residue in the molecule.  Note: Every atom of a particular residue has the same probability value.\n\n\nrecord_ln_ev\nnumpy.ndarray  A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (adfs.size + blobs.size), containing the log-probabilities, \\(\\log P ({\\mathcal{Y}|M_n})\\), for each residue in the molecule. record_ln_ev[:, :adfs.size] contains the log-probabilites for each \\(\\sigma_0\\) in adfs and record_ln_ev[:, adfs.size:] contains the log-probabilites for each \\(\\sigma_1\\) in blobs.  Note: Every atom i of a particular residue has the same record_ln_ev[i, :]."
-  },
-  {
-    "objectID": "info_bms.html#bms_residue",
-    "href": "info_bms.html#bms_residue",
-    "title": "Bayesian Model Selection",
-    "section": "bms_residue",
-    "text": "bms_residue\nharp.bayes_model_select.bms_residue (grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)\nThis function runs the HARP calculation at the local residue-level by executing BMS between \\(M_0\\) and \\(M_1\\) for a single residue of the cryoEM structure. This function is typically called by bms_molecule (see below), and therefore, it is unlikely to be independently used.\nReturns a tuple of (record_prob_good, record_ln_ev).\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\nharp.molecule.gridclass  The grid defining the voxel locations for a density map.\n\n\ndata\nnumpy.ndarray  The experimental cryoEM density map for a molecule.\n\n\nsubresidue\nharp.molecule.atomcollection  The collection of atoms that correspond to the specific residue.\n\n\nadfs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_0\\) (in \\(\\unicode{x212B}\\)) for the atomic profiles in \\(M_0\\). The default is an array of 10 \\(\\log_{10}\\)-spaced points points between 0.25 and 1.0.\n\n\nblobs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_1\\) (in \\(\\unicode{x212B}\\)) for the residue super-atom profiles in \\(M_1\\). The default is an array of 20 \\(\\log_{10}\\)-spaced points points between 0.25 and 2.8.\n\n\nsubgrid_size\nfloat  The size of the cubic subgrid (in \\(\\unicode{x212B}\\)) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.\n\n\nsigmacuttoff\nfloat  The cutoff distance (in terms of \\(\\sigma\\)) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.\n\n\noffset\nfloat  The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.\n\n\natom_types\nnumpy.ndarray  A 1-D array of strings for the elements present in a residue. The default is ['H', 'C', 'N', 'O', 'P', 'S'].\n\n\natom_weights\nnumpy.ndarray  A 1-D array of elements-wise weights, normalized to C, in the same order as atom_types. The default is [0.05, 1., 1., 1., 2., 2.].\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nrecord_prob_good\nnumpy.ndarray  A 1-D array of the same size as the number of atoms in the residue, containing the probability \\(P(M_0| \\mathcal{Y})\\) for a specific residue.  Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue.\n\n\nrecord_ln_ev\nnumpy.ndarray  A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (adfs.size + blobs.size), containing the log-probabilities, \\(\\log P ({\\mathcal{Y}|M_n})\\), for the specific residue. record_ln_ev[:, :adfs.size] contains the log-probabilites for each \\(\\sigma_0\\) in adfs and record_ln_ev[:, adfs.size:] contains the log-probabilites for each \\(\\sigma_1\\) in blobs.  Note: Every record_ln_ev[i] contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue."
-  },
-  {
-    "objectID": "info_molecule.html#atomcollection",
-    "href": "info_molecule.html#atomcollection",
-    "title": "Molecules",
-    "section": "atomcollection",
-    "text": "atomcollection\nclass harp.molecule.atomcollection (atomid, resid, resname, atomnamechain, element, conf, xyz, occupancy, bfactor, hetatom, modelnum, authresid=None)\nAn atomcollection object stores all information about the molecular models and the methods to manipulate them in HARP.\n\nAttributes\nThe attributes are named following the PDB naming convention\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.natoms\nint  Number of atoms in the molecule.\n\n\nself.atomid\nnumpy.ndarray  A 1-D int array of size natoms, containing a numerical id for each individual atom in the molecule.\n\n\nself.ind\nnumpy.ndarray  A 1-D int array of size natoms, containing the index for each individual atom in the molecule. Is equal to numpy.arange(natoms). Used internally in HARP for indexing.\n\n\nself.resid\nnumpy.ndarray  A 1-D int array of size natoms, containing a numerical id for the residue for individual atom in the molecule.\n\n\nself.resname\nnumpy.ndarray  A 1-D string array of size natoms, containing the identity of the residue for each individual atom in the molecule (e.g., Gly, Ala, etc.).\n\n\nself.element\nnumpy.ndarray  A 1-D string array of size natoms, containing the element identity for each individual atom in the molecule (e.g., C, H, O, N, etc.).\n\n\nself.atomname\nnumpy.ndarray  A 1-D string array of size natoms, containing the atom identity of each individual atom in a particular residue in the molecule (e.g., CA, CB, N, etc.).\n\n\nself.chain\nnumpy.ndarray  A 1-D string array of size natoms, containing the identity of the chain for each individual atom in the molecule.\n\n\nself.xyz\nnumpy.ndarray  A 2-D double array of size [natoms, 3], containing the Cartesian co-ordinates of each individual atom in the molecule.  Note: This must be a double array!\n\n\nself.occupancy\nnumpy.ndarray  A 1-D double array of size natoms, containing the occupancy for each individual atom in the molecule.\n\n\nself.bfactor\nnumpy.ndarray  A 1-D double array of size natoms, containing the B-factor for each individual atom in the molecule.\n\n\nself.hetatom\nnumpy.ndarray  A 1-D bool array of size natoms, indicating whether the atom is a heteroatom entry.\n\n\nself.authresid\nnumpy.ndarray  A 1-D int array of size natoms, containing the author-provided id for the residue for individual atom in the molecule. Defaults to resid if not provided.\n\n\nself.conf\nnumpy.ndarray  A 1-D string array of size natoms, containing the conformation for individual atom in the molecule.\n\n\nself.modelnum\nnumpy.ndarray  A 1-D int array of size natoms, containing the model number for individual atom in the molecule.\n\n\nself.unique_residues\nnumpy.ndarray  A 1-D int array of the unique resid in the molecule.\n\n\nself.unique_chains\nnumpy.ndarray  A 1-D string array of the unique chain in the molecule.\n\n\nself.unique_confs\nnumpy.ndarray  A 1-D string array of the unique conf in the molecule.\n\n\n\n\n\nFunctions\nThe functions associated with atomcollection are\n\n\n\n\n\n\n\nFunction\nDescrption\n\n\n\n\nself.get_residue\nReturns a particular residue.  Input: int number (the specific resid to be returned).  Output: atomcollection.\n\n\nself.get_chain\nReturns a particular chain.  Input: string chain (the specific chain to be returned).  Output: atomcollection.\n\n\nself.get_chains\nReturns multiple chains.  Input: numpy.ndarray/list chains (the array/list of chain to be returned).  Output: atomcollection.\n\n\nself.get_atomname\nReturns a collection of specific atoms based on their identity in residues.  Input: string atomname (the specific atomname to be returned).  Output: atomcollection.\n\n\nself.get_atomids\nReturns a collection of specific atoms.  Input: numpy.ndarray/list atomids (the array/list of atomid to be returned).  Output: atomcollection.\n\n\nself.get_conformation\nReturns a specific conformation of the model.  Input: string conf (the specifc conf to be returned).  Output: atomcollection.\n\n\nself.dehydrogen\nRemoves hydrogens from self  Input: None.  Output: atomcollection.\n\n\nself.remove_hetatoms\nRemoves heteroatoms from self  Input: None.  Output: atomcollection.\n\n\nself.split_residue\nSplits an atomcollection of a single residue into component parts. For a nucleotide, returns a list of phosphate, sugar, and base. For an amino-acid, returns backbone and sidechain.  Input: None (Note: self must be a single residue!).  Output: A list of atomcollection.\n\n\nself.com\nReturns the Cartesian co-ordinate center-of-mass (centroid) of an atomcollection, i.e. the mean of self.xyz.  Input: None.  Output: A numpy.ndarray of size 3.\n\n\n\nA separate function is involved in loading an atomcollection from a file."
-  },
-  {
-    "objectID": "info_molecule.html#load",
-    "href": "info_molecule.html#load",
-    "title": "Molecules",
-    "section": "load",
-    "text": "load\nharp.molecule.load (fname, only_polymers = False, firstmodel = True, authid = False)\n\nArgument\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nfname\nstring  The filename of the mmCIF file to load.  Note: This function currently only handles the file suffixes .mmcif, .cif, or_ .cif.gz.\n\n\nonly_polymers\nbool  A flag for whether to only use entities labeled as polymers (i.e. not water, ions, metals, or ligands, etc.).\n\n\nfirstmodel\nbool  A flag for whether to take the only first model. Useful for an ensemble of models (e.g., as in NMR).\n\n\nauthid\nbool  A flag for whether to use authid as atomcollection.resid or not. Useful for when people populate the wrong column (e.g., during model building).\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\natomcollection\nContains the molecular model written in the .mmCIF file"
   },
   {
     "objectID": "info_density.html#gridclass",
@@ -215,5 +124,75 @@
     "title": "Density maps",
     "section": "trim_density_to_mol",
     "text": "trim_density_to_mol\nharp.density.trim_density_to_mol (grid, data, mol, pad = 8.)\nThis function finds the box that emcompasses the atomic coordinates of a specific molecular model on the grid for a specified density map and returns a trimmed grid and associated density map corresponding to this box. The trimmed box may additionally be padded isotropically by a constant value using periodic boundary condtions. This truncation is particularly useful for maps where only a small region has been used to build a model (which commonly occurs for molecules with high rotational symmetry) as it greatly reduces the computational cost of HARP calculations in these cases.\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The cryoEM grid associated with the cryoEM map.\n\n\ndata\nnumpy.ndarray  The cryoEM density values defined at the voxel locations in grid.\n\n\nmol\nharp.molecule.atomcollection  The molecular model that is built using part of the the cryoEM densities in data at voxel locations specified in grid.\n\n\npad\ndouble  A constant length (in \\(\\unicode{x212B}\\)) that is added to the box encompassing mol that is padded using peridic boundary conditions. The default value is 8.\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\ngridclass  The grid trimmed to the box around mol.\n\n\ndata\nnumpy.ndarray  The cryoEM densities at the voxel locations specified by the trimmed grid."
+  },
+  {
+    "objectID": "info_molecule.html",
+    "href": "info_molecule.html",
+    "title": "Molecules",
+    "section": "",
+    "text": "This page describes how how molecular models are handled in HARP."
+  },
+  {
+    "objectID": "info_molecule.html#atomcollection",
+    "href": "info_molecule.html#atomcollection",
+    "title": "Molecules",
+    "section": "atomcollection",
+    "text": "atomcollection\nclass harp.molecule.atomcollection (atomid, resid, resname, atomnamechain, element, conf, xyz, occupancy, bfactor, hetatom, modelnum, authresid=None)\nAn atomcollection object stores all information about the molecular models and the methods to manipulate them in HARP.\n\nAttributes\nThe attributes are named following the PDB naming convention\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nself.natoms\nint  Number of atoms in the molecule.\n\n\nself.atomid\nnumpy.ndarray  A 1-D int array of size natoms, containing a numerical id for each individual atom in the molecule.\n\n\nself.ind\nnumpy.ndarray  A 1-D int array of size natoms, containing the index for each individual atom in the molecule. Is equal to numpy.arange(natoms). Used internally in HARP for indexing.\n\n\nself.resid\nnumpy.ndarray  A 1-D int array of size natoms, containing a numerical id for the residue for individual atom in the molecule.\n\n\nself.resname\nnumpy.ndarray  A 1-D string array of size natoms, containing the identity of the residue for each individual atom in the molecule (e.g., Gly, Ala, etc.).\n\n\nself.element\nnumpy.ndarray  A 1-D string array of size natoms, containing the element identity for each individual atom in the molecule (e.g., C, H, O, N, etc.).\n\n\nself.atomname\nnumpy.ndarray  A 1-D string array of size natoms, containing the atom identity of each individual atom in a particular residue in the molecule (e.g., CA, CB, N, etc.).\n\n\nself.chain\nnumpy.ndarray  A 1-D string array of size natoms, containing the identity of the chain for each individual atom in the molecule.\n\n\nself.xyz\nnumpy.ndarray  A 2-D double array of size [natoms, 3], containing the Cartesian co-ordinates of each individual atom in the molecule.  Note: This must be a double array!\n\n\nself.occupancy\nnumpy.ndarray  A 1-D double array of size natoms, containing the occupancy for each individual atom in the molecule.\n\n\nself.bfactor\nnumpy.ndarray  A 1-D double array of size natoms, containing the B-factor for each individual atom in the molecule.\n\n\nself.hetatom\nnumpy.ndarray  A 1-D bool array of size natoms, indicating whether the atom is a heteroatom entry.\n\n\nself.authresid\nnumpy.ndarray  A 1-D int array of size natoms, containing the author-provided id for the residue for individual atom in the molecule. Defaults to resid if not provided.\n\n\nself.conf\nnumpy.ndarray  A 1-D string array of size natoms, containing the conformation for individual atom in the molecule.\n\n\nself.modelnum\nnumpy.ndarray  A 1-D int array of size natoms, containing the model number for individual atom in the molecule.\n\n\nself.unique_residues\nnumpy.ndarray  A 1-D int array of the unique resid in the molecule.\n\n\nself.unique_chains\nnumpy.ndarray  A 1-D string array of the unique chain in the molecule.\n\n\nself.unique_confs\nnumpy.ndarray  A 1-D string array of the unique conf in the molecule.\n\n\n\n\n\nFunctions\nThe functions associated with atomcollection are\n\n\n\n\n\n\n\nFunction\nDescrption\n\n\n\n\nself.get_residue\nReturns a particular residue.  Input: int number (the specific resid to be returned).  Output: atomcollection.\n\n\nself.get_chain\nReturns a particular chain.  Input: string chain (the specific chain to be returned).  Output: atomcollection.\n\n\nself.get_chains\nReturns multiple chains.  Input: numpy.ndarray/list chains (the array/list of chain to be returned).  Output: atomcollection.\n\n\nself.get_atomname\nReturns a collection of specific atoms based on their identity in residues.  Input: string atomname (the specific atomname to be returned).  Output: atomcollection.\n\n\nself.get_atomids\nReturns a collection of specific atoms.  Input: numpy.ndarray/list atomids (the array/list of atomid to be returned).  Output: atomcollection.\n\n\nself.get_conformation\nReturns a specific conformation of the model.  Input: string conf (the specifc conf to be returned).  Output: atomcollection.\n\n\nself.dehydrogen\nRemoves hydrogens from self  Input: None.  Output: atomcollection.\n\n\nself.remove_hetatoms\nRemoves heteroatoms from self  Input: None.  Output: atomcollection.\n\n\nself.split_residue\nSplits an atomcollection of a single residue into component parts. For a nucleotide, returns a list of phosphate, sugar, and base. For an amino-acid, returns backbone and sidechain.  Input: None (Note: self must be a single residue!).  Output: A list of atomcollection.\n\n\nself.com\nReturns the Cartesian co-ordinate center-of-mass (centroid) of an atomcollection, i.e. the mean of self.xyz.  Input: None.  Output: A numpy.ndarray of size 3.\n\n\n\nA separate function is involved in loading an atomcollection from a file."
+  },
+  {
+    "objectID": "info_molecule.html#load",
+    "href": "info_molecule.html#load",
+    "title": "Molecules",
+    "section": "load",
+    "text": "load\nharp.molecule.load (fname, only_polymers = False, firstmodel = True, authid = False)\n\nArgument\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nfname\nstring  The filename of the mmCIF file to load.  Note: This function currently only handles the file suffixes .mmcif, .cif, or_ .cif.gz.\n\n\nonly_polymers\nbool  A flag for whether to only use entities labeled as polymers (i.e. not water, ions, metals, or ligands, etc.).\n\n\nfirstmodel\nbool  A flag for whether to take the only first model. Useful for an ensemble of models (e.g., as in NMR).\n\n\nauthid\nbool  A flag for whether to use authid as atomcollection.resid or not. Useful for when people populate the wrong column (e.g., during model building).\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\natomcollection\natomcollection  Contains the molecular model written in the .mmCIF file"
+  },
+  {
+    "objectID": "tutorials.html",
+    "href": "tutorials.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.\n\nGet Started with harpcalc\n\nInstall HARP\nActivate the HARP environment (conda activate harp or source harpenv/bin/activate; see above)\nuse the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):\n\nharpcalc -id 6j6j\nLoading 6j6j\nN_adfs = 10, N_blobs = 20\nUsing default weights: [0.05 1.   1.   1.   2.   2.  ]\nChain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec\nChain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec\nChain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec\nChain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec\n<P_res>: 0.8030\nFinite: 476 / 476\n\n\nVideo Tutorial"
+  },
+  {
+    "objectID": "somestuff.html",
+    "href": "somestuff.html",
+    "title": "Some Stuff",
+    "section": "",
+    "text": "placeholder"
+  },
+  {
+    "objectID": "info_bms.html",
+    "href": "info_bms.html",
+    "title": "Bayesian Model Selection",
+    "section": "",
+    "text": "HARP executes Bayesian model selection (BMS) between an atomic level model (\\(M_0\\)) and a residue level model (\\(M_1\\)) to compute the probability, \\(P(M_0 | \\mathcal{Y})\\), where \\(\\mathcal{Y}\\) is the local cryoEM map for a residue., according to\n\\[\nP(M_0 | \\mathcal{Y}) = \\frac{P(\\mathcal{Y} | M_0) P(M_0)}{P(\\mathcal{Y} | M_0) P(M_0) + P(\\mathcal{Y} | M_1) P(M_1)}\n\\] where the priors \\(P(M_0) = P(M_1) = \\frac{1}{2}\\), and \\(P(\\mathcal{Y} | M_0)\\) and \\(P(\\mathcal{Y} | M_1)\\) are the likelihoods that the latent structural information in \\(\\mathcal{Y}\\) is explained by an atomic level template (for \\(M_0\\)) or a residue level template (for \\(M_1\\)), according to Equation 2.2.2. in Ray, et al."
+  },
+  {
+    "objectID": "info_bms.html#bms_residue",
+    "href": "info_bms.html#bms_residue",
+    "title": "Bayesian Model Selection",
+    "section": "bms_residue",
+    "text": "bms_residue\nharp.bayes_model_select.bms_residue (grid, data, subresidue, adfs, blobs, subgrid_size=8., sigmacutoff=5, offset=0.5, atom_types=None, atom_weights=None)\nThis function runs the HARP calculation at the local residue-level by executing BMS between \\(M_0\\) and \\(M_1\\) for a single residue of the cryoEM structure. This function is typically called by bms_molecule (see below), and therefore, it is unlikely to be independently used.\nReturns a tuple of (record_prob_good, record_ln_ev).\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\nharp.density.gridclass  The grid defining the voxel locations for a density map.\n\n\ndata\nnumpy.ndarray  The experimental cryoEM density map for a molecule.\n\n\nsubresidue\nharp.molecule.atomcollection  The collection of atoms that correspond to the specific residue.\n\n\nadfs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_0\\) (in \\(\\unicode{x212B}\\)) for the atomic profiles in \\(M_0\\). The default is an array of 10 \\(\\log_{10}\\)-spaced points points between 0.25 and 1.0.\n\n\nblobs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_1\\) (in \\(\\unicode{x212B}\\)) for the residue super-atom profiles in \\(M_1\\). The default is an array of 20 \\(\\log_{10}\\)-spaced points points between 0.25 and 2.8.\n\n\nsubgrid_size\nfloat  The size of the cubic subgrid (in \\(\\unicode{x212B}\\)) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.\n\n\nsigmacuttoff\nfloat  The cutoff distance (in terms of \\(\\sigma\\)) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.\n\n\noffset\nfloat  The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.\n\n\natom_types\nnumpy.ndarray  A 1-D array of strings for the elements present in a residue. The default is ['H', 'C', 'N', 'O', 'P', 'S'].\n\n\natom_weights\nnumpy.ndarray  A 1-D array of elements-wise weights, normalized to C, in the same order as atom_types. The default is [0.05, 1., 1., 1., 2., 2.].\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nrecord_prob_good\nnumpy.ndarray  A 1-D array of the same size as the number of atoms in the residue, containing the probability \\(P(M_0| \\mathcal{Y})\\) for a specific residue.  Note: Every element of the array contains the same probability value which is evaluated for the entire residue. This value is assigned to each atom of the residue.\n\n\nrecord_ln_ev\nnumpy.ndarray  A 2-D array whose size in the first dimension is equal to the number of atoms in the residue and second dimension is (adfs.size + blobs.size), containing the log-probabilities, \\(\\log P ({\\mathcal{Y}|M_n})\\), for the specific residue. record_ln_ev[:, :adfs.size] contains the log-probabilites for each \\(\\sigma_0\\) in adfs and record_ln_ev[:, adfs.size:] contains the log-probabilites for each \\(\\sigma_1\\) in blobs.  Note: Every record_ln_ev[i] contains the same 1D array which is evaluated for the entire residue. This 1D array is assigned to each atom of the residue."
+  },
+  {
+    "objectID": "info_bms.html#bms_molecule",
+    "href": "info_bms.html#bms_molecule",
+    "title": "Bayesian Model Selection",
+    "section": "bms_molecule",
+    "text": "bms_molecule\nharp.bayes_model_select.bms_molecule (grid, data, mol, adfs = None, blobs = None, subgrid_size = 8., sigmacutoff = 5, offset= 0.5, emit = print, chains = None, atom_types = None, atom_weights = None)\nThis function runs the HARP calculation for a specific molecular model by calling bms_residue (see above) in a loop for all the residues in all the chains of the molecule.\nReturns a tuple of (record_prob_good, record_ln_ev).\n\nArguments\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\ngrid\nharp.density.gridclass  The grid defining the voxel locations for a density map.\n\n\ndata\nnumpy.ndarray  The experimental cryoEM density map for a molecule.\n\n\nmol\nharp.molecule.atomcollection  The collection of atoms that correspond to the molecule.\n\n\nadfs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_0\\) (in \\(\\unicode{x212B}\\)) for the atomic profiles in \\(M_0\\). The default is an array of 10 \\(\\log_{10}\\)-spaced points points between 0.25 and 1.0.\n\n\nblobs\nnumpy.ndarray  A 1-D array of Gaussian width \\(\\sigma_1\\) (in \\(\\unicode{x212B}\\)) for the residue super-atom profiles in \\(M_1\\). The default is an array of 20 \\(\\log_{10}\\)-spaced points points between 0.25 and 2.8.\n\n\nsubgrid_size\nfloat  The size of the cubic subgrid (in \\(\\unicode{x212B}\\)) from the residue center-of-mass that defines the local cryoEM density map for the residue. The default value is 8.0.\n\n\nsigmacuttoff\nfloat  The cutoff distance (in terms of \\(\\sigma\\)) from the position of each atom (or superatom) that the template is calculated up to. The default value is 5.\n\n\noffset\nfloat  The offset from the grid voxel edge (in terms of grid voxel size) where the integrated template for the density for that voxel is assigned. The default value is 0.5.\n\n\nemit\nPython function  The function which determines how the HARP result will be displayes. Default is print.\n\n\nchains\nnumpy.ndarray  A 1-D array of strings specifying the chains of the molecule the HARP calculation is executed for. The default is None, which corresponds to the calculation being run for all chains.\n\n\natom_types\nnumpy.ndarray  A 1-D array of strings for the elements present in a residue. The default is ['H', 'C', 'N', 'O', 'P', 'S'].\n\n\natom_weights\nnumpy.ndarray  A 1-D array of elements-wise weights, normalized to C, in the same order as atom_types. The default is [0.05, 1., 1., 1., 2., 2.].\n\n\n\n\n\nOutput\n\n\n\n\n\n\n\nVariable\nDescrption\n\n\n\n\nrecord_prob_good\nnumpy.ndarray  A 1-D array of the same size as the number of atoms in the molecule, containing the probability \\(P(M_0| \\mathcal{Y})\\) for each residue in the molecule.  Note: Every atom of a particular residue has the same probability value.\n\n\nrecord_ln_ev\nnumpy.ndarray  A 2-D array whose size in the first dimension is equal to the number of atoms in the molecule and second dimension is (adfs.size + blobs.size), containing the log-probabilities, \\(\\log P ({\\mathcal{Y}|M_n})\\), for each residue in the molecule. record_ln_ev[:, :adfs.size] contains the log-probabilites for each \\(\\sigma_0\\) in adfs and record_ln_ev[:, adfs.size:] contains the log-probabilites for each \\(\\sigma_1\\) in blobs.  Note: Every atom i of a particular residue has the same record_ln_ev[i, :]."
+  },
+  {
+    "objectID": "harpcalc.html",
+    "href": "harpcalc.html",
+    "title": "harpcalc",
+    "section": "",
+    "text": "harpcalc is a command line interface (CLI) to performing HARP calculations."
+  },
+  {
+    "objectID": "harpcalc.html#usage",
+    "href": "harpcalc.html#usage",
+    "title": "harpcalc",
+    "section": "Usage",
+    "text": "Usage\nusage: harpcalc [-h] (-f F F | -id ID) [--authid] [-o OUTPUT] [--label_sf LABEL_SF] [--label_phase LABEL_PHASE]\n                [--atoms_min ATOMS_MIN] [--atoms_max ATOMS_MAX] [--atoms_num ATOMS_NUM] [--voxel_offset VOXEL_OFFSET]\n                [--blobs_min BLOBS_MIN] [--blobs_max BLOBS_MAX] [--blobs_num BLOBS_NUM] [--skip_calc] [--skip_load]\n                [--only_polymers] [--output_bfactor] [--remove_metals] [--remove_water]\n                [--verbose | --quiet | --normal] [--use_c | --use_python] [-c CHAINS [CHAINS ...]]\n\nUse HARP to calculate trustiworthness of model\n\noptions:\n  -h, --help            show this help message and exit\n  -f F F                Location of mmcif file and density file\n  -id ID                The ID of the structure in the wwPDB to process\n  --authid              Use Auth ID instead of Label ID\n  -o OUTPUT, --output OUTPUT\n                        Directory to store results and files\n  --label_sf LABEL_SF   Structure factor label in X-ray file\n  --label_phase LABEL_PHASE\n                        Phase label in X-ray file\n  --atoms_min ATOMS_MIN\n                        Minimum width of atoms to check (standard deviation of 3D normal distribution)\n  --atoms_max ATOMS_MAX\n                        Maximum width of atoms to check (standard deviation of 3D normal distribution)\n  --atoms_num ATOMS_NUM\n                        Number of atoms models to use. Spaced evenly between atom_min and atom_max\n  --voxel_offset VOXEL_OFFSET\n                        XYZ coordinate offset for each density voxel to relate to atomic model coordinates. A value of\n                        0.0 is edge centered, 0.5 is face centered.\n  --blobs_min BLOBS_MIN\n                        Minimum width of a blob to check (standard deviation of 3D normal distribution)\n  --blobs_max BLOBS_MAX\n                        Maximum width of a blob to check (standard deviation of 3D normal distribution)\n  --blobs_num BLOBS_NUM\n                        Number of blobs to use. Spaced evenly between blob_min and blob_max\n  --skip_calc           Skip the trustworthiness calculation, still download and visualize\n  --skip_load           Skip loading molecule and density\n  --only_polymers       Only calculate chains that come from entities that are polymers\n  --output_bfactor      Output a version of the structure with bfactors overwritten with HARP prob\n  --remove_metals       Remove common metal/salt ions from molecule before calculation\n  --remove_water        Remove waters from molecule before calculation\n  --verbose\n  --quiet\n  --normal\n  --use_c               Use the C library to render models\n  --use_python          Use Python to render models\n  -c CHAINS [CHAINS ...], --chains CHAINS [CHAINS ...]\n                        Chains in mmcif to run the calculation for. Separate by spaces. If not provided, all chains are\n                        used."
   }
 ]

@@ -1,0 +1,58 @@
+---
+title: "harpcalc"
+toc-expand: false
+---
+
+`harpcalc` is a command line interface (CLI) to performing HARP calculations. 
+
+## Usage
+
+``` text
+usage: harpcalc [-h] (-f F F | -id ID) [--authid] [-o OUTPUT] [--label_sf LABEL_SF] [--label_phase LABEL_PHASE]
+                [--atoms_min ATOMS_MIN] [--atoms_max ATOMS_MAX] [--atoms_num ATOMS_NUM] [--voxel_offset VOXEL_OFFSET]
+                [--blobs_min BLOBS_MIN] [--blobs_max BLOBS_MAX] [--blobs_num BLOBS_NUM] [--skip_calc] [--skip_load]
+                [--only_polymers] [--output_bfactor] [--remove_metals] [--remove_water]
+                [--verbose | --quiet | --normal] [--use_c | --use_python] [-c CHAINS [CHAINS ...]]
+
+Use HARP to calculate trustiworthness of model
+
+options:
+  -h, --help            show this help message and exit
+  -f F F                Location of mmcif file and density file
+  -id ID                The ID of the structure in the wwPDB to process
+  --authid              Use Auth ID instead of Label ID
+  -o OUTPUT, --output OUTPUT
+                        Directory to store results and files
+  --label_sf LABEL_SF   Structure factor label in X-ray file
+  --label_phase LABEL_PHASE
+                        Phase label in X-ray file
+  --atoms_min ATOMS_MIN
+                        Minimum width of atoms to check (standard deviation of 3D normal distribution)
+  --atoms_max ATOMS_MAX
+                        Maximum width of atoms to check (standard deviation of 3D normal distribution)
+  --atoms_num ATOMS_NUM
+                        Number of atoms models to use. Spaced evenly between atom_min and atom_max
+  --voxel_offset VOXEL_OFFSET
+                        XYZ coordinate offset for each density voxel to relate to atomic model coordinates. A value of
+                        0.0 is edge centered, 0.5 is face centered.
+  --blobs_min BLOBS_MIN
+                        Minimum width of a blob to check (standard deviation of 3D normal distribution)
+  --blobs_max BLOBS_MAX
+                        Maximum width of a blob to check (standard deviation of 3D normal distribution)
+  --blobs_num BLOBS_NUM
+                        Number of blobs to use. Spaced evenly between blob_min and blob_max
+  --skip_calc           Skip the trustworthiness calculation, still download and visualize
+  --skip_load           Skip loading molecule and density
+  --only_polymers       Only calculate chains that come from entities that are polymers
+  --output_bfactor      Output a version of the structure with bfactors overwritten with HARP prob
+  --remove_metals       Remove common metal/salt ions from molecule before calculation
+  --remove_water        Remove waters from molecule before calculation
+  --verbose
+  --quiet
+  --normal
+  --use_c               Use the C library to render models
+  --use_python          Use Python to render models
+  -c CHAINS [CHAINS ...], --chains CHAINS [CHAINS ...]
+                        Chains in mmcif to run the calculation for. Separate by spaces. If not provided, all chains are
+                        used.
+```

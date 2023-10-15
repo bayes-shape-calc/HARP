@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HARP Documentation - Some Stuff</title>
+<title>HARP Documentation - harpcalc</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Some Stuff</h1>
+      <h1 class="quarto-secondary-nav-title">harpcalc</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -127,15 +127,15 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Programs</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Programs</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./harpcalc.html" class="sidebar-item-text sidebar-link">harpcalc</a>
+  <a href="./harpcalc.html" class="sidebar-item-text sidebar-link active">harpcalc</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -190,14 +190,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#usage" id="toc-usage" class="nav-link active" data-scroll-target="#usage">Usage</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Some Stuff</h1>
+<h1 class="title d-none d-lg-block">harpcalc</h1>
 </div>
 
 
@@ -212,9 +218,59 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>placeholder</p>
+<p><code>harpcalc</code> is a command line interface (CLI) to performing HARP calculations.</p>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<pre class="text"><code>usage: harpcalc [-h] (-f F F | -id ID) [--authid] [-o OUTPUT] [--label_sf LABEL_SF] [--label_phase LABEL_PHASE]
+                [--atoms_min ATOMS_MIN] [--atoms_max ATOMS_MAX] [--atoms_num ATOMS_NUM] [--voxel_offset VOXEL_OFFSET]
+                [--blobs_min BLOBS_MIN] [--blobs_max BLOBS_MAX] [--blobs_num BLOBS_NUM] [--skip_calc] [--skip_load]
+                [--only_polymers] [--output_bfactor] [--remove_metals] [--remove_water]
+                [--verbose | --quiet | --normal] [--use_c | --use_python] [-c CHAINS [CHAINS ...]]
+
+Use HARP to calculate trustiworthness of model
+
+options:
+  -h, --help            show this help message and exit
+  -f F F                Location of mmcif file and density file
+  -id ID                The ID of the structure in the wwPDB to process
+  --authid              Use Auth ID instead of Label ID
+  -o OUTPUT, --output OUTPUT
+                        Directory to store results and files
+  --label_sf LABEL_SF   Structure factor label in X-ray file
+  --label_phase LABEL_PHASE
+                        Phase label in X-ray file
+  --atoms_min ATOMS_MIN
+                        Minimum width of atoms to check (standard deviation of 3D normal distribution)
+  --atoms_max ATOMS_MAX
+                        Maximum width of atoms to check (standard deviation of 3D normal distribution)
+  --atoms_num ATOMS_NUM
+                        Number of atoms models to use. Spaced evenly between atom_min and atom_max
+  --voxel_offset VOXEL_OFFSET
+                        XYZ coordinate offset for each density voxel to relate to atomic model coordinates. A value of
+                        0.0 is edge centered, 0.5 is face centered.
+  --blobs_min BLOBS_MIN
+                        Minimum width of a blob to check (standard deviation of 3D normal distribution)
+  --blobs_max BLOBS_MAX
+                        Maximum width of a blob to check (standard deviation of 3D normal distribution)
+  --blobs_num BLOBS_NUM
+                        Number of blobs to use. Spaced evenly between blob_min and blob_max
+  --skip_calc           Skip the trustworthiness calculation, still download and visualize
+  --skip_load           Skip loading molecule and density
+  --only_polymers       Only calculate chains that come from entities that are polymers
+  --output_bfactor      Output a version of the structure with bfactors overwritten with HARP prob
+  --remove_metals       Remove common metal/salt ions from molecule before calculation
+  --remove_water        Remove waters from molecule before calculation
+  --verbose
+  --quiet
+  --normal
+  --use_c               Use the C library to render models
+  --use_python          Use Python to render models
+  -c CHAINS [CHAINS ...], --chains CHAINS [CHAINS ...]
+                        Chains in mmcif to run the calculation for. Separate by spaces. If not provided, all chains are
+                        used.</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

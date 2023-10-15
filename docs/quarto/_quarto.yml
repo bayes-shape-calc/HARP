@@ -38,19 +38,24 @@ website:
       - href: index.qmd
         text: Home
 
-      - href: about.qmd
-        text: About HARP
+      # - href: about.qmd
+      #   text: About HARP
             
       - section: "Get Started"
         contents:
           - install.qmd
           - tutorials.qmd
+        
+      - section: "Programs"
+        contents:
+          - harpcalc.qmd
+          - openrcsb.qmd
           
-      - section: "Examples"
+      - section: "Code Examples"
         contents:
           - example1.qmd
           
-      - section: "Documentation"
+      - section: "API Documentation"
         contents:
           - info_bms.qmd
           - info_molecule.qmd

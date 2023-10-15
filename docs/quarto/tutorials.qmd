@@ -6,6 +6,31 @@ resources:
 
 Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.
 
+
+
+# Get Started with `harpcalc`
+1. Install HARP
+
+2. Activate the HARP environment (`conda activate harp` or `source harpenv/bin/activate`; see above)
+
+3. use the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):
+``` bash
+harpcalc -id 6j6j
+```
+
+``` 
+Loading 6j6j
+N_adfs = 10, N_blobs = 20
+Using default weights: [0.05 1.   1.   1.   2.   2.  ]
+Chain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec
+Chain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec
+Chain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec
+Chain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec
+<P_res>: 0.8030
+Finite: 476 / 476
+```
+
+# Video Tutorial
 {{< video harpcalctutorial.mp4 >}}
 
 
