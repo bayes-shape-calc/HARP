@@ -7,7 +7,7 @@ from setuptools.command.install import install as _install
 with open("readme.md") as f:
 	ld = f.read()
 
-NAME = "harp-biomolecule"
+NAME = "harp"
 
 #pip version
 setuptools.setup(
@@ -25,9 +25,12 @@ setuptools.setup(
 		'Documentation': 'https://github.com/bayes-shape-calc/HARP/docs',
 	},
 	# packages=setuptools.find_packages(where="."),
+	# extras_require=EXTRAS_REQUIRE,
 	packages=setuptools.find_packages(include=['harp','harp.*']),
-	python_requires='==3.10.12',
+	python_requires='>=3.10.0',
 	install_requires=[
+		# "pup>=1.0.0a17",
+		"PyQt5>=5.15.0",
 		"numpy==1.23.5",
 		"numba==0.56.4",
 		"mrcfile==1.4.3",
@@ -41,6 +44,7 @@ setuptools.setup(
 	],
 	entry_points={
 			'console_scripts': [
+				'harpgui=harp.__main__:main',
 				'openrcsb=harp.bin.openrcsb:main',
 				'harpcalc=harp.bin.harpcalc:main'
 			],
