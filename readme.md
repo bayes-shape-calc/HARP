@@ -1,27 +1,34 @@
 # HARP - Hierarchical Atomic Resolution Perception
 HARP is an advanced, model-based, physics-informed machine learning algorithm capable of perceiving the local resolution of a biomolecule in its imaged density. Using the [Bayesian inference-based shape calculation framework](https://bayes-shape-calc.github.io/) it can be used to validate the trustworthiness of (*e.g.*, cryoEM-derived) structural models.
 
-## Quick start
-1. Install HARP
+# Quick start
+1. Install the [latest release of the HARP graphical user interface](https://github.com/bayes-shape-calc/HARP/releases).
 
-2. Activate the HARP environment (`conda activate harp` or `source harpenv/bin/activate`; see above)
+2. Use the 'PDB ID' tab to run the a structure already in the PDB. Type the PDB ID in the text box (*e.g.*, 6j6j). Click 'Run Harp'.
 
-3. use the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):
-``` bash
-harpcalc -id 6j6j
-```
-
+3. Output should look something like this:
 ``` 
+Using python library
+FTP: ftp://ftp.wwpdb.org/pub/pdb/data/structures/divided/mmCIF/j6/6j6j.cif.gz --> /Users/colin/6j6j.cif.gz
+FTP: ftp://ftp.wwpdb.org/pub/emdb/structures/EMD-0689/map/emd_0689.map.gz --> /Users/colin/emd_0689.map.gz
 Loading 6j6j
+--> Loaded 6j6j - em
+--> Grid: [0. 0. 0.], [128 128 128], [1.05299997 1.05299997 1.05299997]
 N_adfs = 10, N_blobs = 20
 Using default weights: [0.05 1.   1.   1.   2.   2.  ]
-Chain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec
-Chain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec
-Chain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec
-Chain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec
-<P_res>: 0.8030
-Finite: 476 / 476
+Chain: A, 119 residues, <P_res> = 0.7874, t = 1.60 sec, <t/res> = 13.44 msec
+Chain: B, 119 residues, <P_res> = 0.8053, t = 0.72 sec, <t/res> = 6.03 msec
+Chain: C, 119 residues, <P_res> = 0.7972, t = 0.72 sec, <t/res> = 6.05 msec
+Chain: D, 119 residues, <P_res> = 0.8059, t = 0.72 sec, <t/res> = 6.03 msec
+Chain: E, 1 residues, <P_res> = 1.0000, t = 0.01 sec, <t/res> = 8.65 msec
+Chain: F, 1 residues, <P_res> = 1.0000, t = 0.01 sec, <t/res> = 8.52 msec
+Chain: G, 1 residues, <P_res> = 1.0000, t = 0.01 sec, <t/res> = 8.66 msec
+Chain: H, 1 residues, <P_res> = 1.0000, t = 0.01 sec, <t/res> = 8.78 msec
+<P_res>: 0.8006
+ Finite: 480 / 480
+Results for 6j6j saved in /Users/colin/results_6j6j.csv
 ```
+
 
 ## Install
 HARP comes as a Python module called `harp` that has a command line interface (CLI) program called `harpcalc`. Installing the `harp` module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use `conda` or `venv` to do this. 
