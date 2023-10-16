@@ -110,7 +110,8 @@ class main_window(QMainWindow):
 		
 		l_wdir = QLabel('Working Directory:')
 		self.le_wdir = QLineEdit()
-		self.le_wdir.setText(os.getcwd())
+		self.le_wdir.setText(os.path.expanduser("~"))
+		
 		self.le_wdir.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Fixed)
 		self.b_selectwdir = QPushButton('Select Directory')
 		qwdir = QWidget()
