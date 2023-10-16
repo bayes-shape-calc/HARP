@@ -4,23 +4,30 @@ import sys
 import os
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QMainWindow,QLabel,QVBoxLayout,QHBoxLayout,QWidget,QSizePolicy,QPushButton,QFileDialog,QLineEdit,QTabWidget,QCheckBox,QDoubleSpinBox,QSpinBox,QFormLayout
+from PyQt5.QtWidgets import QApplication,QMainWindow,QLabel,QVBoxLayout,QHBoxLayout,QWidget,QSizePolicy,QPushButton,QFileDialog,QLineEdit,QTabWidget,QCheckBox,QDoubleSpinBox,QSpinBox,QFormLayout,QTextEdit
 from PyQt5.QtGui import QIcon
 
 from . import __version__
 from .. import bin,bayes_model_select
 
+
 class main_window(QMainWindow):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 		self.initialize_widgets()
-		
+
 		self.setWindowTitle('HARP (%s)'%(str(__version__)))
 		self.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
+
+		self.setup_stdout()
 
 		self.show()
 	
 	def initialize_widgets(self):
+		
+		self.qoutput = QTextEdit()
+		self.qoutput.setReadOnly(True)
+		self.qoutput.setText('')
 		tabs = QTabWidget()
 		tabs.setStyleSheet('''QTabWidget::tab-bar {left: 0;}''')
 		
@@ -193,7 +200,19 @@ class main_window(QMainWindow):
 		self.b_selectwdir.clicked.connect(self.select_wdir)
 
 		tabs.setCurrentIndex(0)
-		self.setCentralWidget(tabs)
+		
+		qw = QWidget()
+		vbox = QVBoxLayout()
+		vbox.addWidget(tabs)
+		vbox.addWidget(self.qoutput)
+		qw.setLayout(vbox)
+		self.setCentralWidget(qw)
+		
+	def setup_stdout(self):
+		
+		self.outstream = outstream(self.qoutput)
+		sys.stdout = self.outstream
+	
 		
 		
 	def select_map(self):
@@ -282,4 +301,17 @@ class main_window(QMainWindow):
 		
 		
 		
-		
+class outstream(object):
+	def __init__(self,widget):
+		self.widget = widget	
+		self.history = ''
+	
+	def write(self,text):
+		self.history += text
+		self.widget.setText(self.history)
+		vsb = self.widget.verticalScrollBar()
+		vsb.setValue(vsb.maximum())
+		QApplication.processEvents()
+	
+	def flush(self):
+		QApplication.processEvents()
