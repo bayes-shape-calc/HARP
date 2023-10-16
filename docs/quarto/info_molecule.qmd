@@ -5,7 +5,7 @@ format:
     css: styles_doc.css
 ---
 
-This page describes how how molecular models are handled in HARP.
+This page describes how molecular models are handled in HARP.
 
 ## atomcollection
 ```
