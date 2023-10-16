@@ -1,6 +1,6 @@
 name: harp
 dependencies:
-  - python=3.10.12
+  - python=3.10.9
   - numpy=1.23.5
   - numba=0.56.4
   - mrcfile=1.4.3
