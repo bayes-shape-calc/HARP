@@ -1,7 +1,11 @@
 # HARP - Hierarchical Atomic Resolution Perception
 HARP is an advanced, model-based, physics-informed machine learning algorithm capable of perceiving the local resolution of a biomolecule in its imaged density. Using the [Bayesian inference-based shape calculation framework](https://bayes-shape-calc.github.io/) it can be used to validate the trustworthiness of (*e.g.*, cryoEM-derived) structural models.
 
-# Quick start
+
+Learn more about HARP by checking out the documentation on the [website](https://bayes-shape-calc.github.io/HARP/)
+
+
+## Quick start
 1. Install the [latest release of the HARP graphical user interface](https://github.com/bayes-shape-calc/HARP/releases).
 
 2. Use the 'PDB ID' tab to run the a structure already in the PDB. Type the PDB ID in the text box (*e.g.*, 6j6j). Click 'Run Harp'.
