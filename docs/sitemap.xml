@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://bayes-shape-calc.github.io/HARP/install_gui.html</loc>
+    <lastmod>2023-10-20T18:25:09.699Z</lastmod>
+  </url>
+  <url>
     <loc>https://bayes-shape-calc.github.io/HARP/example1.html</loc>
-    <lastmod>2023-10-15T21:42:45.374Z</lastmod>
+    <lastmod>2023-10-20T18:25:09.961Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_priors.html</loc>
-    <lastmod>2023-10-15T21:42:45.626Z</lastmod>
+    <lastmod>2023-10-20T18:25:10.218Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/openrcsb.html</loc>
-    <lastmod>2023-10-16T21:52:28.226Z</lastmod>
+    <lastmod>2023-10-20T18:25:10.505Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/index.html</loc>
-    <lastmod>2023-10-16T21:30:23.208Z</lastmod>
+    <lastmod>2023-10-20T18:25:10.758Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/install.html</loc>
-    <lastmod>2023-10-16T21:30:24.875Z</lastmod>
+    <lastmod>2023-10-20T18:25:11.021Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/about.html</loc>
-    <lastmod>2023-10-15T21:42:46.867Z</lastmod>
+    <lastmod>2023-10-20T18:25:11.274Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_density.html</loc>
-    <lastmod>2023-10-15T21:42:47.165Z</lastmod>
+    <lastmod>2023-10-20T18:25:11.603Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_molecule.html</loc>
-    <lastmod>2023-10-16T21:30:24.210Z</lastmod>
+    <lastmod>2023-10-20T18:25:11.912Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/tutorials.html</loc>
-    <lastmod>2023-10-15T21:42:47.710Z</lastmod>
+    <lastmod>2023-10-20T18:25:12.180Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/somestuff.html</loc>
-    <lastmod>2023-10-15T21:42:47.963Z</lastmod>
+    <lastmod>2023-10-20T18:25:12.426Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/info_bms.html</loc>
-    <lastmod>2023-10-15T21:42:48.265Z</lastmod>
+    <lastmod>2023-10-20T18:25:12.735Z</lastmod>
   </url>
   <url>
     <loc>https://bayes-shape-calc.github.io/HARP/harpcalc.html</loc>
-    <lastmod>2023-10-16T21:51:59.002Z</lastmod>
+    <lastmod>2023-10-20T18:25:13.018Z</lastmod>
   </url>
 </urlset>

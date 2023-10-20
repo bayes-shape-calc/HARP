@@ -1,5 +1,5 @@
 ---
-title: "Installing HARP"
+title: "HARP Library"
 ---
 
 HARP comes as a Python module called `harp` that has a command line interface (CLI) program called `harpcalc`. Installing the `harp` module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use `conda` or `venv` to do this. 

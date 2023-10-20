@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Hierarchical Atomic Resolution Perception</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://www.biorxiv.org" title="HARP paper" class="sidebar-tool px-1"><i class="bi bi-file-earmark-text"></i></a>
+    <a href="https://www.biorxiv.org/content/10.1101/2023.10.17.562748v1" title="HARP paper" class="sidebar-tool px-1"><i class="bi bi-file-earmark-text"></i></a>
     <a href="https://github.com/bayes-shape-calc/HARP" title="HARP repo" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
     <a href="https://bayes-shape-calc.github.io/" title="Shape-calc website" class="sidebar-tool px-1"><i class="bi bi-hexagon"></i></a>
     <a href="https://github.com/bayes-shape-calc" title="Shape calculations" class="sidebar-tool px-1"><i class="bi bi-upload"></i></a>
@@ -180,7 +180,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./install.html" class="sidebar-item-text sidebar-link">Installing HARP</a>
+  <a href="./install_gui.html" class="sidebar-item-text sidebar-link">HARP GUI</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./install.html" class="sidebar-item-text sidebar-link">HARP Library</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -259,8 +264,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get-started-with-harpcalc" id="toc-get-started-with-harpcalc" class="nav-link active" data-scroll-target="#get-started-with-harpcalc">Get Started with <code>harpcalc</code></a></li>
-  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link" data-scroll-target="#video-tutorial">Video Tutorial</a></li>
+  <li><a href="#harp-gui" id="toc-harp-gui" class="nav-link active" data-scroll-target="#harp-gui">HARP GUI</a></li>
+  <li><a href="#harp-module" id="toc-harp-module" class="nav-link" data-scroll-target="#harp-module">HARP module</a>
+  <ul class="collapse">
+  <li><a href="#get-started-with-harpcalc" id="toc-get-started-with-harpcalc" class="nav-link" data-scroll-target="#get-started-with-harpcalc">Get Started with <code>harpcalc</code></a></li>
+  <li><a href="#running-your-own-files" id="toc-running-your-own-files" class="nav-link" data-scroll-target="#running-your-own-files">Running your own files</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -284,12 +293,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.</p>
-<section id="get-started-with-harpcalc" class="level1">
-<h1>Get Started with <code>harpcalc</code></h1>
+<section id="harp-gui" class="level1">
+<h1>HARP GUI</h1>
+<p>Here’s a video tutorial of using the “PDB ID” mode of the HARP GUI</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="harp_gui_tutorial.mp4"></video></div>
+</section>
+<section id="harp-module" class="level1">
+<h1>HARP module</h1>
+<p>Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) module.</p>
+<section id="get-started-with-harpcalc" class="level2">
+<h2 class="anchored" data-anchor-id="get-started-with-harpcalc">Get Started with <code>harpcalc</code></h2>
 <ol type="1">
 <li><p>Install HARP</p></li>
-<li><p>Activate the HARP environment (<code>conda activate harp</code> or <code>source harpenv/bin/activate</code>; see above)</p></li>
+<li><p>Activate the HARP environment (<code>conda activate harp</code> or <code>source harpenv/bin/activate</code>)</p></li>
 <li><p>use the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):</p></li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">harpcalc</span> <span class="at">-id</span> 6j6j</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -303,12 +319,14 @@ Chain: D, 119 residues, &lt;P_res&gt; = 0.8045, t = 1.44 sec, &lt;t/res&gt; = 12
 &lt;P_res&gt;: 0.8030
 Finite: 476 / 476</code></pre>
 </section>
-<section id="video-tutorial" class="level1">
-<h1>Video Tutorial</h1>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="harpcalctutorial.mp4"></video></div>
+<section id="running-your-own-files" class="level2">
+<h2 class="anchored" data-anchor-id="running-your-own-files">Running your own files</h2>
+<p>Here is a video tutorial of running your own files using <code>harpcalc</code>:</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="harpcalctutorial.mp4"></video></div>
 <!-- ![](images/HARP_logo.png){fig-alt="The profile is inspired by a (upsidedown?) harp"} -->
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -447,6 +465,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 <script>videojs(video_shortcode_videojs_video1);</script>
+<script>videojs(video_shortcode_videojs_video2);</script>
 
 
 

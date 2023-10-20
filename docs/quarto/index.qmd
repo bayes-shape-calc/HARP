@@ -10,13 +10,15 @@ Hierarchical Atomic Resolution Perception (HARP) is a Python package for the eva
 
 # About HARP
 
-HARP is an ongoing project based out of the [Kinz-Thompson lab](https://ckinzthompson.github.io) at Rutgers University-Newark. HARP utilizes a mathematical framework to describe [the latent structural information](https://bayes-shape-calc.github.io) in a noisy dataset (described in [Ray, _et al_.](https://doi.org/10.1098/rspa.2022.0177)). 
+HARP is an ongoing project based out of the [Kinz-Thompson lab](https://ckinzthompson.github.io) at Rutgers University-Newark. HARP utilizes a mathematical framework to describe [the latent structural information](https://bayes-shape-calc.github.io) in a noisy dataset (described in [Ray, _et al_.](https://doi.org/10.1098/rspa.2022.0177)).
+
+Learn more about HARP by reading the preprint of the manuscript on bioRxiv: [Scale-dependent hierarchical resolution: applications to atomic resolution and model validation in cryoEM](https://www.biorxiv.org/content/10.1101/2023.10.17.562748v1).
 
 ## Citing HARP
 
-If you use HARP in your work, please cite:
+The HARP manuscript is currently a preprint. If you use HARP in your work, please cite:
 
-[Link goes here]
+Ray, Korak Kumar, Kinz-Thompson, Colin D., *Scale-dependent hierarchical resolution: applications to atomic resolution and model validation in cryoEM*. bioRxiv 2023.10.17.562748; doi: https://doi.org/10.1101/2023.10.17.562748
 
 ## Developers
 * Colin Kinz-Thompson

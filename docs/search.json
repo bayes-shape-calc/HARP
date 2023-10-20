@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "install_gui.html",
+    "href": "install_gui.html",
+    "title": "HARP GUI",
+    "section": "",
+    "text": "The easiest way to use HARP is to download the latest stand-alone installers created for Mac or Windows. Run the installer, follow those instructions, then launch HARP."
+  },
+  {
+    "objectID": "install_gui.html#pdb-id-mode",
+    "href": "install_gui.html#pdb-id-mode",
+    "title": "HARP GUI",
+    "section": "“PDB ID mode",
+    "text": "“PDB ID mode\nWith this mode, you can specifiy the PDB ID in the text box, and then run HARP or open the corresponding page on the RCSB. Downloading uses FTP access to the RCSB and currently only works on Mac. Files are downloaded into the “Working Directory” specified on the “Options” tab."
+  },
+  {
+    "objectID": "install_gui.html#files-mode",
+    "href": "install_gui.html#files-mode",
+    "title": "HARP GUI",
+    "section": "“Files” mode",
+    "text": "“Files” mode\nWith this mode, you can specify a model (mmCIF format in .cif or .cif.gz) and a map (MRC format, i.e., .map, .mrc; can be gzipped), and then run HARP. Currently, this has been tested using CryoSPARC created maps and PHENIX created models."
+  },
+  {
+    "objectID": "install_gui.html#options",
+    "href": "install_gui.html#options",
+    "title": "HARP GUI",
+    "section": "Options",
+    "text": "Options\n\nWorking Directory: All files are saved here\nAuth ID/Label ID: Change which name is used for each residue\nOnly polymers: Ignore all small molecules\nRemove metals: Removes common ions\nRemove waters: Removes waters\nVoxel offset: face-centered (0.5; default) or edge-centered (0.0) voxels\n\\(\\sigma_0\\) and \\(\\sigma_1\\) parameters: For defining the Rayleigh criterion for \\(M_0\\) and \\(M_1\\) and marginalization conditions."
+  },
+  {
     "objectID": "example1.html",
     "href": "example1.html",
     "title": "Load Data",
@@ -39,7 +67,7 @@
     "href": "index.html#citing-harp",
     "title": "Welcome to HARP",
     "section": "Citing HARP",
-    "text": "Citing HARP\nIf you use HARP in your work, please cite:\n[Link goes here]"
+    "text": "Citing HARP\nThe HARP manuscript is currently a preprint. If you use HARP in your work, please cite:\nRay, Korak Kumar, Kinz-Thompson, Colin D., Scale-dependent hierarchical resolution: applications to atomic resolution and model validation in cryoEM. bioRxiv 2023.10.17.562748; doi: https://doi.org/10.1101/2023.10.17.562748"
   },
   {
     "objectID": "index.html#developers",
@@ -58,7 +86,7 @@
   {
     "objectID": "install.html",
     "href": "install.html",
-    "title": "Installing HARP",
+    "title": "HARP Library",
     "section": "",
     "text": "HARP comes as a Python module called harp that has a command line interface (CLI) program called harpcalc. Installing the harp module into a separate Python environment is recommended practice, because it allows you to maintain required library dependencies. You can use conda or venv to do this.\n\nEnvironment 1: conda\nconda is a Python environment manager. You’ll have to download and install conda or the smaller miniconda. With that installed, you need to get the HARP code, make an environment for HARP, and then install HARP. Here is an example of how to do that from a terminal window:\ngit clone https://github.com/bayes-shape-calc/HARP.git\ncd HARP\nconda env create\nconda activate harp\npip install ./\n\n\nEnvironment 2: venv + pip\nIf you don’t want to use conda, you can use venv to make an environment and pip to handle installing all the libraries. Here is an exmaple of how to do that from a terminal window:\npython -m venv harpenv\nsource harpenv/bin/activate\ngit clone https://github.com/bayes-shape-calc/HARP.git\ncd HARP\npip install ./\n\n\nDependencies\nThese are not the absolute minimum required versions. They should be automatically installed by the pip command above (step 4).\n\n\n\n\n\n\n\n\n\nLibrary\nVersion\nRequired?\nUse\n\n\n\n\npython\n3.7\nYes\nProgramming\n\n\nmrcfile\n1.3\nYes\nFor loading density maps\n\n\nnumba\n0.55\nYes\nFor fast model building\n\n\nnumpy\n1.22\nYes\nMath\n\n\ngemmi\n0.5.5\nNo\n(optional) For X-ray SF loading"
   },
@@ -151,7 +179,21 @@
     "href": "tutorials.html",
     "title": "Tutorials",
     "section": "",
-    "text": "Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.\n\nGet Started with harpcalc\n\nInstall HARP\nActivate the HARP environment (conda activate harp or source harpenv/bin/activate; see above)\nuse the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):\n\nharpcalc -id 6j6j\nLoading 6j6j\nN_adfs = 10, N_blobs = 20\nUsing default weights: [0.05 1.   1.   1.   2.   2.  ]\nChain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec\nChain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec\nChain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec\nChain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec\n<P_res>: 0.8030\nFinite: 476 / 476\n\n\nVideo Tutorial"
+    "text": "Here’s a video tutorial of using the “PDB ID” mode of the HARP GUI"
+  },
+  {
+    "objectID": "tutorials.html#get-started-with-harpcalc",
+    "href": "tutorials.html#get-started-with-harpcalc",
+    "title": "Tutorials",
+    "section": "Get Started with harpcalc",
+    "text": "Get Started with harpcalc\n\nInstall HARP\nActivate the HARP environment (conda activate harp or source harpenv/bin/activate)\nuse the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):\n\nharpcalc -id 6j6j\nLoading 6j6j\nN_adfs = 10, N_blobs = 20\nUsing default weights: [0.05 1.   1.   1.   2.   2.  ]\nChain: A, 119 residues, <P_res> = 0.7948, t = 1.40 sec, <t/res> = 11.73 msec\nChain: B, 119 residues, <P_res> = 0.8067, t = 1.34 sec, <t/res> = 11.28 msec\nChain: C, 119 residues, <P_res> = 0.8062, t = 1.39 sec, <t/res> = 11.65 msec\nChain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec\n<P_res>: 0.8030\nFinite: 476 / 476"
+  },
+  {
+    "objectID": "tutorials.html#running-your-own-files",
+    "href": "tutorials.html#running-your-own-files",
+    "title": "Tutorials",
+    "section": "Running your own files",
+    "text": "Running your own files\nHere is a video tutorial of running your own files using harpcalc:"
   },
   {
     "objectID": "somestuff.html",

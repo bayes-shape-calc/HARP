@@ -2,16 +2,23 @@
 title: "Tutorials"
 resources:
   - harpcalctutorial.mp4
+  - harp_gui_tutorial.mp4
 ---
 
-Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) package.
+
+# HARP GUI
+Here's a video tutorial of using the "PDB ID" mode of the HARP GUI
+{{< video harp_gui_tutorial.mp4 >}}
 
 
+# HARP module
+Here is some documentation/cookbook examples about how to use the Hierarchical Atomic Resolution Perception (HARP) module.
 
-# Get Started with `harpcalc`
+
+## Get Started with `harpcalc`
 1. Install HARP
 
-2. Activate the HARP environment (`conda activate harp` or `source harpenv/bin/activate`; see above)
+2. Activate the HARP environment (`conda activate harp` or `source harpenv/bin/activate`)
 
 3. use the CLI (using PDB ID 6J6J as an example; see tutorial on documentation website):
 ``` bash
@@ -30,7 +37,8 @@ Chain: D, 119 residues, <P_res> = 0.8045, t = 1.44 sec, <t/res> = 12.08 msec
 Finite: 476 / 476
 ```
 
-# Video Tutorial
+## Running your own files
+Here is a video tutorial of running your own files using `harpcalc`:
 {{< video harpcalctutorial.mp4 >}}
 
 

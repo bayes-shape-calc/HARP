@@ -17,7 +17,7 @@ website:
     tools:
 
       - icon: file-earmark-text
-        href: https://www.biorxiv.org
+        href: https://www.biorxiv.org/content/10.1101/2023.10.17.562748v1
         text: "HARP paper"
       - icon: github
         href: https://github.com/bayes-shape-calc/HARP
@@ -43,6 +43,7 @@ website:
             
       - section: "Get Started"
         contents:
+          - install_gui.qmd
           - install.qmd
           - tutorials.qmd
         
